@@ -1,12 +1,54 @@
-import { View, Text, StyleSheet } from 'react-native';
-import { Link, router } from 'expo-router';
+import { View, Text, StyleSheet, Button, Image } from 'react-native';
+import { ThemedText } from '@/components/ThemedText';
+import { ThemedView } from '@/components/ThemedView';
+import { LinearGradient } from 'expo-linear-gradient';
+import { Link } from 'expo-router';
 
 export default function Tab() {
   return (
-    <View style={styles.container}>
-      <Text style={styles.text}>Go to</Text>
+    <ThemedView style={styles.container}>
+      <LinearGradient colors={['#1E1E1E', 'black']} style={styles.container}>
+
+      <ThemedText style={styles.menuTitle} type="title">Profile</ThemedText>
+
+      <Image
+          style={styles.image}
+          source="../assets/images/icon.png"
+          placeholder="../assets/images/icon.png"
+          contentFit="cover"
+          transition={1000}
+      />
+
+      <ThemedText style={styles.userName} type="default">username</ThemedText>
+
+      <View style={styles.containerData}>
+
+        <View>
+          <ThemedText style={{ textAlign: 'center', fontSize: 22, fontWeight: 'bold'}} type="default">Weight</ThemedText>
+          <ThemedText style={{ textAlign: 'center', fontSize: 20, color:'darkgrey', padding: 10}} type="default">73kg</ThemedText>
+        </View>
+        
+        <View>
+          <ThemedText style={{ textAlign: 'center', fontSize: 22, fontWeight: 'bold'}} type="default">Height</ThemedText>
+          <ThemedText style={{ textAlign: 'center', fontSize: 20, color:'darkgrey', padding: 10}} type="default">179cm</ThemedText>
+        </View>
+
+        <View>
+          <ThemedText style={{ textAlign: 'center', fontSize: 22, fontWeight: 'bold'}} type="default">Workouts</ThemedText>
+          <ThemedText style={{ textAlign: 'center', fontSize: 20, color:'darkgrey', padding: 10}} type="default">213</ThemedText>
+        </View>
+        
+      </View>
+
+
+      
+
       <Link style={styles.link} href="/settings">Settings</Link>
-    </View>
+
+
+    
+      </LinearGradient>
+    </ThemedView>
   );
 }
 
@@ -14,7 +56,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: 'center',
-    alignItems: 'center',
   },
   text: {
     color: 'white',
@@ -22,5 +63,32 @@ const styles = StyleSheet.create({
   link: {
     color: 'blue',
 
-  }
+  },
+  menuTitle: {
+    textAlign: 'center',
+    padding: 20,
+    fontSize: 50,
+  },
+
+  userName: {
+    textAlign: 'center',
+    padding: 20,
+    fontSize: 30,
+  },
+
+  containerData: {
+    flexDirection: 'row',
+    //elements of this container will be spaced evenly
+    justifyContent: 'space-evenly',
+    padding: 20,
+    
+  },
+
+  image: {
+    width: 150,
+    height: 150,
+    borderRadius: 150 / 2,
+    alignSelf: 'center',
+  },
+
 });

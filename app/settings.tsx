@@ -1,12 +1,18 @@
-import { View, Text, StyleSheet } from 'react-native';
-import { Link, router } from 'expo-router';
+import { View, Text, StyleSheet, Button } from 'react-native';
+import { ThemedText } from '@/components/ThemedText';
+import { ThemedView } from '@/components/ThemedView';
+import { LinearGradient } from 'expo-linear-gradient';
 
 export default function Tab() {
   return (
-    <View style={styles.container}>
-      <Text style={styles.text}>Settings</Text>
+    <ThemedView style={styles.container}>
+      <LinearGradient colors={['#1E1E1E', 'black']} style={styles.container}>
+
+      
      
-    </View>
+
+      </LinearGradient>
+    </ThemedView>
   );
 }
 
@@ -14,9 +20,12 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: 'center',
-    alignItems: 'center',
   },
-  text: {
-    color: 'white',
-  }
+
+  menuTitle: {
+    textAlign: 'center',
+    padding: 20,
+    fontSize: 50,
+  },
 });
+
