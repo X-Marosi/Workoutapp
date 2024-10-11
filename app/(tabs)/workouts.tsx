@@ -2,6 +2,7 @@ import { View, Text, StyleSheet, Button, ScrollView } from 'react-native';
 import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
 import { LinearGradient } from 'expo-linear-gradient';
+import { Link } from 'expo-router';
 
 export default function Tab() {
   return (
@@ -38,7 +39,7 @@ export default function Tab() {
 
 
         {/* New Workout Button */}
-        <ThemedText style={styles.buttonNew} type="title">New Workout</ThemedText>
+        <Link style={styles.buttonNew} href="/emptyWou">New Workout</Link>
 
 
       </LinearGradient>
@@ -77,7 +78,8 @@ const styles = StyleSheet.create({
     padding: 5,
     margin: 10,
     fontSize: 20,
-    alignSelf: 'center'
+    alignSelf: 'center',
+    fontWeight: 'bold',
   },
 
   workoutContainer: {
