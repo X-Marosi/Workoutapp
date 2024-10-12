@@ -23,7 +23,7 @@ const apiCall = async (url: string, params: object) => {
 export const fetchExercises = async () => {
     const url = baseUrl + 'exercises';
     const params = {
-        limit: 200
+        limit: 1400
     }
 
     const data = await apiCall(url, params);

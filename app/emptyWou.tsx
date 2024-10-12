@@ -1,26 +1,45 @@
-import { View, Text, StyleSheet, Button, FlatList, Image } from "react-native";
+import {
+  View,
+  Text,
+  StyleSheet,
+  Button,
+  FlatList,
+  Image,
+  TextInput,
+} from "react-native";
 import { ThemedText } from "@/components/ThemedText";
 import { ThemedView } from "@/components/ThemedView";
 import { LinearGradient } from "expo-linear-gradient";
 import { useEffect, useState } from "react";
 import { fetchExercises } from "@/api/exerciseDB";
-import { exerciseDump } from "@/constants/exercise";
+import { exerciseListAll } from "@/constants/exercise";
 
 export default function Tab() {
-  const [exercises, setExercises] = useState(exerciseDump);
-
-  //console.log(exercises);
-  //console.log(exerciseDump);
+  const [exercises, setExercises] = useState(exerciseListAll);
+  const [searchQuery, setSearchQuery] = useState("");
 
   useEffect(() => {
     //fetchExercises();
   }, []);
 
+  const filteredExercises = exercises.filter((exercise) =>
+    exercise.name.toLowerCase().includes(searchQuery.toLowerCase())
+  );
+
   return (
     <ThemedView style={styles.container}>
-      <LinearGradient colors={["#1E1E1E", "black"]} style={styles.container}>
+      <LinearGradient
+        colors={["#1E1E1E", "black"]}
+        style={{ padding: 16, flex: 1 }}
+      >
+        <TextInput
+          style={styles.searchBar}
+          placeholder="Search exercises"
+          value={searchQuery}
+          onChangeText={setSearchQuery}
+        />
         <FlatList
-          data={exercises}
+          data={filteredExercises}
           renderItem={({ item }) => (
             <View style={styles.containerBox}>
               <Image
@@ -43,19 +62,19 @@ export default function Tab() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: "center",
   },
-
-  menuTitle: {
-    textAlign: "center",
-    padding: 20,
-    fontSize: 50,
+  searchBar: {
+    height: 40,
+    borderColor: "gray",
+    borderWidth: 1,
+    borderRadius: 8,
+    paddingHorizontal: 8,
+    marginBottom: 16,
+    backgroundColor: "white",
   },
   containerBox: {
     flexDirection: "row",
-    margin: 10,
-    padding: 10,
-    backgroundColor: "#222",
-    borderRadius: 8,
+    alignItems: "center",
+    marginBottom: 16,
   },
 });
