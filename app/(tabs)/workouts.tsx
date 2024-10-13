@@ -56,9 +56,9 @@ export default function Tab() {
           </View>
         </View>
 
-        {/* New Workout Button */}
-        <Link style={styles.buttonNew} href="/emptyWou">
-          New Workout
+      
+        <Link style={styles.buttonNew} href="/blankWou">
+          Blank Workout
         </Link>
       </LinearGradient>
     </ScrollView>

@@ -58,25 +58,6 @@ export const exerciseListAll = [
       ]
   },
   {
-      "bodyPart": "upper legs",
-      "equipment": "body weight",
-      "gifUrl": "https://v2.exercisedb.io/image/3lAQaVamhUvZPa",
-      "id": "1512",
-      "name": "all fours squad stretch",
-      "target": "quads",
-      "secondaryMuscles": [
-          "hamstrings",
-          "glutes"
-      ],
-      "instructions": [
-          "Start on all fours with your hands directly under your shoulders and your knees directly under your hips.",
-          "Extend one leg straight back, keeping your knee bent and your foot flexed.",
-          "Slowly lower your hips towards the ground, feeling a stretch in your quads.",
-          "Hold this position for 20-30 seconds.",
-          "Switch legs and repeat the stretch on the other side."
-      ]
-  },
-  {
       "bodyPart": "waist",
       "equipment": "body weight",
       "gifUrl": "https://v2.exercisedb.io/image/g45QUgCjmGEn0o",
@@ -302,60 +283,6 @@ export const exerciseListAll = [
       ]
   },
   {
-      "bodyPart": "lower legs",
-      "equipment": "assisted",
-      "gifUrl": "https://v2.exercisedb.io/image/fBnn-9lZSc-tQM",
-      "id": "1708",
-      "name": "assisted lying calves stretch",
-      "target": "calves",
-      "secondaryMuscles": [
-          "hamstrings"
-      ],
-      "instructions": [
-          "Lie on your back with your legs extended.",
-          "Bend one knee and place your foot flat on the ground.",
-          "Using your hands or a towel, gently pull your toes towards your body, feeling a stretch in your calf.",
-          "Hold the stretch for 20-30 seconds.",
-          "Release the stretch and repeat on the other leg."
-      ]
-  },
-  {
-      "bodyPart": "upper legs",
-      "equipment": "assisted",
-      "gifUrl": "https://v2.exercisedb.io/image/3wTnAhFczYeM4G",
-      "id": "1709",
-      "name": "assisted lying glutes stretch",
-      "target": "glutes",
-      "secondaryMuscles": [
-          "hamstrings"
-      ],
-      "instructions": [
-          "Lie on your back with your legs extended.",
-          "Bend your right knee and place your right ankle on your left thigh, just above the knee.",
-          "Grasp your left thigh with both hands and gently pull it towards your chest.",
-          "Hold the stretch for 20-30 seconds.",
-          "Release and repeat on the other side."
-      ]
-  },
-  {
-      "bodyPart": "upper legs",
-      "equipment": "assisted",
-      "gifUrl": "https://v2.exercisedb.io/image/x364vgPufIZsmE",
-      "id": "1710",
-      "name": "assisted lying gluteus and piriformis stretch",
-      "target": "glutes",
-      "secondaryMuscles": [
-          "hamstrings"
-      ],
-      "instructions": [
-          "Lie on your back with your legs extended.",
-          "Bend your right knee and place your right ankle on your left thigh, just above the knee.",
-          "Grasp your left thigh with both hands and gently pull it towards your chest.",
-          "Hold the stretch for 20-30 seconds.",
-          "Release the stretch and repeat on the other side."
-      ]
-  },
-  {
       "bodyPart": "waist",
       "equipment": "assisted",
       "gifUrl": "https://v2.exercisedb.io/image/STZR-Oyytm-lZN",
@@ -459,43 +386,6 @@ export const exerciseListAll = [
       ]
   },
   {
-      "bodyPart": "upper legs",
-      "equipment": "assisted",
-      "gifUrl": "https://v2.exercisedb.io/image/Y7UCeTieMmiAvP",
-      "id": "1713",
-      "name": "assisted prone lying quads stretch",
-      "target": "quads",
-      "secondaryMuscles": [
-          "hamstrings",
-          "glutes"
-      ],
-      "instructions": [
-          "Lie face down on the ground with your legs extended.",
-          "Bend your left knee and reach back with your left hand to grab your left foot or ankle.",
-          "Gently pull your left foot towards your glutes, feeling a stretch in your left quad.",
-          "Hold the stretch for 20-30 seconds, then release.",
-          "Repeat with your right leg."
-      ]
-  },
-  {
-      "bodyPart": "waist",
-      "equipment": "assisted",
-      "gifUrl": "https://v2.exercisedb.io/image/okLonqlzsQCEj-",
-      "id": "1714",
-      "name": "assisted prone rectus femoris stretch",
-      "target": "abs",
-      "secondaryMuscles": [
-          "quadriceps"
-      ],
-      "instructions": [
-          "Lie face down on the ground with your legs straight.",
-          "Bend your right knee and reach back with your right hand to grab your right foot or ankle.",
-          "Gently pull your right foot or ankle towards your glutes, feeling a stretch in the front of your right thigh.",
-          "Hold the stretch for 20-30 seconds.",
-          "Release and repeat on the other side."
-      ]
-  },
-  {
       "bodyPart": "back",
       "equipment": "leverage machine",
       "gifUrl": "https://v2.exercisedb.io/image/16KGIzwawWaKb8",
@@ -514,45 +404,6 @@ export const exerciseListAll = [
           "Continue pulling until your chin is above the handles.",
           "Pause for a moment at the top, then slowly lower your body back down to the starting position.",
           "Repeat for the desired number of repetitions."
-      ]
-  },
-  {
-      "bodyPart": "chest",
-      "equipment": "assisted",
-      "gifUrl": "https://v2.exercisedb.io/image/pOLHSchkk0dyYo",
-      "id": "1716",
-      "name": "assisted seated pectoralis major stretch with stability ball",
-      "target": "pectorals",
-      "secondaryMuscles": [
-          "shoulders",
-          "triceps"
-      ],
-      "instructions": [
-          "Sit on a stability ball with your feet flat on the ground and your back straight.",
-          "Hold a stability ball with both hands and extend your arms straight out in front of you.",
-          "Slowly lower the stability ball towards your chest, feeling a stretch in your pectoral muscles.",
-          "Hold the stretch for a few seconds, then slowly return to the starting position.",
-          "Repeat for the desired number of repetitions."
-      ]
-  },
-  {
-      "bodyPart": "upper legs",
-      "equipment": "assisted",
-      "gifUrl": "https://v2.exercisedb.io/image/Jx6YTnwDobtYae",
-      "id": "1712",
-      "name": "assisted side lying adductor stretch",
-      "target": "adductors",
-      "secondaryMuscles": [
-          "hamstrings",
-          "glutes"
-      ],
-      "instructions": [
-          "Lie on your side with your legs straight and stacked on top of each other.",
-          "Bend your bottom leg slightly for stability.",
-          "Place your top foot on a stable surface, such as a bench or step.",
-          "Keeping your top leg straight, slowly lower it towards the ground, feeling a stretch in your inner thigh.",
-          "Hold the stretch for 20-30 seconds.",
-          "Return to the starting position and repeat on the other side."
       ]
   },
   {
@@ -753,27 +604,6 @@ export const exerciseListAll = [
           "Slowly lift your legs up, keeping them straight, until your body is parallel to the ground.",
           "Hold this position for a few seconds, then slowly lower your legs back down to the starting position.",
           "Repeat for the desired number of repetitions."
-      ]
-  },
-  {
-      "bodyPart": "back",
-      "equipment": "body weight",
-      "gifUrl": "https://v2.exercisedb.io/image/Ir99nE8dWwlz8A",
-      "id": "1405",
-      "name": "back pec stretch",
-      "target": "lats",
-      "secondaryMuscles": [
-          "shoulders",
-          "chest"
-      ],
-      "instructions": [
-          "Stand tall with your feet shoulder-width apart.",
-          "Extend your arms straight out in front of you, parallel to the ground.",
-          "Cross your arms in front of your body, with your right arm over your left arm.",
-          "Interlock your fingers and rotate your palms away from your body.",
-          "Slowly raise your arms up and away from your body, feeling a stretch in your back and chest.",
-          "Hold the stretch for 15-30 seconds, then release.",
-          "Repeat on the opposite side."
       ]
   },
   {
@@ -1323,27 +1153,6 @@ export const exerciseListAll = [
           "At the same time, twist your torso towards the side of the pulling arm.",
           "Pause for a moment at the top, then slowly release the tension in the band and return to the starting position.",
           "Repeat for the desired number of repetitions, then switch to the other arm."
-      ]
-  },
-  {
-      "bodyPart": "upper legs",
-      "equipment": "band",
-      "gifUrl": "https://v2.exercisedb.io/image/IJall-6BIdRZ2j",
-      "id": "0991",
-      "name": "band pull through",
-      "target": "glutes",
-      "secondaryMuscles": [
-          "hamstrings",
-          "lower back"
-      ],
-      "instructions": [
-          "Attach a resistance band to a sturdy anchor point at ground level.",
-          "Stand facing away from the anchor point with your feet shoulder-width apart.",
-          "Step forward to create tension in the band, keeping your knees slightly bent.",
-          "Hinge at the hips and push your glutes back, maintaining a slight bend in your knees.",
-          "Lower your torso until it is parallel to the ground, feeling a stretch in your hamstrings.",
-          "Drive your hips forward and squeeze your glutes to return to the starting position.",
-          "Repeat for the desired number of repetitions."
       ]
   },
   {
@@ -4738,25 +4547,6 @@ export const exerciseListAll = [
           "Continue crawling forward, alternating your hand and foot movements.",
           "Maintain a steady pace and keep your core tight throughout the exercise.",
           "Continue for the desired distance or time."
-      ]
-  },
-  {
-      "bodyPart": "chest",
-      "equipment": "assisted",
-      "gifUrl": "https://v2.exercisedb.io/image/2ew9fxvLJSSIUc",
-      "id": "1259",
-      "name": "behind head chest stretch",
-      "target": "pectorals",
-      "secondaryMuscles": [
-          "shoulders",
-          "triceps"
-      ],
-      "instructions": [
-          "Stand tall with your feet shoulder-width apart.",
-          "Interlace your fingers behind your head with your elbows pointing outwards.",
-          "Slowly squeeze your shoulder blades together and push your chest forward.",
-          "Hold the stretch for 15-30 seconds.",
-          "Release the stretch and repeat as desired."
       ]
   },
   {
@@ -8450,63 +8240,6 @@ export const exerciseListAll = [
       ]
   },
   {
-      "bodyPart": "lower legs",
-      "equipment": "body weight",
-      "gifUrl": "https://v2.exercisedb.io/image/8B9in6MQd3edqF",
-      "id": "1407",
-      "name": "calf push stretch with hands against wall",
-      "target": "calves",
-      "secondaryMuscles": [
-          "hamstrings"
-      ],
-      "instructions": [
-          "Stand facing a wall with your feet hip-width apart.",
-          "Place your hands against the wall at shoulder height.",
-          "Step back with one foot, keeping your heel on the ground and your leg straight.",
-          "Bend your front knee slightly and lean forward, feeling a stretch in your calf.",
-          "Hold the stretch for 20-30 seconds.",
-          "Switch legs and repeat the stretch."
-      ]
-  },
-  {
-      "bodyPart": "lower legs",
-      "equipment": "body weight",
-      "gifUrl": "https://v2.exercisedb.io/image/jfjZ3Vx8UmC3MG",
-      "id": "1377",
-      "name": "calf stretch with hands against wall",
-      "target": "calves",
-      "secondaryMuscles": [
-          "hamstrings"
-      ],
-      "instructions": [
-          "Stand facing a wall with your feet hip-width apart.",
-          "Place your hands against the wall at shoulder height.",
-          "Step your right foot back, keeping your heel on the ground and your leg straight.",
-          "Bend your left knee and lean forward, keeping your back leg straight and your heel on the ground.",
-          "Hold the stretch for 20-30 seconds.",
-          "Switch legs and repeat the stretch."
-      ]
-  },
-  {
-      "bodyPart": "lower legs",
-      "equipment": "rope",
-      "gifUrl": "https://v2.exercisedb.io/image/yhsBrEnPbZXeS4",
-      "id": "1378",
-      "name": "calf stretch with rope",
-      "target": "calves",
-      "secondaryMuscles": [
-          "hamstrings"
-      ],
-      "instructions": [
-          "Stand facing a wall or sturdy object with your feet hip-width apart.",
-          "Hold the ends of the rope in each hand and place the middle of the rope around the ball of your right foot.",
-          "Step back with your left foot, keeping your heel on the ground and your leg straight.",
-          "Lean forward, keeping your back straight, and gently pull on the rope to stretch your calf.",
-          "Hold the stretch for 20-30 seconds, then release.",
-          "Repeat on the other leg."
-      ]
-  },
-  {
       "bodyPart": "back",
       "equipment": "barbell",
       "gifUrl": "https://v2.exercisedb.io/image/5y5u52DQkjEhov",
@@ -8541,45 +8274,6 @@ export const exerciseListAll = [
           "Engage your abs and lift your legs up in front of you, keeping them straight.",
           "Continue lifting until your legs are parallel to the ground or as high as you can comfortably go.",
           "Pause for a moment at the top, then slowly lower your legs back down to the starting position.",
-          "Repeat for the desired number of repetitions."
-      ]
-  },
-  {
-      "bodyPart": "upper legs",
-      "equipment": "body weight",
-      "gifUrl": "https://v2.exercisedb.io/image/DI0B2h6ba07wXt",
-      "id": "1548",
-      "name": "chair leg extended stretch",
-      "target": "quads",
-      "secondaryMuscles": [
-          "hamstrings",
-          "calves"
-      ],
-      "instructions": [
-          "Sit on the edge of a chair with your back straight and feet flat on the ground.",
-          "Extend one leg straight out in front of you, keeping your heel on the ground.",
-          "Lean forward slightly, feeling a stretch in your quadriceps.",
-          "Hold this position for 20-30 seconds.",
-          "Switch legs and repeat the stretch."
-      ]
-  },
-  {
-      "bodyPart": "chest",
-      "equipment": "body weight",
-      "gifUrl": "https://v2.exercisedb.io/image/eCKRL7TZwoHknF",
-      "id": "1271",
-      "name": "chest and front of shoulder stretch",
-      "target": "pectorals",
-      "secondaryMuscles": [
-          "deltoids"
-      ],
-      "instructions": [
-          "Stand tall with your feet shoulder-width apart.",
-          "Extend your arms straight out in front of you at shoulder height.",
-          "Cross your arms in front of your body, with your right arm on top of your left arm.",
-          "Interlace your fingers and press your palms together.",
-          "Gently squeeze your shoulder blades together and push your hands forward, feeling a stretch in your chest and front of your shoulders.",
-          "Hold the stretch for 20-30 seconds, then release.",
           "Repeat for the desired number of repetitions."
       ]
   },
@@ -8644,25 +8338,6 @@ export const exerciseListAll = [
   },
   {
       "bodyPart": "chest",
-      "equipment": "stability ball",
-      "gifUrl": "https://v2.exercisedb.io/image/u9oxomyo0xPnb4",
-      "id": "1272",
-      "name": "chest stretch with exercise ball",
-      "target": "pectorals",
-      "secondaryMuscles": [
-          "shoulders",
-          "triceps"
-      ],
-      "instructions": [
-          "Sit on the stability ball with your feet flat on the ground and your back straight.",
-          "Hold the exercise ball with both hands and extend your arms straight out in front of you.",
-          "Slowly bring the exercise ball towards your chest, feeling a stretch in your chest muscles.",
-          "Hold the stretch for a few seconds, then slowly return to the starting position.",
-          "Repeat for the desired number of repetitions."
-      ]
-  },
-  {
-      "bodyPart": "chest",
       "equipment": "body weight",
       "gifUrl": "https://v2.exercisedb.io/image/Y8c99pTqrS2DhQ",
       "id": "3216",
@@ -8717,24 +8392,6 @@ export const exerciseListAll = [
           "Continue pulling until your chin is above the bar.",
           "Pause for a moment at the top, then slowly lower your body back down to the starting position.",
           "Repeat for the desired number of repetitions."
-      ]
-  },
-  {
-      "bodyPart": "lower legs",
-      "equipment": "body weight",
-      "gifUrl": "https://v2.exercisedb.io/image/iqzS10SeYOhsXG",
-      "id": "0257",
-      "name": "circles knee stretch",
-      "target": "calves",
-      "secondaryMuscles": [
-          "hamstrings",
-          "quadriceps"
-      ],
-      "instructions": [
-          "Stand with your feet shoulder-width apart and your hands on your hips.",
-          "Bend your knees slightly and lift your heels off the ground, balancing on the balls of your feet.",
-          "Keeping your knees bent, rotate your knees in a circular motion, first clockwise and then counterclockwise.",
-          "Perform the movement for the desired number of repetitions."
       ]
   },
   {
@@ -14686,26 +14343,6 @@ export const exerciseListAll = [
       ]
   },
   {
-      "bodyPart": "chest",
-      "equipment": "body weight",
-      "gifUrl": "https://v2.exercisedb.io/image/vN98Sm5XID219r",
-      "id": "1167",
-      "name": "dynamic chest stretch (male)",
-      "target": "pectorals",
-      "secondaryMuscles": [
-          "shoulders",
-          "triceps"
-      ],
-      "instructions": [
-          "Stand tall with your feet shoulder-width apart.",
-          "Extend your arms straight out to the sides, parallel to the ground.",
-          "Slowly bring your arms forward, crossing them in front of your body.",
-          "Feel the stretch in your chest muscles.",
-          "Hold the stretch for 10-30 seconds.",
-          "Return to the starting position and repeat for the desired number of repetitions."
-      ]
-  },
-  {
       "bodyPart": "upper arms",
       "equipment": "body weight",
       "gifUrl": "https://v2.exercisedb.io/image/HufPZnhxpJFN7r",
@@ -14900,25 +14537,6 @@ export const exerciseListAll = [
       ]
   },
   {
-      "bodyPart": "upper legs",
-      "equipment": "stability ball",
-      "gifUrl": "https://v2.exercisedb.io/image/2nZmBHMF6OncO2",
-      "id": "1559",
-      "name": "exercise ball hip flexor stretch",
-      "target": "glutes",
-      "secondaryMuscles": [
-          "quadriceps",
-          "hamstrings"
-      ],
-      "instructions": [
-          "Place the stability ball on the ground and kneel in front of it.",
-          "Place your right foot on top of the stability ball, with your knee bent at a 90-degree angle.",
-          "Extend your left leg behind you, keeping it straight.",
-          "Lean forward, pushing your hips towards the stability ball, until you feel a stretch in your right hip flexor.",
-          "Hold the stretch for 20-30 seconds, then switch sides and repeat."
-      ]
-  },
-  {
       "bodyPart": "back",
       "equipment": "stability ball",
       "gifUrl": "https://v2.exercisedb.io/image/f0ThMSMdZ88soa",
@@ -14936,64 +14554,6 @@ export const exerciseListAll = [
           "Continue leaning back until you feel a stretch in your back muscles.",
           "Hold the position for a few seconds, then slowly return to the starting position.",
           "Repeat for the desired number of repetitions."
-      ]
-  },
-  {
-      "bodyPart": "back",
-      "equipment": "stability ball",
-      "gifUrl": "https://v2.exercisedb.io/image/kjsmIavjNQuO2x",
-      "id": "1339",
-      "name": "exercise ball lat stretch",
-      "target": "lats",
-      "secondaryMuscles": [
-          "shoulders",
-          "triceps"
-      ],
-      "instructions": [
-          "Sit on a stability ball with your feet flat on the ground and your back straight.",
-          "Hold a dumbbell in one hand and extend your arm straight up overhead.",
-          "Slowly lean to the opposite side, feeling a stretch in your lat muscle.",
-          "Hold the stretch for 20-30 seconds, then return to the starting position.",
-          "Repeat on the other side."
-      ]
-  },
-  {
-      "bodyPart": "back",
-      "equipment": "stability ball",
-      "gifUrl": "https://v2.exercisedb.io/image/2P7BSzP1ZBU4iq",
-      "id": "1341",
-      "name": "exercise ball lower back stretch (pyramid)",
-      "target": "lats",
-      "secondaryMuscles": [
-          "glutes",
-          "hamstrings"
-      ],
-      "instructions": [
-          "Sit on the stability ball with your feet flat on the ground and your knees bent at a 90-degree angle.",
-          "Slowly walk your feet forward, rolling the ball down your back until your lower back is resting on the ball.",
-          "Place your hands behind your head or cross them over your chest.",
-          "Engage your core and slowly lower your upper body towards the ground, allowing your lower back to stretch over the ball.",
-          "Hold the stretch for a few seconds, then slowly return to the starting position.",
-          "Repeat for the desired number of repetitions."
-      ]
-  },
-  {
-      "bodyPart": "back",
-      "equipment": "stability ball",
-      "gifUrl": "https://v2.exercisedb.io/image/SYKisN5y65Tspy",
-      "id": "1342",
-      "name": "exercise ball lying side lat stretch",
-      "target": "lats",
-      "secondaryMuscles": [
-          "shoulders",
-          "triceps"
-      ],
-      "instructions": [
-          "Lie on your side with your legs extended and your head supported by the stability ball.",
-          "Place your top arm on the ball for stability.",
-          "Reach your top arm overhead and allow your torso to rotate slightly.",
-          "Feel the stretch in your lat muscles on the side of your body.",
-          "Hold the stretch for 20-30 seconds, then switch sides and repeat."
       ]
   },
   {
@@ -15140,45 +14700,6 @@ export const exerciseListAll = [
           "Keeping your legs straight, slowly lift them off the ground, using your lower back and glutes to raise them as high as possible.",
           "Pause for a moment at the top, then slowly lower your legs back down to the starting position.",
           "Repeat for the desired number of repetitions."
-      ]
-  },
-  {
-      "bodyPart": "upper legs",
-      "equipment": "stability ball",
-      "gifUrl": "https://v2.exercisedb.io/image/Emqwnfj1Co140t",
-      "id": "1560",
-      "name": "exercise ball seated hamstring stretch",
-      "target": "hamstrings",
-      "secondaryMuscles": [
-          "glutes",
-          "lower back"
-      ],
-      "instructions": [
-          "Sit on the stability ball with your feet flat on the ground and your knees bent at a 90-degree angle.",
-          "Slowly roll the ball forward, walking your feet out until your upper back is resting on the ball and your legs are extended straight in front of you.",
-          "Place your hands on your hips for support.",
-          "Engage your core and slowly lower your upper body towards the ground, keeping your back straight and your chest lifted.",
-          "Stop when you feel a stretch in your hamstrings, and hold the position for 20-30 seconds.",
-          "Slowly return to the starting position by pushing through your heels and using your hamstrings to pull yourself back up.",
-          "Repeat for the desired number of repetitions."
-      ]
-  },
-  {
-      "bodyPart": "upper arms",
-      "equipment": "stability ball",
-      "gifUrl": "https://v2.exercisedb.io/image/l8U17rBQCICPGG",
-      "id": "1745",
-      "name": "exercise ball seated triceps stretch",
-      "target": "triceps",
-      "secondaryMuscles": [
-          "shoulders"
-      ],
-      "instructions": [
-          "Sit on a stability ball with your feet flat on the ground and your back straight.",
-          "Hold a dumbbell in one hand and extend your arm straight up above your head.",
-          "Bend your elbow and lower the dumbbell behind your head, keeping your upper arm close to your ear.",
-          "Hold the stretch for a few seconds, then return to the starting position.",
-          "Repeat with the other arm."
       ]
   },
   {
@@ -16194,24 +15715,6 @@ export const exerciseListAll = [
       ]
   },
   {
-      "bodyPart": "upper legs",
-      "equipment": "body weight",
-      "gifUrl": "https://v2.exercisedb.io/image/mNfEUDnAk1ffA1",
-      "id": "1511",
-      "name": "hamstring stretch",
-      "target": "hamstrings",
-      "secondaryMuscles": [
-          "glutes"
-      ],
-      "instructions": [
-          "Stand with your feet shoulder-width apart.",
-          "Step forward with your right foot and shift your weight onto your right leg.",
-          "Keeping your back straight, slowly bend forward at the hips, reaching towards your right foot with both hands.",
-          "Hold the stretch for 20-30 seconds, then return to the starting position.",
-          "Repeat on the other side."
-      ]
-  },
-  {
       "bodyPart": "chest",
       "equipment": "upper body ergometer",
       "gifUrl": "https://v2.exercisedb.io/image/idTovSu06KgvvJ",
@@ -16775,26 +16278,6 @@ export const exerciseListAll = [
   },
   {
       "bodyPart": "upper legs",
-      "equipment": "rope",
-      "gifUrl": "https://v2.exercisedb.io/image/ooif4JWLWHCIxq",
-      "id": "1564",
-      "name": "intermediate hip flexor and quad stretch",
-      "target": "quads",
-      "secondaryMuscles": [
-          "hamstrings",
-          "glutes"
-      ],
-      "instructions": [
-          "Stand upright with your feet shoulder-width apart.",
-          "Hold onto a stable object for support.",
-          "Bend your right knee and bring your right foot towards your glutes, grabbing the rope with your right hand.",
-          "Slowly pull your right foot towards your glutes, feeling a stretch in your right quad.",
-          "Hold the stretch for 20-30 seconds.",
-          "Release the stretch and repeat on the left side."
-      ]
-  },
-  {
-      "bodyPart": "upper legs",
       "equipment": "body weight",
       "gifUrl": "https://v2.exercisedb.io/image/jdX87sob6csd3d",
       "id": "0496",
@@ -16933,26 +16416,6 @@ export const exerciseListAll = [
           "Pull your chest towards the handles, squeezing your shoulder blades together.",
           "Pause for a moment at the top, then slowly lower yourself back to the starting position.",
           "Repeat for the desired number of repetitions."
-      ]
-  },
-  {
-      "bodyPart": "upper legs",
-      "equipment": "body weight",
-      "gifUrl": "https://v2.exercisedb.io/image/LB4M5fis8clAZh",
-      "id": "1419",
-      "name": "iron cross stretch",
-      "target": "glutes",
-      "secondaryMuscles": [
-          "hamstrings",
-          "quadriceps"
-      ],
-      "instructions": [
-          "Lie flat on your back with your arms extended out to the sides.",
-          "Raise your legs up towards the ceiling, keeping them straight.",
-          "Slowly lower your legs to one side, aiming to touch the floor with your feet.",
-          "Hold the stretch for a few seconds, then return your legs to the starting position.",
-          "Repeat the stretch on the other side.",
-          "Continue alternating sides for the desired number of repetitions."
       ]
   },
   {
@@ -18046,26 +17509,6 @@ export const exerciseListAll = [
       ]
   },
   {
-      "bodyPart": "back",
-      "equipment": "body weight",
-      "gifUrl": "https://v2.exercisedb.io/image/eh6JMei4PWHj7w",
-      "id": "1346",
-      "name": "kneeling lat stretch",
-      "target": "lats",
-      "secondaryMuscles": [
-          "shoulders",
-          "triceps"
-      ],
-      "instructions": [
-          "Kneel on the ground with your knees hip-width apart and your toes pointing back.",
-          "Extend your arms overhead and interlace your fingers.",
-          "Keeping your back straight, slowly lean to the right side, feeling a stretch in your left lat muscle.",
-          "Hold the stretch for 20-30 seconds, then return to the starting position.",
-          "Repeat the stretch on the left side, leaning to the left and feeling a stretch in your right lat muscle.",
-          "Continue alternating sides for the desired number of repetitions."
-      ]
-  },
-  {
       "bodyPart": "waist",
       "equipment": "body weight",
       "gifUrl": "https://v2.exercisedb.io/image/94KyxqevYoiYUq",
@@ -18255,24 +17698,6 @@ export const exerciseListAll = [
           "Engage your abs and lift your legs off the ground, bringing your knees towards your chest.",
           "Pause for a moment at the top, then slowly lower your legs back down to the starting position.",
           "Repeat for the desired number of repetitions."
-      ]
-  },
-  {
-      "bodyPart": "upper legs",
-      "equipment": "body weight",
-      "gifUrl": "https://v2.exercisedb.io/image/8xIkELgfUWz1-V",
-      "id": "1576",
-      "name": "leg up hamstring stretch",
-      "target": "hamstrings",
-      "secondaryMuscles": [
-          "glutes"
-      ],
-      "instructions": [
-          "Lie flat on your back with your legs extended.",
-          "Bend one knee and bring it towards your chest, holding onto your thigh or shin.",
-          "Straighten your leg as much as possible while keeping it elevated.",
-          "Hold the stretch for 20-30 seconds.",
-          "Repeat with the other leg."
       ]
   },
   {
@@ -19789,24 +19214,6 @@ export const exerciseListAll = [
       ]
   },
   {
-      "bodyPart": "upper legs",
-      "equipment": "body weight",
-      "gifUrl": "https://v2.exercisedb.io/image/i834CDt79TF-E7",
-      "id": "0613",
-      "name": "lying (side) quads stretch",
-      "target": "quads",
-      "secondaryMuscles": [
-          "hamstrings"
-      ],
-      "instructions": [
-          "Lie on your side with your legs straight.",
-          "Bend your top leg and grab your ankle or foot with your hand.",
-          "Gently pull your ankle or foot towards your glutes until you feel a stretch in your quads.",
-          "Hold the stretch for 20-30 seconds.",
-          "Release the stretch and repeat on the other side."
-      ]
-  },
-  {
       "bodyPart": "waist",
       "equipment": "body weight",
       "gifUrl": "https://v2.exercisedb.io/image/DGupWwetWKa66N",
@@ -20235,25 +19642,6 @@ export const exerciseListAll = [
       ]
   },
   {
-      "bodyPart": "neck",
-      "equipment": "body weight",
-      "gifUrl": "https://v2.exercisedb.io/image/xUjUUmK9w-bt8x",
-      "id": "1403",
-      "name": "neck side stretch",
-      "target": "levator scapulae",
-      "secondaryMuscles": [
-          "trapezius",
-          "sternocleidomastoid"
-      ],
-      "instructions": [
-          "Stand or sit up straight with your shoulders relaxed.",
-          "Tilt your head to one side, bringing your ear towards your shoulder.",
-          "Hold the stretch for 15-30 seconds.",
-          "Repeat on the other side.",
-          "Perform 2-4 sets on each side."
-      ]
-  },
-  {
       "bodyPart": "waist",
       "equipment": "body weight",
       "gifUrl": "https://v2.exercisedb.io/image/R-WSC0kglR1kwE",
@@ -20544,24 +19932,6 @@ export const exerciseListAll = [
       ]
   },
   {
-      "bodyPart": "upper arms",
-      "equipment": "body weight",
-      "gifUrl": "https://v2.exercisedb.io/image/lXqIsNRl8z4CgQ",
-      "id": "0643",
-      "name": "overhead triceps stretch",
-      "target": "triceps",
-      "secondaryMuscles": [
-          "shoulders"
-      ],
-      "instructions": [
-          "Stand or sit upright with your feet shoulder-width apart.",
-          "Extend one arm overhead, bending at the elbow so that your hand reaches towards the opposite shoulder blade.",
-          "With your other hand, gently pull the elbow of the extended arm towards the opposite side of your head, feeling a stretch in your triceps.",
-          "Hold the stretch for 15-30 seconds, then release.",
-          "Repeat on the other side."
-      ]
-  },
-  {
       "bodyPart": "waist",
       "equipment": "body weight",
       "gifUrl": "https://v2.exercisedb.io/image/kf0LII8MyNdHWI",
@@ -20598,26 +19968,6 @@ export const exerciseListAll = [
           "Tilt your pelvis upward, lifting your hips off the ground.",
           "Hold the bridge position for a few seconds.",
           "Slowly lower your hips back down to the starting position.",
-          "Repeat for the desired number of repetitions."
-      ]
-  },
-  {
-      "bodyPart": "lower legs",
-      "equipment": "rope",
-      "gifUrl": "https://v2.exercisedb.io/image/h2pztHDc9gH8JR",
-      "id": "1388",
-      "name": "peroneals stretch",
-      "target": "calves",
-      "secondaryMuscles": [
-          "ankles",
-          "feet"
-      ],
-      "instructions": [
-          "Sit on the ground with your legs extended in front of you.",
-          "Loop the rope around the ball of your foot and hold the ends of the rope with your hands.",
-          "Gently pull the rope towards you, flexing your foot and stretching your calf muscles.",
-          "Hold the stretch for 15-30 seconds.",
-          "Release the tension on the rope and repeat the stretch on the other leg.",
           "Repeat for the desired number of repetitions."
       ]
   },
@@ -20685,26 +20035,6 @@ export const exerciseListAll = [
           "Pause for a moment at the bottom of the lunge, then return to the starting position by pushing through your left heel and bringing your right foot forward.",
           "Repeat the movement on the other side, stepping back with your left foot and bending your right knee.",
           "Continue alternating sides for the desired number of repetitions."
-      ]
-  },
-  {
-      "bodyPart": "lower legs",
-      "equipment": "rope",
-      "gifUrl": "https://v2.exercisedb.io/image/52Ntk2OfN8uBiw",
-      "id": "1389",
-      "name": "posterior tibialis stretch",
-      "target": "calves",
-      "secondaryMuscles": [
-          "hamstrings",
-          "quadriceps"
-      ],
-      "instructions": [
-          "Sit on the ground with your legs extended in front of you.",
-          "Loop the rope around the ball of your foot and hold the ends of the rope with your hands.",
-          "Gently pull the rope towards you, flexing your foot and stretching your calf muscles.",
-          "Hold the stretch for 20-30 seconds.",
-          "Release the tension on the rope and relax your foot.",
-          "Repeat the stretch on the other leg."
       ]
   },
   {
@@ -21285,25 +20615,6 @@ export const exerciseListAll = [
       ]
   },
   {
-      "bodyPart": "shoulders",
-      "equipment": "body weight",
-      "gifUrl": "https://v2.exercisedb.io/image/dMbkjh4GfBCP8y",
-      "id": "0669",
-      "name": "rear deltoid stretch",
-      "target": "delts",
-      "secondaryMuscles": [
-          "trapezius",
-          "rhomboids"
-      ],
-      "instructions": [
-          "Stand tall with your feet shoulder-width apart.",
-          "Extend your right arm across your chest, placing your left hand on your right elbow.",
-          "Gently pull your right arm towards your left shoulder, feeling a stretch in your right shoulder.",
-          "Hold the stretch for 15-30 seconds, then release.",
-          "Repeat on the other side."
-      ]
-  },
-  {
       "bodyPart": "back",
       "equipment": "body weight",
       "gifUrl": "https://v2.exercisedb.io/image/QhpeezDO8uRMwU",
@@ -21634,27 +20945,6 @@ export const exerciseListAll = [
       ]
   },
   {
-      "bodyPart": "upper legs",
-      "equipment": "body weight",
-      "gifUrl": "https://v2.exercisedb.io/image/4NVcr4hFcdAT-j",
-      "id": "2571",
-      "name": "rocking frog stretch",
-      "target": "glutes",
-      "secondaryMuscles": [
-          "hamstrings",
-          "quadriceps"
-      ],
-      "instructions": [
-          "Start by kneeling on the ground with your knees hip-width apart.",
-          "Place your hands on the ground in front of you for support.",
-          "Slowly lean forward, shifting your weight onto your hands and extending your legs behind you.",
-          "Keep your back straight and engage your glutes as you push your hips back and up towards the ceiling.",
-          "Hold this position for a few seconds, feeling a stretch in your glutes.",
-          "Slowly return to the starting position by bending your knees and lowering your hips back down.",
-          "Repeat for the desired number of repetitions."
-      ]
-  },
-  {
       "bodyPart": "back",
       "equipment": "body weight",
       "gifUrl": "https://v2.exercisedb.io/image/UP9ZiT4NVVfDTu",
@@ -21675,26 +20965,6 @@ export const exerciseListAll = [
       ]
   },
   {
-      "bodyPart": "back",
-      "equipment": "roller",
-      "gifUrl": "https://v2.exercisedb.io/image/RQ3RNa3FJUrtwV",
-      "id": "2208",
-      "name": "roller back stretch",
-      "target": "spine",
-      "secondaryMuscles": [
-          "hamstrings",
-          "glutes"
-      ],
-      "instructions": [
-          "Start by sitting on the ground with your legs extended in front of you.",
-          "Place the roller perpendicular to your body, just below your glutes.",
-          "Slowly roll your body backwards, allowing the roller to move up your back.",
-          "Continue rolling until the roller reaches your upper back.",
-          "Pause for a moment, then slowly roll back to the starting position.",
-          "Repeat for the desired number of repetitions."
-      ]
-  },
-  {
       "bodyPart": "waist",
       "equipment": "roller",
       "gifUrl": "https://v2.exercisedb.io/image/wCounGKlgkUf3G",
@@ -21710,46 +20980,6 @@ export const exerciseListAll = [
           "Start in a plank position with your forearms on the roller and your body in a straight line.",
           "Engage your core and slowly roll the roller forward, extending your body as far as you can while maintaining control.",
           "Pause for a moment at the furthest point, then slowly roll the roller back towards your starting position.",
-          "Repeat for the desired number of repetitions."
-      ]
-  },
-  {
-      "bodyPart": "upper legs",
-      "equipment": "roller",
-      "gifUrl": "https://v2.exercisedb.io/image/C0Dkgcp1VPVHR8",
-      "id": "2205",
-      "name": "roller hip lat stretch",
-      "target": "glutes",
-      "secondaryMuscles": [
-          "hamstrings",
-          "quadriceps"
-      ],
-      "instructions": [
-          "Start by kneeling on the ground with the roller positioned under your hips.",
-          "Place your hands on the roller for support.",
-          "Slowly roll the roller forward, extending your hips and stretching your glutes.",
-          "Hold the stretch for a few seconds, then roll back to the starting position.",
-          "Repeat for the desired number of repetitions."
-      ]
-  },
-  {
-      "bodyPart": "upper legs",
-      "equipment": "roller",
-      "gifUrl": "https://v2.exercisedb.io/image/7gNkpcMf4TVtqs",
-      "id": "2202",
-      "name": "roller hip stretch",
-      "target": "glutes",
-      "secondaryMuscles": [
-          "hamstrings",
-          "quadriceps"
-      ],
-      "instructions": [
-          "Start by sitting on the ground with your legs extended in front of you.",
-          "Place the roller under your glutes, just above your knees.",
-          "Lean back and place your hands on the ground behind you for support.",
-          "Engage your glutes and slowly roll the roller forward, bending your knees and bringing them towards your chest.",
-          "Pause for a moment at the end of the movement, feeling a stretch in your glutes.",
-          "Slowly roll the roller back to the starting position, extending your legs.",
           "Repeat for the desired number of repetitions."
       ]
   },
@@ -21807,25 +21037,6 @@ export const exerciseListAll = [
           "Lean back slightly and engage your core muscles.",
           "Raise the roller up to shoulder level, keeping your arms straight.",
           "Slowly lower the roller back down to your thighs.",
-          "Repeat for the desired number of repetitions."
-      ]
-  },
-  {
-      "bodyPart": "back",
-      "equipment": "roller",
-      "gifUrl": "https://v2.exercisedb.io/image/5HBH0BVYZj52y8",
-      "id": "2207",
-      "name": "roller side lat stretch",
-      "target": "lats",
-      "secondaryMuscles": [
-          "shoulders",
-          "triceps"
-      ],
-      "instructions": [
-          "Stand with your feet shoulder-width apart and hold the roller with both hands in front of your body.",
-          "Bend your knees slightly and hinge forward at the hips, keeping your back straight.",
-          "Extend your arms forward and roll the roller down towards your feet, feeling a stretch in your lats.",
-          "Hold the stretch for a few seconds, then slowly roll the roller back up to the starting position.",
           "Repeat for the desired number of repetitions."
       ]
   },
@@ -21890,25 +21101,6 @@ export const exerciseListAll = [
           "Begin jogging in place, lifting your knees up towards your chest and landing softly on the balls of your feet.",
           "Maintain a steady pace and continue jogging for the desired duration or distance.",
           "Remember to breathe deeply and maintain good posture throughout the exercise."
-      ]
-  },
-  {
-      "bodyPart": "upper legs",
-      "equipment": "body weight",
-      "gifUrl": "https://v2.exercisedb.io/image/FfYnFOlTYsFO3r",
-      "id": "1585",
-      "name": "runners stretch",
-      "target": "hamstrings",
-      "secondaryMuscles": [
-          "calves",
-          "quadriceps"
-      ],
-      "instructions": [
-          "Stand with your feet hip-width apart.",
-          "Take a step forward with your right foot, keeping your left foot planted.",
-          "Bend your right knee and lower your body down, keeping your left leg straight.",
-          "Place your hands on your right thigh for support.",
-          "Hold the stretch for 20-30 seconds, then switch sides and repeat."
       ]
   },
   {
@@ -22010,43 +21202,6 @@ export const exerciseListAll = [
       ]
   },
   {
-      "bodyPart": "lower legs",
-      "equipment": "body weight",
-      "gifUrl": "https://v2.exercisedb.io/image/ofTtxgUgUwz16S",
-      "id": "1390",
-      "name": "seated calf stretch (male)",
-      "target": "calves",
-      "secondaryMuscles": [
-          "hamstrings"
-      ],
-      "instructions": [
-          "Sit on the edge of a chair or bench with your feet flat on the ground.",
-          "Extend one leg straight out in front of you, keeping your heel on the ground.",
-          "Lean forward slightly, feeling a stretch in your calf muscle.",
-          "Hold the stretch for 20-30 seconds.",
-          "Switch legs and repeat the stretch."
-      ]
-  },
-  {
-      "bodyPart": "upper legs",
-      "equipment": "body weight",
-      "gifUrl": "https://v2.exercisedb.io/image/Iw2QmzWknzrW-f",
-      "id": "1424",
-      "name": "seated glute stretch",
-      "target": "glutes",
-      "secondaryMuscles": [
-          "hamstrings"
-      ],
-      "instructions": [
-          "Sit on the ground with your legs extended in front of you.",
-          "Bend your right knee and cross your right ankle over your left thigh.",
-          "Place your right hand on the ground behind you for support.",
-          "With your left hand, gently press down on your right knee to deepen the stretch.",
-          "Hold the stretch for 30 seconds to 1 minute.",
-          "Switch sides and repeat."
-      ]
-  },
-  {
       "bodyPart": "waist",
       "equipment": "body weight",
       "gifUrl": "https://v2.exercisedb.io/image/fO0YMi3TPU9ocj",
@@ -22062,42 +21217,6 @@ export const exerciseListAll = [
           "Keeping your legs straight, slowly raise them up in front of you until they are parallel to the ground.",
           "Pause for a moment at the top, then slowly lower your legs back down to the starting position.",
           "Repeat for the desired number of repetitions."
-      ]
-  },
-  {
-      "bodyPart": "back",
-      "equipment": "body weight",
-      "gifUrl": "https://v2.exercisedb.io/image/FRz1NPPEiWcNIH",
-      "id": "0690",
-      "name": "seated lower back stretch",
-      "target": "lats",
-      "secondaryMuscles": [
-          "glutes",
-          "hamstrings"
-      ],
-      "instructions": [
-          "Sit on the edge of a chair with your feet flat on the ground.",
-          "Place your hands on your thighs or on the sides of the chair for support.",
-          "Slowly lean forward from your hips, keeping your back straight.",
-          "Feel the stretch in your lower back and hold for 20-30 seconds.",
-          "Slowly return to the starting position and repeat for the desired number of repetitions."
-      ]
-  },
-  {
-      "bodyPart": "upper legs",
-      "equipment": "body weight",
-      "gifUrl": "https://v2.exercisedb.io/image/u0m26Jv3ER8vOg",
-      "id": "2567",
-      "name": "seated piriformis stretch",
-      "target": "glutes",
-      "secondaryMuscles": [
-          "hamstrings"
-      ],
-      "instructions": [
-          "Sit on the ground with your legs extended in front of you.",
-          "Bend your right knee and place your right foot on the outside of your left knee.",
-          "Place your left elbow on the outside of your right knee and gently twist your torso to the right.",
-          "Hold the stretch for 20-30 seconds, then switch sides and repeat."
       ]
   },
   {
@@ -22380,26 +21499,6 @@ export const exerciseListAll = [
       ]
   },
   {
-      "bodyPart": "back",
-      "equipment": "body weight",
-      "gifUrl": "https://v2.exercisedb.io/image/hET0kJhgmwXek7",
-      "id": "1358",
-      "name": "side lying floor stretch",
-      "target": "lats",
-      "secondaryMuscles": [
-          "obliques",
-          "glutes"
-      ],
-      "instructions": [
-          "Lie on your side with your legs straight and your bottom arm extended straight overhead.",
-          "Bend your top knee and place your foot on the ground in front of your bottom leg.",
-          "Reach your top arm over your head and grab onto something stable, like a wall or a piece of furniture.",
-          "Slowly lift your bottom leg off the ground, keeping it straight, until you feel a stretch in your side.",
-          "Hold the stretch for 20-30 seconds, then slowly lower your leg back down.",
-          "Repeat on the other side."
-      ]
-  },
-  {
       "bodyPart": "upper legs",
       "equipment": "body weight",
       "gifUrl": "https://v2.exercisedb.io/image/BMklY-RtcxTBVF",
@@ -22439,26 +21538,6 @@ export const exerciseListAll = [
       ]
   },
   {
-      "bodyPart": "neck",
-      "equipment": "body weight",
-      "gifUrl": "https://v2.exercisedb.io/image/Zg2rF3GeIdGLpT",
-      "id": "0716",
-      "name": "side push neck stretch",
-      "target": "levator scapulae",
-      "secondaryMuscles": [
-          "trapezius",
-          "sternocleidomastoid"
-      ],
-      "instructions": [
-          "Stand or sit up straight with your shoulders relaxed.",
-          "Tilt your head to the right, bringing your right ear towards your right shoulder.",
-          "Place your right hand on the left side of your head and gently apply pressure to increase the stretch.",
-          "Hold the stretch for 15-30 seconds.",
-          "Repeat on the other side, tilting your head to the left and applying pressure with your left hand.",
-          "Repeat the stretch 2-3 times on each side."
-      ]
-  },
-  {
       "bodyPart": "upper arms",
       "equipment": "body weight",
       "gifUrl": "https://v2.exercisedb.io/image/La0hEwI1QAAqoT",
@@ -22477,25 +21556,6 @@ export const exerciseListAll = [
           "Extend your top arm straight up towards the ceiling, creating a straight line from your head to your heels.",
           "Lower your body back down to the starting position with control.",
           "Repeat for the desired number of repetitions, then switch sides."
-      ]
-  },
-  {
-      "bodyPart": "lower arms",
-      "equipment": "body weight",
-      "gifUrl": "https://v2.exercisedb.io/image/bhwUfOnf7UGJCG",
-      "id": "0721",
-      "name": "side wrist pull stretch",
-      "target": "forearms",
-      "secondaryMuscles": [
-          "wrists",
-          "hands"
-      ],
-      "instructions": [
-          "Stand with your feet shoulder-width apart and your arms extended in front of you.",
-          "Extend your right arm out to the side, parallel to the ground, with your palm facing down.",
-          "With your left hand, grab your right hand and gently pull it towards your body, feeling a stretch in your right forearm.",
-          "Hold the stretch for 15-30 seconds, then release.",
-          "Repeat on the other side."
       ]
   },
   {
@@ -24159,26 +23219,6 @@ export const exerciseListAll = [
       ]
   },
   {
-      "bodyPart": "back",
-      "equipment": "body weight",
-      "gifUrl": "https://v2.exercisedb.io/image/c2KY7DCt9kmnce",
-      "id": "1363",
-      "name": "spine stretch",
-      "target": "spine",
-      "secondaryMuscles": [
-          "hamstrings",
-          "glutes"
-      ],
-      "instructions": [
-          "Sit on the ground with your legs extended in front of you.",
-          "Place your hands on the ground behind you, fingers pointing towards your body.",
-          "Engage your core and slowly lean back, keeping your back straight.",
-          "Continue leaning back until you feel a stretch in your spine.",
-          "Hold the stretch for a few seconds, then slowly return to the starting position.",
-          "Repeat for the desired number of repetitions."
-      ]
-  },
-  {
       "bodyPart": "waist",
       "equipment": "body weight",
       "gifUrl": "https://v2.exercisedb.io/image/CYYHrpAlR1Xplx",
@@ -24418,67 +23458,6 @@ export const exerciseListAll = [
           "Stand with your feet shoulder-width apart, toes pointing forward.",
           "Raise your heels off the ground as high as possible, standing on your toes.",
           "Hold the position for a moment, then slowly lower your heels back down to the starting position.",
-          "Repeat for the desired number of repetitions."
-      ]
-  },
-  {
-      "bodyPart": "lower legs",
-      "equipment": "body weight",
-      "gifUrl": "https://v2.exercisedb.io/image/jm8gSHf3jZmebl",
-      "id": "1398",
-      "name": "standing calves calf stretch",
-      "target": "calves",
-      "secondaryMuscles": [
-          "hamstrings",
-          "glutes"
-      ],
-      "instructions": [
-          "Stand facing a wall or sturdy object, about an arm's length away.",
-          "Place your hands on the wall or object at shoulder height.",
-          "Step back with one foot, keeping your heel flat on the ground.",
-          "Bend your front knee slightly and lean forward, keeping your back leg straight.",
-          "You should feel a stretch in your calf muscle.",
-          "Hold the stretch for 20-30 seconds.",
-          "Repeat on the other leg."
-      ]
-  },
-  {
-      "bodyPart": "upper legs",
-      "equipment": "rope",
-      "gifUrl": "https://v2.exercisedb.io/image/-BejnBDc1ZTnew",
-      "id": "1599",
-      "name": "standing hamstring and calf stretch with strap",
-      "target": "hamstrings",
-      "secondaryMuscles": [
-          "calves"
-      ],
-      "instructions": [
-          "Stand upright with your feet shoulder-width apart.",
-          "Hold the strap with both hands and place it around the ball of your foot.",
-          "Keep your leg straight and slowly lean forward from your hips, keeping your back straight.",
-          "Feel the stretch in your hamstring and calf muscles.",
-          "Hold the stretch for 20-30 seconds.",
-          "Release the stretch and repeat with the other leg.",
-          "Repeat for the desired number of repetitions."
-      ]
-  },
-  {
-      "bodyPart": "back",
-      "equipment": "body weight",
-      "gifUrl": "https://v2.exercisedb.io/image/OO1Ua8BIv41b2c",
-      "id": "0794",
-      "name": "standing lateral stretch",
-      "target": "lats",
-      "secondaryMuscles": [
-          "shoulders",
-          "obliques"
-      ],
-      "instructions": [
-          "Stand with your feet shoulder-width apart and your knees slightly bent.",
-          "Extend your arms straight out to the sides, parallel to the ground.",
-          "Slowly lean your upper body to one side, feeling a stretch in your side and lats.",
-          "Hold the stretch for 15-30 seconds.",
-          "Return to the starting position and repeat on the other side.",
           "Repeat for the desired number of repetitions."
       ]
   },
@@ -24976,24 +23955,6 @@ export const exerciseListAll = [
       ]
   },
   {
-      "bodyPart": "upper arms",
-      "equipment": "body weight",
-      "gifUrl": "https://v2.exercisedb.io/image/vlRM9oDDr4NUEL",
-      "id": "0817",
-      "name": "triceps stretch",
-      "target": "triceps",
-      "secondaryMuscles": [
-          "shoulders"
-      ],
-      "instructions": [
-          "Stand or sit upright with your back straight.",
-          "Extend one arm overhead, bending it at the elbow.",
-          "Place your opposite hand on the bent elbow and gently pull it towards your head.",
-          "Hold the stretch for 15-30 seconds, feeling a gentle stretch in your triceps.",
-          "Release the stretch and repeat on the other arm."
-      ]
-  },
-  {
       "bodyPart": "waist",
       "equipment": "body weight",
       "gifUrl": "https://v2.exercisedb.io/image/xzephLxBqdop9W",
@@ -25112,25 +24073,6 @@ export const exerciseListAll = [
           "Reach down towards your toes with both hands, keeping your legs straight.",
           "Pause for a moment at the bottom, then slowly return to the starting position.",
           "Repeat for the desired number of repetitions."
-      ]
-  },
-  {
-      "bodyPart": "back",
-      "equipment": "body weight",
-      "gifUrl": "https://v2.exercisedb.io/image/e1aRbuN5w5LcJs",
-      "id": "1365",
-      "name": "upper back stretch",
-      "target": "upper back",
-      "secondaryMuscles": [
-          "shoulders"
-      ],
-      "instructions": [
-          "Stand up straight with your feet shoulder-width apart.",
-          "Extend your arms straight in front of you, parallel to the ground.",
-          "Interlace your fingers and rotate your palms away from your body.",
-          "Slowly raise your arms overhead, keeping them straight and parallel to each other.",
-          "As you raise your arms, squeeze your shoulder blades together.",
-          "Hold the stretch for 15-30 seconds, then release and repeat."
       ]
   },
   {
@@ -26120,27 +25062,6 @@ export const exerciseListAll = [
           "Begin running as fast as you can, pumping your arms and driving your knees up.",
           "Continue sprinting for a specific distance or time period.",
           "Rest and repeat for the desired number of repetitions."
-      ]
-  },
-  {
-      "bodyPart": "upper legs",
-      "equipment": "body weight",
-      "gifUrl": "https://v2.exercisedb.io/image/doSnv0l9wn7UK-",
-      "id": "1604",
-      "name": "world greatest stretch",
-      "target": "hamstrings",
-      "secondaryMuscles": [
-          "glutes",
-          "quadriceps",
-          "calves"
-      ],
-      "instructions": [
-          "Start in a lunge position with your right foot forward and your left foot back.",
-          "Place your hands on the ground on either side of your right foot.",
-          "Lower your left knee to the ground and extend your right leg, keeping your right foot flat on the ground.",
-          "Rotate your torso to the right, reaching your right arm up towards the ceiling.",
-          "Hold this position for a few seconds, then return to the starting position.",
-          "Switch sides and repeat the stretch with your left foot forward."
       ]
   },
   {
