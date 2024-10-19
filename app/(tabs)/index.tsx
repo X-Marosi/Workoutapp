@@ -13,8 +13,8 @@ export default function Tab() {
 
         <Image
           style={styles.image}
-          source="../assets/images/icon.png"
-          placeholder="../assets/images/icon.png"
+          source="assets/images/icon.png"
+          placeholder="assets/images/icon.png"
           contentFit="cover"
           transition={1000}
       />
