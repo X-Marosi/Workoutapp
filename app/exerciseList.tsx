@@ -1,7 +1,6 @@
 import { View, Text, StyleSheet, Button, FlatList, Image, TextInput, TouchableOpacity } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import { useEffect, useState } from "react";
-import { exerciseListAll } from "@/constants/exercise";
 import { ThemedText } from "@/components/ThemedText";
 import { ThemedView } from "@/components/ThemedView";
 import { fetchExercises } from "@/api/exerciseDB";
@@ -9,14 +8,18 @@ import { router } from "expo-router";
 
 
 export default function Tab() {
-  const [exercises] = useState(exerciseListAll);
   const [searchQuery, setSearchQuery] = useState("");
 
-  //onsole.log(exercises);
+  //console.log(exercises);
 
+//get data from fetchExercises use it for exercises
+  const [exercises, setExercises] = useState<{ id: string; name: string; target: string; equipment: string; gifUrl: string }[]>([]);
   useEffect(() => {
-    //fetchExercises();
+    fetchExercises().then((data) => {
+      setExercises(data);
+    });
   }, []);
+  
 
   const filteredExercises = exercises.filter(
     (exercise) =>

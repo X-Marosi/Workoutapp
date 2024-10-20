@@ -19,12 +19,12 @@ export default function Tab() {
       // normal setExercises (doesn't accept duplicates)
       setExercises((prevExercises) => [...prevExercises, exercise]);
       //setExercises((prevExercises) => [...prevExercises, { ...exercise, uniqueId: `${exercise.id}-${Date.now()}` }]);
-      console.log(exercise.uniqueId);
+      //console.log(exercise.uniqueId);
     }
   }, [selectedExercise]);
 
   return (
-    <ScrollView style={{ flex: 1 }}>
+    <View style={{ flex: 1 }}>
       <LinearGradient colors={["#1E1E1E", "black"]} style={styles.container}>
 
         <ThemedText style={styles.menuTitle} type="title">
@@ -46,7 +46,7 @@ export default function Tab() {
         </Link>
 
       </LinearGradient>
-    </ScrollView>
+    </View>
   );
 }
 

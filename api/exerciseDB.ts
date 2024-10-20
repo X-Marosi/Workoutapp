@@ -26,6 +26,8 @@ export const fetchExercises = async () => {
         limit: 1400
     }
 
+
     const data = await apiCall(url, params);
-    console.log(data);
+    //console.log(data);
+    return data;
 }
