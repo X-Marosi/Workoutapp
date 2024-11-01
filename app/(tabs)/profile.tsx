@@ -3,6 +3,7 @@ import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
 import { LinearGradient } from 'expo-linear-gradient';
 import { Link } from 'expo-router';
+import auth from '@react-native-firebase/auth';
 
 export default function Tab() {
   return (
@@ -38,6 +39,7 @@ export default function Tab() {
       
 
       <Link style={styles.link} href="/settings">Settings</Link>
+      <Button title="Logout" onPress={() => auth().signOut()} />
 
 
     
