@@ -28,6 +28,6 @@ export const fetchExercises = async () => {
 
 
     const data = await apiCall(url, params);
-    //console.log(data);
+    console.log(data);
     return data;
 }
