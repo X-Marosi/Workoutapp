@@ -11,13 +11,7 @@ export default function Tab() {
 
       <ThemedText style={styles.menuTitle} type="title">Profile</ThemedText>
 
-      <Image
-          style={styles.image}
-          source="../assets/images/icon.png"
-          placeholder="../assets/images/icon.png"
-          contentFit="cover"
-          transition={1000}
-      />
+      <Image source={require('@/assets/images/icon.png')} style={styles.image} />
 
       <ThemedText style={styles.userName} type="default">username</ThemedText>
 
