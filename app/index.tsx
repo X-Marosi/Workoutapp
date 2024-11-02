@@ -9,14 +9,19 @@ import { FirebaseError } from '@firebase/util';
 
 export default function Tab() {
 
+  const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
 
-  const hanleRegister = async () => {
+  const handleRegister = async () => {
     setLoading(true);
     try {
       const user = await auth().createUserWithEmailAndPassword(email, password);
+      //add username to user
+      await user.user?.updateProfile({
+        displayName: username,
+      });
       console.log(user);
     } catch (error) {
       const err = error as FirebaseError;
@@ -49,6 +54,14 @@ export default function Tab() {
 
           <ThemedText style={styles.menuTitle} type="title">Welcome</ThemedText>
 
+          <ThemedText>Username</ThemedText>
+          <TextInput
+            style={styles.input}
+            value={username}
+            onChangeText={setUsername}
+            placeholder="Username"
+          />
+
           <ThemedText>Email</ThemedText>
           <TextInput
             style={styles.input}
@@ -71,7 +84,7 @@ export default function Tab() {
           {loading ? (<ActivityIndicator size="large" color="#0a7ea4" />) : (
               <>
               <Button title="Login" onPress={handleLogin} />
-              <Button title="Register" onPress={hanleRegister} />
+              <Button title="Register" onPress={handleRegister} />
               </>
             )}
 

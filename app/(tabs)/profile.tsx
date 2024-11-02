@@ -6,6 +6,9 @@ import { Link } from 'expo-router';
 import auth from '@react-native-firebase/auth';
 
 export default function Tab() {
+
+  const user = auth().currentUser;
+  
   return (
     <ThemedView style={styles.container}>
       <LinearGradient colors={['#1E1E1E', 'black']} style={styles.container}>
@@ -14,7 +17,7 @@ export default function Tab() {
 
       <Image source={require('@/assets/images/icon.png')} style={styles.image} />
 
-      <ThemedText style={styles.userName} type="default">username</ThemedText>
+      <ThemedText style={styles.userName} type="default">{user?.displayName}</ThemedText>
 
       <View style={styles.containerData}>
 
