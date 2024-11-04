@@ -45,12 +45,12 @@ export default function Tab() {
             <View style={styles.containerBox}>
 
               <View style={styles.exGifContainer}>
-              <Image style={styles.exGif} source={{ uri: item.gifUrl }}/>
+                <Image style={styles.exGif} source={{ uri: item.gifUrl }}/>
               </View>
               
               <View style={{ marginLeft: 10 }}>
-              <ThemedText style={styles.capitalize} type="subtitle">{item.name}</ThemedText>
-              <ThemedText style={styles.capitalize}>{item.target} | {item.equipment}</ThemedText>
+                <ThemedText style={styles.capitalize} type="subtitle">{item.name}</ThemedText>
+                <ThemedText style={styles.capitalize}>{item.target} | {item.equipment}</ThemedText>
               </View>
             </View>
             </TouchableOpacity>

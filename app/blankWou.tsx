@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, FlatList, TextInput, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, FlatList, TextInput, StyleSheet, TouchableOpacity, Image } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
 import { Link, RouteParams } from 'expo-router';
@@ -7,14 +7,14 @@ import { useLocalSearchParams } from 'expo-router';
 import { ThemedText } from '../components/ThemedText';
 
 export default function Tab() {
-  const [exercises, setExercises] = useState<{ id: string; name: string; target: string; equipment: string;}[]>([]);
-  const [finishedItems, setFinishedItems] = useState<{ [key: string]: boolean }>({});
+  const [exercises, setExercises] = useState<{ id: string; name: string; target: string; gifUrl: string;}[]>([]);
+  const [exerciseState, setExerciseState] = useState<{ [key: string]: boolean }>({});
   const [exerciseSets, setExerciseSets] = useState<{ [key: string]: number[] }>({});
 
   const { selectedExercise } = useLocalSearchParams<RouteParams<{ selectedExercise: string }>>();
 
-  const toggleFinished = (exerciseId: string) => {
-    setFinishedItems((prevState) => ({
+  const toggleState = (exerciseId: string) => {
+    setExerciseState((prevState) => ({
       ...prevState,
       [exerciseId]: !prevState[exerciseId],
     }));
@@ -30,6 +30,16 @@ export default function Tab() {
     });
   };
 
+  const deleteSet = (exerciseId: string) => {
+    setExerciseSets((prevState) => {
+      const sets = prevState[exerciseId] || [];
+      return {
+        ...prevState,
+        [exerciseId]: sets.slice(0, sets.length - 1),
+      };
+    });
+  };
+
   useEffect(() => {
     if (selectedExercise) {
       const exercise = JSON.parse(selectedExercise);
@@ -38,19 +48,36 @@ export default function Tab() {
   }, [selectedExercise]);
 
   return (
+    <View style={styles.container}>
     <LinearGradient colors={['#1E1E1E', 'black']} style={styles.container}>
+      <ThemedText style={styles.menuTitle} type="title">New Workout</ThemedText>
       <FlatList
         data={exercises}
         renderItem={({ item }) => (
-          <View style={[styles.exerciseContainer, finishedItems[item.id] && styles.finished]}>
-            <ThemedText style={styles.exName}>{item.name}</ThemedText>
-            <ThemedText style={styles.exDetails} >{item.target} | {item.equipment}</ThemedText>
+
+          <View style={[styles.exerciseContainer, exerciseState[item.id] && styles.finished]}>
+
+            {/*Exercise Name and Details*/}
+
+            <View style={styles.containerBox}>
+              <View style={styles.exGifContainer}>
+                <Image style={styles.exGif} source={{ uri: item.gifUrl }}/>
+              </View>
+              
+              <View style={{ marginLeft: 10 }}>
+                <ThemedText style={styles.capitalize} type="subtitle">{item.name}</ThemedText>
+                <ThemedText style={styles.capitalize}>{item.target}</ThemedText>
+              </View>
+            </View>
+
+            {/*Exercise Sets*/}
+
             <View style={styles.setContainer}>
               <ThemedText style={styles.exSet}>Sets</ThemedText>
               <ThemedText style={styles.exSet}>Weight</ThemedText>
               <ThemedText style={styles.exSet}>Reps</ThemedText>
             </View>
-            
+              
             {exerciseSets[item.id]?.map((setNumber) => (
               <View key={setNumber} style={styles.setNumbers}>
                 
@@ -60,7 +87,7 @@ export default function Tab() {
                 <View>
                   <TextInput
                     style={styles.input}
-                    value={'0'}
+                    
                     onChangeText={(text) => console.log(text)}
                     placeholder="0"
                   />
@@ -69,7 +96,7 @@ export default function Tab() {
                 
                   <TextInput
                     style={styles.input}
-                    value={'0'}
+                    
                     onChangeText={(text) => console.log(text)}
                     placeholder="0"
                   />
@@ -77,16 +104,17 @@ export default function Tab() {
 
               </View>
             ))}
-            <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
-              <TouchableOpacity onPress={() => addSet(item.id)}>
-                <ThemedText style={styles.addSetButton}>Add Set</ThemedText>
-              </TouchableOpacity>
-              <Ionicons
-                name="checkmark"
-                size={24}
-                color="white"
-                onPress={() => toggleFinished(item.id)}
-              />
+
+
+            {/*Buttons*/}
+
+            <View style={{ flexDirection: 'row', justifyContent: 'flex-end', alignItems: 'center'}}>
+
+              <Ionicons style={{padding: 5}} name="add" size={24} color="white" onPress={() => addSet(item.id)}/>
+              <Ionicons style={{padding: 5}} name="remove" size={24} color="white" onPress={() => deleteSet(item.id)}/>
+              <Ionicons style={{padding: 5}} name="checkmark" size={24} color="white" onPress={() => toggleState(item.id)}/>
+              
+
             </View>
           </View>
         )}
@@ -96,6 +124,7 @@ export default function Tab() {
         Add Exercise
       </Link>
     </LinearGradient>
+    </View>
   );
 }
 
@@ -155,5 +184,29 @@ const styles = StyleSheet.create({
     textTransform: 'capitalize',
     fontSize: 16,
   },
-  
+  menuTitle: {
+    textAlign: "center",
+    padding: 20,
+    paddingTop: 60,
+    paddingBottom: 60,
+    fontSize: 50,
+  },
+  exGif: {
+    width: '100%',
+    height: '100%',
+  },
+  containerBox: {
+    flexDirection: "row",
+    alignItems: "center",
+    marginBottom: 16,
+  },
+  exGifContainer: {
+    width: 80,
+    height: 80,
+    borderRadius: 20,
+    overflow: 'hidden', // This makes sure the content is clipped to the border radius
+  },
+  capitalize: {
+    textTransform: "capitalize",
+  },
 });
