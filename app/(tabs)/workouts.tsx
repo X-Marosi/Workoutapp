@@ -2,7 +2,7 @@ import { View, Text, StyleSheet, Button, ScrollView } from "react-native";
 import { ThemedText } from "@/components/ThemedText";
 import { ThemedView } from "@/components/ThemedView";
 import { LinearGradient } from "expo-linear-gradient";
-import { Link } from "expo-router";
+import { router } from "expo-router";
 
 export default function Tab() {
   return (
@@ -11,6 +11,13 @@ export default function Tab() {
         <ThemedText style={styles.menuTitle} type="title">
           Workouts
         </ThemedText>
+
+
+        <View style={{flexDirection: "row"}}>
+          <Text style={styles.buttonNew} onPress={() => {}}>New Workout Plan</Text>
+          <Text style={styles.buttonNew} onPress={() => {router.push("/blankWou")}}>Start Empty Workout</Text>
+        </View>
+
 
         {/* Workouts List */}
 
@@ -27,39 +34,8 @@ export default function Tab() {
             </ThemedText>
           </View>
         </View>
-
-        <View style={styles.workoutContainer}>
-          <ThemedText style={styles.workoutName} type="title">
-            wou_name
-          </ThemedText>
-          <View style={styles.workoutContainerBox}>
-            <ThemedText type="subtitle">
-              exercises placeholder,exercises placeholder,exercises placeholder
-            </ThemedText>
-            <ThemedText style={styles.button} type="title">
-              Start Workout
-            </ThemedText>
-          </View>
-        </View>
-
-        <View style={styles.workoutContainer}>
-          <ThemedText style={styles.workoutName} type="title">
-            wou_name
-          </ThemedText>
-          <View style={styles.workoutContainerBox}>
-            <ThemedText type="subtitle">
-              exercises placeholder,exercises placeholder,exercises placeholder
-            </ThemedText>
-            <ThemedText style={styles.button} type="title">
-              Start Workout
-            </ThemedText>
-          </View>
-        </View>
-
       
-        <Link style={styles.buttonNew} href="/blankWou">
-          Blank Workout
-        </Link>
+
       </LinearGradient>
     </ScrollView>
   );

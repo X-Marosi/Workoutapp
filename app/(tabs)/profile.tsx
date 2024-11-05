@@ -2,8 +2,8 @@ import { View, Text, StyleSheet, Button, Image } from 'react-native';
 import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
 import { LinearGradient } from 'expo-linear-gradient';
-import { Link } from 'expo-router';
 import auth from '@react-native-firebase/auth';
+import { router } from 'expo-router';
 
 export default function Tab() {
 
@@ -41,8 +41,9 @@ export default function Tab() {
 
       
 
-      <Link style={styles.link} href="/settings">Settings</Link>
+      
       <Button title="Logout" onPress={() => auth().signOut()} />
+      <Text style={styles.link} onPress={() => {router.push("/settings")}}>Settings</Text>
 
 
     
@@ -60,8 +61,9 @@ const styles = StyleSheet.create({
     color: 'white',
   },
   link: {
-    color: 'blue',
-
+    textAlign: 'center',
+    color: '#0a7ea4',
+    padding: 10,
   },
   menuTitle: {
     textAlign: 'center',
