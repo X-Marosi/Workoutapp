@@ -52,7 +52,7 @@ export default function RootLayout() {
     const inAuthGroup = segments[0] === '(tabs)';
 
     if (user && !inAuthGroup) {
-      router.replace('/(tabs)/profile');
+      router.replace('/(tabs)/home');
     } else if (!user && inAuthGroup) {
       router.replace('/');
     }
