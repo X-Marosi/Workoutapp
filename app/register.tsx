@@ -16,12 +16,6 @@ export default function Tab() {
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
 
-  const getUser = async () => {
-    const user = await firestore().collection('users').doc('U2vDqRKH1FTwyFHBWQCg').get();
-    console.log(user);
-
-  }
-
 const handleRegister = async () => {
     if (!username.trim()) {
         alert("Username is required");
@@ -34,7 +28,13 @@ const handleRegister = async () => {
         await user.user?.updateProfile({
             displayName: username,
         });
-        console.log(user);
+        //console.log(user);
+        await firestore().collection('users').doc(user.user?.uid).set({
+            username: username,
+            email: email,
+            createdAt: firestore.FieldValue.serverTimestamp()
+        });
+        router.replace("/setup");
     } catch (error) {
         const err = error as FirebaseError;
         console.log(err.code);
@@ -81,8 +81,6 @@ const handleRegister = async () => {
                 <Button title="Register" onPress={handleRegister} />
                 </>
             )}
-
-            <Text style={styles.link} onPress={getUser}>Getuser</Text>
 
             <Text style={styles.link} onPress={() => router.replace("/")}>Login here</Text>
 

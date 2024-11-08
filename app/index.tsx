@@ -2,10 +2,10 @@ import { View, Text, StyleSheet, Button, Image, KeyboardAvoidingView, TextInput,
 import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
 import { LinearGradient } from 'expo-linear-gradient';
-import { useState } from 'react';
-import auth from '@react-native-firebase/auth';
+import { useEffect, useState } from 'react';
+import auth, { FirebaseAuthTypes, onAuthStateChanged } from '@react-native-firebase/auth';
 import { FirebaseError } from '@firebase/util';
-import { router } from 'expo-router';
+import { router, useRouter, useSegments } from 'expo-router';
 
 
 export default function Tab() {
@@ -14,12 +14,25 @@ export default function Tab() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
+  const [initializing, setInitializing] = useState(true);
+  const [user, setUser] = useState<FirebaseAuthTypes.User | null>(null);
+  const router = useRouter();
+  const segments = useSegments();
+
+  const onAuthStateChanged = (user: FirebaseAuthTypes.User | null) => {
+    console.log('onAuthStateChanged', user);
+    setUser(user);
+    if (initializing) setInitializing(false);
+  }
 
   const handleLogin = async () => {
+    if (!email.trim() || !password.trim()) {
+      alert("Missing required fields");
+      return;
+    }
     setLoading(true);
     try {
       const user = await auth().signInWithEmailAndPassword(email, password);
-      console.log(user);
     } catch (error) {
       const err = error as FirebaseError;
       console.log(err.code);
@@ -29,6 +42,25 @@ export default function Tab() {
     setLoading(false);
   };
   
+  useEffect(() => {
+    const subscriber = auth().onAuthStateChanged(onAuthStateChanged);
+    return subscriber;
+  }, []);
+
+  useEffect(() => {
+    if (initializing) {
+      return;
+    }
+
+    const inAuthGroup = segments[0] === '(tabs)';
+
+    if (user && !inAuthGroup) {
+      router.replace('/(tabs)/home');
+    } else if (!user && inAuthGroup) {
+      router.replace('/');
+    }
+
+  }, [user, initializing]); 
 
   return (
     <ThemedView style={styles.container}>

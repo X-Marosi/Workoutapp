@@ -4,36 +4,51 @@ import { ThemedView } from '@/components/ThemedView';
 import { LinearGradient } from 'expo-linear-gradient';
 import auth from '@react-native-firebase/auth';
 import { router } from 'expo-router';
+import firestore from '@react-native-firebase/firestore';
+import { useEffect, useState } from 'react';
+
 
 export default function Tab() {
 
   const user = auth().currentUser;
+  const [name, setName] = useState('');
+  const [weight, setWeight] = useState('');
+  const [height, setHeight] = useState('');
+  const [workouts, setWorkouts] = useState('');
+
+  useEffect(() => {
+    const subscriber = firestore().collection('users').doc(user?.uid).onSnapshot(documentSnapshot => {
+      setName(documentSnapshot.data()?.username);
+      setWeight(documentSnapshot.data()?.weight);
+      setHeight(documentSnapshot.data()?.height);
+      setWorkouts(documentSnapshot.data()?.workouts);
+    });
+    return subscriber;
+  }, []);
+
   
   return (
     <ThemedView style={styles.container}>
       <LinearGradient colors={['#1E1E1E', 'black']} style={styles.container}>
-
-      <ThemedText style={styles.menuTitle} type="title">Profile</ThemedText>
-
       <Image source={require('@/assets/images/icon.png')} style={styles.image} />
 
-      <ThemedText style={styles.userName} type="default">{user?.displayName}</ThemedText>
+      <ThemedText style={styles.userName} type="default"> {name} </ThemedText>
 
       <View style={styles.containerData}>
 
         <View>
           <ThemedText style={{ textAlign: 'center', fontSize: 22, fontWeight: 'bold'}} type="default">Weight</ThemedText>
-          <ThemedText style={{ textAlign: 'center', fontSize: 20, color:'darkgrey', padding: 10}} type="default">0</ThemedText>
+          <ThemedText style={{ textAlign: 'center', fontSize: 20, color:'darkgrey', padding: 10}} type="default"> {weight} </ThemedText>
         </View>
         
         <View>
           <ThemedText style={{ textAlign: 'center', fontSize: 22, fontWeight: 'bold'}} type="default">Height</ThemedText>
-          <ThemedText style={{ textAlign: 'center', fontSize: 20, color:'darkgrey', padding: 10}} type="default">000</ThemedText>
+          <ThemedText style={{ textAlign: 'center', fontSize: 20, color:'darkgrey', padding: 10}} type="default"> {height} </ThemedText>
         </View>
 
         <View>
           <ThemedText style={{ textAlign: 'center', fontSize: 22, fontWeight: 'bold'}} type="default">Workouts</ThemedText>
-          <ThemedText style={{ textAlign: 'center', fontSize: 20, color:'darkgrey', padding: 10}} type="default">999</ThemedText>
+          <ThemedText style={{ textAlign: 'center', fontSize: 20, color:'darkgrey', padding: 10}} type="default"> {workouts} </ThemedText>
         </View>
         
       </View>
