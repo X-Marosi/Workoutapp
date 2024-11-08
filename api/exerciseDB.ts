@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { rapidApiKey } from '@/constants/exercise';
+import { rapidApiKey } from '@/constants/rapidApi';
 
 const baseUrl = 'https://exercisedb.p.rapidapi.com/';
 
