@@ -6,6 +6,7 @@ import { useState } from 'react';
 import auth from '@react-native-firebase/auth';
 import { FirebaseError } from '@firebase/util';
 import { router } from 'expo-router';
+import firestore from '@react-native-firebase/firestore';
 
 
 export default function Tab() {
@@ -14,6 +15,12 @@ export default function Tab() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
+
+  const getUser = async () => {
+    const user = await firestore().collection('users').doc('U2vDqRKH1FTwyFHBWQCg').get();
+    console.log(user);
+
+  }
 
 const handleRegister = async () => {
     if (!username.trim()) {
@@ -75,7 +82,10 @@ const handleRegister = async () => {
                 </>
             )}
 
+            <Text style={styles.link} onPress={getUser}>Getuser</Text>
+
             <Text style={styles.link} onPress={() => router.replace("/")}>Login here</Text>
+
 
         </LinearGradient>
       </KeyboardAvoidingView>

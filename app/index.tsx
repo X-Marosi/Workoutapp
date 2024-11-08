@@ -69,31 +69,9 @@ export default function Tab() {
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-  },
-
-  menuTitle: {
-    textAlign: 'center',
-    padding: 20,
-    fontSize: 50,
-  },
-
-  image: {
-    width: 150,
-    height: 150,
-    borderRadius: 150 / 2,
-    alignSelf: 'center',
-  },
-  input: {
-    backgroundColor: 'white',
-    padding: 10,
-    margin: 10,
-  },
-  link: {
-    textAlign: 'center',
-    color: '#0a7ea4',
-    padding: 10,
-  },
+  container: { flex: 1, justifyContent: 'center' },
+  menuTitle: { textAlign: 'center', padding: 20, fontSize: 50 },
+  image: { width: 150, height: 150, borderRadius: 150 / 2, alignSelf: 'center' },
+  input: { backgroundColor: 'white', padding: 10, margin: 10 },
+  link: { textAlign: 'center', color: '#0a7ea4', padding: 10 },
 });

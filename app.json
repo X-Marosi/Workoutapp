@@ -31,7 +31,6 @@
       "expo-router",
       "@react-native-firebase/auth",
       "@react-native-firebase/app"
-      
     ],
     "experiments": {
       "typedRoutes": true
