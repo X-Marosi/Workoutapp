@@ -3,19 +3,19 @@ import { LinearGradient } from "expo-linear-gradient";
 import { useEffect, useState } from "react";
 import { ThemedText } from "@/components/ThemedText";
 import { ThemedView } from "@/components/ThemedView";
+import { fetchExercises } from "@/api/exerciseDB";
 import { router } from "expo-router";
-import { exerciseListAll } from "@/constants/exerciseNew";
-
+import exercises from "@/app/_layout";
 
 
 export default function Tab() {
   const [searchQuery, setSearchQuery] = useState("");
+  const [exercises, setExercises] = useState<{ id: string; name: string; target: string; equipment: string; gifUrl: string }[]>([]);
 
   //console.log(exercises);
 
-//get data from fetchExercises use it for exercises
-  const [exercises, setExercises] = useState(exerciseListAll);
 
+  
 
   const filteredExercises = exercises.filter(
     (exercise) =>
@@ -40,9 +40,9 @@ export default function Tab() {
             }}>
             <View style={styles.containerBox}>
 
-                <View style={styles.exGifContainer}>
-                  <Image source={item.pic} style={styles.exGif} />
-                </View>
+              <View style={styles.exGifContainer}>
+                <Image style={styles.exGif} source={{ uri: item.gifUrl }}/>
+              </View>
               
               <View style={{ marginLeft: 10 }}>
                 <ThemedText style={styles.capitalize} type="subtitle">{item.name}</ThemedText>

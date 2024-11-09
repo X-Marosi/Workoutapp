@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from 'react';
-import { View, FlatList, TextInput, StyleSheet, TouchableOpacity, Image } from 'react-native';
+import React, { useState, useEffect, useCallback } from 'react';
+import { View, FlatList, TextInput, StyleSheet, TouchableOpacity, Image, Alert } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
-import { Link, RouteParams } from 'expo-router';
+import { Link, RouteParams, router, useFocusEffect, useNavigation } from 'expo-router';
 import { useLocalSearchParams } from 'expo-router';
 import { ThemedText } from '../components/ThemedText';
 
@@ -10,7 +10,7 @@ type Exercise = { id: string; name: string; target: string; gifUrl: string; };
 type ExerciseSet = { [key: string]: { isComplete: boolean; sets: number[] } };
 
 const ExerciseItem = (
-  { item, toggleState, addSet, deleteSet, exerciseSets }: 
+  { item, toggleState, addSet, deleteSet, exerciseSets }:
   { item: Exercise; 
     toggleState: (id: string) => void; 
     addSet: (id: string) => void; 
@@ -18,13 +18,20 @@ const ExerciseItem = (
     exerciseSets: ExerciseSet 
   }) => (
   <View style={[styles.exerciseContainer, exerciseSets[item.id]?.isComplete && styles.finished]}>
-    <View style={styles.containerBox}>
+    <TouchableOpacity style={styles.containerBox}
+      onPress={() => {
+        router.push({
+          pathname: '/exerciseDetails',
+          params: { item: JSON.stringify(item) },
+        });
+      }}
+    >
       <Image style={styles.exGif} source={{ uri: item.gifUrl }} />
       <View style={styles.exerciseInfo}>
         <ThemedText style={styles.capitalize} type="subtitle">{item.name}</ThemedText>
         <ThemedText style={styles.capitalize}>{item.target}</ThemedText>
       </View>
-    </View>
+    </TouchableOpacity>
 
     <View style={styles.setContainer}>
       <ThemedText style={styles.exSet}>Sets</ThemedText>
@@ -52,6 +59,7 @@ export default function Tab() {
   const [exercises, setExercises] = useState<Exercise[]>([]);
   const [exerciseSets, setExerciseSets] = useState<ExerciseSet>({});
   const { selectedExercise } = useLocalSearchParams<RouteParams<{ selectedExercise: string }>>();
+  const navigation = useNavigation();
 
   const toggleState = (exerciseId: string) => {
     setExerciseSets((prevState) => ({
@@ -91,6 +99,25 @@ export default function Tab() {
       }));
     }
   }, [selectedExercise]);
+
+  useEffect(() => {
+    const unsubscribe = navigation.addListener('beforeRemove', (event) => {
+      // Prevent default behavior of leaving the screen
+      event.preventDefault();
+
+      // Show confirmation dialog
+      Alert.alert(
+        'Discard workout?',
+        'Are you sure you want to discard your workout?',
+        [
+          { text: 'Cancel', style: 'cancel', onPress: () => {} },
+          { text: 'Discard', style: 'destructive', onPress: () => router.push('/workouts') },
+        ]
+      );
+    });
+
+    return unsubscribe; // Cleanup listener on component unmount
+  }, [navigation, router]);
 
   return (
     <LinearGradient colors={['#1E1E1E', 'black']} style={styles.container}>

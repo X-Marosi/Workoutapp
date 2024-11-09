@@ -14,10 +14,27 @@ SplashScreen.preventAutoHideAsync();
 
 export default function RootLayout() {
   const colorScheme = useColorScheme();
+  const [initializing, setInitializing] = useState(true);
+  const [user, setUser] = useState<FirebaseAuthTypes.User | null>(null);
+  const router = useRouter();
+  const segments = useSegments();
+
+  const onAuthStateChanged = (user: FirebaseAuthTypes.User | null) => {
+    console.log('onAuthStateChanged', user);
+    setUser(user);
+    if (initializing) setInitializing(false);
+  }
+  
+
 
   const [loaded] = useFonts({
     SpaceMono: require('../assets/fonts/SpaceMono-Regular.ttf'),
   });
+
+  useEffect(() => {
+    const subscriber = auth().onAuthStateChanged(onAuthStateChanged);
+    return subscriber;
+  }, []);
 
 
   useEffect(() => {
@@ -26,7 +43,30 @@ export default function RootLayout() {
     }
   }, [loaded]);
 
+  
+  useEffect(() => {
+    if (initializing) {
+      return;
+    }
 
+    const inAuthGroup = segments[0] === '(tabs)';
+    const inRegisterGroup = segments[0] === 'register';
+
+    if (user && !inAuthGroup && !inRegisterGroup) {
+      router.replace('/(tabs)/home');
+    } else if (!user && inAuthGroup) {
+      router.replace('/');
+    }
+
+  }, [user, initializing]); 
+
+  if (initializing) {
+    return (
+      <ThemedView style={styles.container}>
+        <ActivityIndicator size="large" color="#0a7ea4" />
+      </ThemedView>
+    )
+  }
 
   return (
     <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
@@ -37,6 +77,8 @@ export default function RootLayout() {
         <Stack.Screen name="blankWou" options={{ headerShown: false }}/>
         <Stack.Screen name="exerciseList" options={{ headerShown: false }}/>
         <Stack.Screen name="settings" options={{ headerShown: false }}/>
+        <Stack.Screen name="register" options={{ headerShown: false }}/>
+        <Stack.Screen name="exerciseDetails" options={{ headerShown: false }}/>
       </Stack>
     </ThemeProvider>
   );

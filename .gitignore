@@ -9,7 +9,6 @@ npm-debug.*
 *.mobileprovision
 *.orig.*
 web-build/
-constants/exercise.ts
 
 # macOS
 .DS_Store
@@ -19,3 +18,8 @@ constants/exercise.ts
 
 expo-env.d.ts
 # @end expo-cli
+app/exerciseDetails.tsx
+constants/exercise.ts
+assets/exercises/001.mp4
+assets/exercises/001.jpg
+constants/exerciseNew.ts
