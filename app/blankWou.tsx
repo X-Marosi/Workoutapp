@@ -27,7 +27,7 @@ const ExerciseItem = (
         });
       }}
     >
-      <Image source={item.pic} style={styles.exGif} />
+      <Image  source={item.pic ? item.pic : require('@/assets/images/icon.png')} style={styles.exGif}/>
       <View style={styles.exerciseInfo}>
         <ThemedText style={styles.capitalize} type="subtitle">{item.name}</ThemedText>
         <ThemedText style={styles.capitalize}>{item.target}</ThemedText>
@@ -43,8 +43,8 @@ const ExerciseItem = (
     {exerciseSets[item.id]?.sets.map((setNumber) => (
       <View key={setNumber} style={styles.setNumbers}>
         <ThemedText style={styles.setText}>{setNumber}</ThemedText>
-        <TextInput style={styles.input} placeholder="0" onChangeText={(text) => console.log(text)} />
-        <TextInput style={styles.input} placeholder="0" onChangeText={(text) => console.log(text)} />
+        <TextInput style={styles.input} placeholder="0" placeholderTextColor={'white'} onChangeText={(text) => console.log(text)} />
+        <TextInput style={styles.input} placeholder="0" placeholderTextColor={'white'} onChangeText={(text) => console.log(text)} />
       </View>
     ))}
 
@@ -77,7 +77,7 @@ export default function Tab() {
   };
 
   const deleteSet = (exerciseId: string) => {
-    if(exerciseSets[exerciseId]?.sets.length <= 1) {
+    if(exerciseSets[exerciseId]?.sets.length > 1) {
     setExerciseSets((prevState) => {
       const sets = prevState[exerciseId]?.sets || [];
       return { ...prevState, [exerciseId]: { ...prevState[exerciseId], sets: sets.slice(0, -1) } };

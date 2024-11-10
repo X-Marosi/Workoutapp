@@ -41,7 +41,7 @@ export default function Tab() {
             <View style={styles.containerBox}>
 
                 <View style={styles.exGifContainer}>
-                  <Image source={item.pic} style={styles.exGif} />
+                  <Image  source={item.pic ? item.pic : require('@/assets/images/icon.png')} style={styles.exGif}/>
                 </View>
               
               <View style={{ marginLeft: 10 }}>
