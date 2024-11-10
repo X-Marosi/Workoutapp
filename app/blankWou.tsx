@@ -1,21 +1,22 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import { View, FlatList, TextInput, StyleSheet, TouchableOpacity, Image, Alert } from 'react-native';
+import { View, FlatList, TextInput, StyleSheet, TouchableOpacity, Image, Alert, ImageSourcePropType } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
 import { Link, RouteParams, router, useFocusEffect, useNavigation } from 'expo-router';
 import { useLocalSearchParams } from 'expo-router';
 import { ThemedText } from '../components/ThemedText';
 
-type Exercise = { id: string; name: string; target: string; gifUrl: string; };
+type Exercise = { id: string; name: string; target: string; pic: ImageSourcePropType; };
 type ExerciseSet = { [key: string]: { isComplete: boolean; sets: number[] } };
 
 const ExerciseItem = (
-  { item, toggleState, addSet, deleteSet, exerciseSets }:
+  { item, toggleState, addSet, deleteSet, exerciseSets, pic }:
   { item: Exercise; 
     toggleState: (id: string) => void; 
     addSet: (id: string) => void; 
     deleteSet: (id: string) => void; 
-    exerciseSets: ExerciseSet 
+    exerciseSets: ExerciseSet;
+    pic: ImageSourcePropType;
   }) => (
   <View style={[styles.exerciseContainer, exerciseSets[item.id]?.isComplete && styles.finished]}>
     <TouchableOpacity style={styles.containerBox}
@@ -26,7 +27,7 @@ const ExerciseItem = (
         });
       }}
     >
-      <Image style={styles.exGif} source={{ uri: item.gifUrl }} />
+      <Image source={item.pic} style={styles.exGif} />
       <View style={styles.exerciseInfo}>
         <ThemedText style={styles.capitalize} type="subtitle">{item.name}</ThemedText>
         <ThemedText style={styles.capitalize}>{item.target}</ThemedText>
@@ -131,6 +132,7 @@ export default function Tab() {
             addSet={addSet} 
             deleteSet={deleteSet} 
             exerciseSets={exerciseSets}
+            pic={item.pic}
           />
         )}
         keyExtractor={(item) => item.id}
