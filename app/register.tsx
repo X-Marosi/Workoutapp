@@ -41,6 +41,11 @@ export default function Tab() {
         age: 0,
         workouts: 0,
       });
+      //Create a collection for the user's workouts
+      await firestore().collection('users').doc(user.user?.uid).collection('workouts').doc().set({
+        createdAt: firestore.FieldValue.serverTimestamp()
+      });
+
       // Navigate to setup page
       setPage('setup');
     } catch (error) {

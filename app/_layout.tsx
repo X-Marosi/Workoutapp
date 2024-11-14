@@ -23,9 +23,7 @@ export default function RootLayout() {
     console.log('onAuthStateChanged', user);
     setUser(user);
     if (initializing) setInitializing(false);
-  }
-  
-
+  };
 
   const [loaded] = useFonts({
     SpaceMono: require('../assets/fonts/SpaceMono-Regular.ttf'),
@@ -50,12 +48,11 @@ export default function RootLayout() {
     }
 
     const inAuthGroup = segments[0] === '(tabs)';
-    const inRegisterGroup = segments[0] === 'register';
 
-    if (user && !inAuthGroup && !inRegisterGroup) {
+    if (user && !inAuthGroup && ('register' in segments)) {
       router.replace('/(tabs)/home');
-    } else if (!user && inAuthGroup) {
-      router.replace('/');
+    } else if (!user && inAuthGroup && !('login' in segments)) {
+      router.replace('/login');
     }
 
   }, [user, initializing]); 
@@ -79,6 +76,7 @@ export default function RootLayout() {
         <Stack.Screen name="settings" options={{ headerShown: false }}/>
         <Stack.Screen name="register" options={{ headerShown: false }}/>
         <Stack.Screen name="exerciseDetails" options={{ headerShown: false }}/>
+        <Stack.Screen name="login" options={{ headerShown: false }}/>
       </Stack>
     </ThemeProvider>
   );
