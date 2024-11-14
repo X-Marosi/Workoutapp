@@ -1,33 +1,37 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import { View, FlatList, TextInput, StyleSheet, TouchableOpacity, Image, Alert, ImageSourcePropType } from 'react-native';
+import { View, FlatList, TextInput, StyleSheet, TouchableOpacity, Image, Alert, ImageSourcePropType, Text } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
-import { Link, RouteParams, router, useFocusEffect, useNavigation } from 'expo-router';
+import { router, useNavigation } from 'expo-router';
 import { useLocalSearchParams } from 'expo-router';
 import { ThemedText } from '../components/ThemedText';
+import firestore from '@react-native-firebase/firestore';
 
-type Exercise = { id: string; name: string; target: string; pic: ImageSourcePropType; };
-type ExerciseSet = { [key: string]: { isComplete: boolean; sets: number[] } };
+type Exercise = { id: string; name: string; target: string; pic: ImageSourcePropType };
+type SetDetails = { setNumber: number; weight: number; reps: number };
+type ExerciseSet = { isComplete: boolean; sets: SetDetails[] };
 
-const ExerciseItem = (
-  { item, toggleState, addSet, deleteSet, exerciseSets, pic }:
-  { item: Exercise; 
-    toggleState: (id: string) => void; 
-    addSet: (id: string) => void; 
-    deleteSet: (id: string) => void; 
-    exerciseSets: ExerciseSet;
-    pic: ImageSourcePropType;
-  }) => (
+const ExerciseItem = ({
+  item, 
+  toggleState, 
+  addSet, 
+  deleteSet, 
+  exerciseSets, 
+  updateSetDetails 
+}: {
+  item: Exercise;
+  toggleState: (id: string) => void;
+  addSet: (id: string) => void;
+  deleteSet: (id: string) => void;
+  exerciseSets: Record<string, ExerciseSet>;
+  updateSetDetails: (exerciseId: string, setNumber: number, field: 'weight' | 'reps', value: number) => void;
+}) => (
   <View style={[styles.exerciseContainer, exerciseSets[item.id]?.isComplete && styles.finished]}>
-    <TouchableOpacity style={styles.containerBox}
-      onPress={() => {
-        router.push({
-          pathname: '/exerciseDetails',
-          params: { item: JSON.stringify(item) },
-        });
-      }}
+    <TouchableOpacity
+      style={styles.containerBox}
+      onPress={() => router.push({ pathname: '/exerciseDetails', params: { item: JSON.stringify(item) } })}
     >
-      <Image  source={item.pic ? item.pic : require('@/assets/images/icon.png')} style={styles.exGif}/>
+      <Image source={item.pic || require('@/assets/images/icon.png')} style={styles.exGif} />
       <View style={styles.exerciseInfo}>
         <ThemedText style={styles.capitalize} type="subtitle">{item.name}</ThemedText>
         <ThemedText style={styles.capitalize}>{item.target}</ThemedText>
@@ -40,11 +44,23 @@ const ExerciseItem = (
       <ThemedText style={styles.exSet}>Reps</ThemedText>
     </View>
 
-    {exerciseSets[item.id]?.sets.map((setNumber) => (
-      <View key={setNumber} style={styles.setNumbers}>
-        <ThemedText style={styles.setText}>{setNumber}</ThemedText>
-        <TextInput style={styles.input} placeholder="0" placeholderTextColor={'white'} onChangeText={(text) => console.log(text)} />
-        <TextInput style={styles.input} placeholder="0" placeholderTextColor={'white'} onChangeText={(text) => console.log(text)} />
+    {exerciseSets[item.id]?.sets.map((set) => (
+      <View key={set.setNumber} style={styles.setNumbers}>
+        <ThemedText style={styles.setText}>{set.setNumber}</ThemedText>
+        <TextInput
+          style={styles.input}
+          placeholder="0"
+          placeholderTextColor="white"
+          value={set.weight.toString()}
+          onChangeText={(text) => updateSetDetails(item.id, set.setNumber, 'weight', parseInt(text))}
+        />
+        <TextInput
+          style={styles.input}
+          placeholder="0"
+          placeholderTextColor="white"
+          value={set.reps.toString()}
+          onChangeText={(text) => updateSetDetails(item.id, set.setNumber, 'reps', parseInt(text))}
+        />
       </View>
     ))}
 
@@ -58,9 +74,10 @@ const ExerciseItem = (
 
 export default function Tab() {
   const [exercises, setExercises] = useState<Exercise[]>([]);
-  const [exerciseSets, setExerciseSets] = useState<ExerciseSet>({});
-  const { selectedExercise } = useLocalSearchParams<RouteParams<{ selectedExercise: string }>>();
+  const [exerciseSets, setExerciseSets] = useState<Record<string, ExerciseSet>>({});
+  const { selectedExercise } = useLocalSearchParams<{ selectedExercise: string }>();
   const navigation = useNavigation();
+
 
   const toggleState = (exerciseId: string) => {
     setExerciseSets((prevState) => ({
@@ -72,7 +89,14 @@ export default function Tab() {
   const addSet = (exerciseId: string) => {
     setExerciseSets((prevState) => {
       const sets = prevState[exerciseId]?.sets || [];
-      return { ...prevState, [exerciseId]: { ...prevState[exerciseId], sets: [...sets, sets.length + 1] } };
+      const newSetNumber = sets.length + 1;
+      return {
+        ...prevState,
+        [exerciseId]: {
+          ...prevState[exerciseId],
+          sets: [...sets, { setNumber: newSetNumber, weight: 0, reps: 0 }],
+        },
+      };
     });
   };
 
@@ -83,20 +107,53 @@ export default function Tab() {
       return { ...prevState, [exerciseId]: { ...prevState[exerciseId], sets: sets.slice(0, -1) } };
     });
     } else {
-      //ask if you want to remove exercise (this should be a function)
+      removeExercise(exerciseId);
     }
   };
 
-  //TODO
-  const removeExercise = (exerciseId: string) => {};
+  const removeExercise = (exerciseId: string) => {
+    setExercises((prevExercises) => prevExercises.filter((exercise) => exercise.id !== exerciseId));
+    setExerciseSets((prevState) => {
+      const newState = { ...prevState };
+      delete newState[exerciseId];
+      return newState;
+    });
+    router.setParams({ selectedExercise: null });
+  };
+
+  const updateSetDetails = (exerciseId: string, setNumber: number, field: 'weight' | 'reps', value: number) => {
+    setExerciseSets((prev) => {
+      const updatedSets = prev[exerciseId]?.sets.map((set) =>
+        set.setNumber === setNumber ? { ...set, [field]: value } : set
+      ) || [];
+      return { ...prev, [exerciseId]: { ...prev[exerciseId], sets: updatedSets } };
+    });
+  };
+
+  const uploadWorkout = async () => {
+    const workoutData = {
+      name: 'empty workout',
+      createdAt: firestore.FieldValue.serverTimestamp(),
+      exercises: exercises.map((exercise) => ({
+        id: exercise.id,
+        sets: exerciseSets[exercise.id].sets.map((set) => ({
+          //setNumber: set.setNumber,
+          weight: set.weight,
+          reps: set.reps,
+        })),
+      })),
+    };
+    await firestore().collection('workouts').add(workoutData);
+    router.push('/workouts');
+  };
 
   useEffect(() => {
-    if (selectedExercise) {
+    if (selectedExercise && selectedExercise !== 'null') {
       const exercise = JSON.parse(selectedExercise);
       setExercises((prevExercises) => [...prevExercises, exercise]);
       setExerciseSets((prevState) => ({
         ...prevState,
-        [exercise.id]: { isComplete: false, sets: [1] },
+        [exercise.id]: { isComplete: false, sets: [{ setNumber: 1, weight: 0, reps: 0 }] },
       }));
     }
   }, [selectedExercise]);
@@ -126,18 +183,19 @@ export default function Tab() {
       <FlatList
         data={exercises}
         renderItem={({ item }) => (
-          <ExerciseItem 
-            item={item} 
-            toggleState={toggleState} 
-            addSet={addSet} 
-            deleteSet={deleteSet} 
+          <ExerciseItem
+            item={item}
+            toggleState={toggleState}
+            addSet={addSet}
+            deleteSet={deleteSet}
             exerciseSets={exerciseSets}
-            pic={item.pic}
+            updateSetDetails={updateSetDetails}
           />
         )}
         keyExtractor={(item) => item.id}
       />
-      <Link style={styles.buttonNew} href="/exerciseList">Add Exercise</Link>
+      <Text style={styles.buttonNew} onPress={() => router.push('/exerciseList')}>Add Exercise</Text>
+      <Text style={styles.buttonNew} onPress={() => {uploadWorkout()}}>Finish Workout</Text>
     </LinearGradient>
   );
 }
@@ -157,5 +215,6 @@ const styles = StyleSheet.create({
   exGif: { width: 80, height: 80, borderRadius: 20 },
   exSet: { color: 'lightgray', fontSize: 16, textTransform: 'capitalize' },
   setText: { fontWeight: 'bold', textAlign: 'center' },
-  buttonNew: { marginTop: 20, padding: 10, backgroundColor: '#0a7ea4', borderRadius: 5, textAlign: 'center' },
+  buttonNew: { marginTop: 20, marginRight: 30,marginLeft: 30, padding: 10, backgroundColor: '#0a7ea4', borderRadius: 5, textAlign: 'center' },
 });
+

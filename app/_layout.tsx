@@ -48,10 +48,13 @@ export default function RootLayout() {
     }
 
     const inAuthGroup = segments[0] === '(tabs)';
+    const inRegisterGroup = segments[0] === 'register';
 
-    if (user && !inAuthGroup && ('register' in segments)) {
+    if (user && !inAuthGroup && !inRegisterGroup) {
       router.replace('/(tabs)/home');
-    } else if (!user && inAuthGroup && !('login' in segments)) {
+    } else if (!user && inAuthGroup) {
+      router.replace('/login');
+    } else if (!user && !segments[0]) {
       router.replace('/login');
     }
 
