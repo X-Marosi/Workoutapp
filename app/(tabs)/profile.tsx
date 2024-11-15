@@ -24,42 +24,45 @@ export default function Tab() {
       setWorkouts(documentSnapshot.data()?.workouts);
     });
     return subscriber;
-  }, []);
+  });
 
   
   return (
     <ThemedView style={styles.container}>
       <LinearGradient colors={['#1E1E1E', 'black']} style={styles.container}>
-      <Image source={require('@/assets/images/icon.png')} style={styles.image} />
+        <ThemedText style={styles.menuTitle} type="title">
+          Profile
+        </ThemedText>
 
-      <ThemedText style={styles.userName} type="default"> {name} </ThemedText>
+        <ThemedText style={styles.userName} type="default"> {name} </ThemedText>
 
-      <View style={styles.containerData}>
+        <View style={styles.containerData}>
 
-        <View>
-          <ThemedText style={{ textAlign: 'center', fontSize: 22, fontWeight: 'bold'}} type="default">Weight</ThemedText>
-          <ThemedText style={{ textAlign: 'center', fontSize: 20, color:'darkgrey', padding: 10}} type="default"> {weight} </ThemedText>
+          <View>
+            <ThemedText style={styles.infoTitle} type="default">Weight</ThemedText>
+            <ThemedText style={styles.infoData} type="default"> {weight} </ThemedText>
+          </View>
+          
+          <View>
+            <ThemedText style={styles.infoTitle} type="default">Height</ThemedText>
+            <ThemedText style={styles.infoData} type="default"> {height} </ThemedText>
+          </View>
+
+          <View>
+            <ThemedText style={styles.infoTitle} type="default">Workouts</ThemedText>
+            <ThemedText style={styles.infoData} type="default"> {workouts} </ThemedText>
+          </View>
+          
         </View>
+
+        <ThemedText style={{ textAlign: 'center', fontSize: 22, fontWeight: 'bold'}} type="default">Charts</ThemedText>
+        <Image source={require('@/assets/images/icon.png')} style={styles.image} />
+
         
-        <View>
-          <ThemedText style={{ textAlign: 'center', fontSize: 22, fontWeight: 'bold'}} type="default">Height</ThemedText>
-          <ThemedText style={{ textAlign: 'center', fontSize: 20, color:'darkgrey', padding: 10}} type="default"> {height} </ThemedText>
-        </View>
 
-        <View>
-          <ThemedText style={{ textAlign: 'center', fontSize: 22, fontWeight: 'bold'}} type="default">Workouts</ThemedText>
-          <ThemedText style={{ textAlign: 'center', fontSize: 20, color:'darkgrey', padding: 10}} type="default"> {workouts} </ThemedText>
-        </View>
         
-      </View>
-
-
-      
-
-      
-      <Button title="Logout" onPress={() => auth().signOut()} />
-      <Text style={styles.link} onPress={() => {router.push("/settings")}}>Settings</Text>
-
+        <Text style={styles.settings} onPress={() => {router.push("/settings")}}>Edit Profile</Text>
+        <Text style={styles.logout} onPress={() => auth().signOut()}>Logout</Text>
 
     
       </LinearGradient>
@@ -69,42 +72,67 @@ export default function Tab() {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    justifyContent: 'center',
+    flex: 1
   },
   text: {
     color: 'white',
   },
-  link: {
+
+  settings: {
     textAlign: 'center',
-    color: '#0a7ea4',
+    fontSize: 20,
+    color: '#ba181b',
     padding: 10,
+  },
+
+  logout: {
+    position: 'absolute',
+    top: 40,
+    right: 20,
+    textAlign: 'center',
+    fontSize: 20,
+    color: '#ba181b',
   },
   menuTitle: {
     textAlign: 'center',
+    marginTop: 100,
     padding: 20,
     fontSize: 50,
   },
 
   userName: {
     textAlign: 'center',
+    color: '#e5383b',
     padding: 20,
-    fontSize: 30,
+    fontSize: 40,
   },
 
   containerData: {
     flexDirection: 'row',
-    //elements of this container will be spaced evenly
     justifyContent: 'space-evenly',
-    padding: 20,
-    
+    paddingVertical: 20,
+    paddingHorizontal: 0,
   },
 
   image: {
-    width: 150,
-    height: 150,
-    borderRadius: 150 / 2,
+    width: 250,
+    height: 250,
+    borderRadius: 20,
     alignSelf: 'center',
+    margin: 20,
   },
+
+  infoTitle: {
+    textAlign: 'center',
+    fontSize: 18,
+    color: '#b1a7a6',
+  },
+
+  infoData: {
+    textAlign: 'center',
+    fontSize: 24,
+    padding: 10,
+    fontWeight: 'bold',
+  }
 
 });

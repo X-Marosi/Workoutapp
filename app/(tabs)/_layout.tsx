@@ -19,7 +19,7 @@ export default function TabLayout() {
         options={{
           title: 'Home',
           tabBarIcon: ({ color, focused }) => (
-            <TabBarIcon name={focused ? 'home' : 'home-outline'} color={color} />
+            <TabBarIcon name={focused ? 'home' : 'home'} color={color} />
           ),
         }}
       />
@@ -28,7 +28,7 @@ export default function TabLayout() {
         options={{
           title: 'Workouts',
           tabBarIcon: ({ color, focused }) => (
-            <TabBarIcon name={focused ? 'barbell' : 'barbell-outline'} color={color} />
+            <TabBarIcon name={focused ? 'barbell' : 'barbell'} color={color} />
           ),
         }}
       />
@@ -37,7 +37,7 @@ export default function TabLayout() {
         options={{
           title: 'Profile',
           tabBarIcon: ({ color, focused }) => (
-            <TabBarIcon name={focused ? 'accessibility' : 'accessibility-outline'} color={color} />
+            <TabBarIcon name={focused ? 'accessibility' : 'accessibility'} color={color} />
           ),
         }}
       />

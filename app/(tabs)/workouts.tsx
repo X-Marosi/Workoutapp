@@ -12,29 +12,29 @@ export default function Tab() {
           Workouts
         </ThemedText>
 
-
-        <View style={{flexDirection: "row"}}>
-          <Text style={styles.buttonNew} onPress={() => {}}>New Workout Plan</Text>
-          <Text style={styles.buttonNew} onPress={() => {router.push("/blankWou")}}>Start Empty Workout</Text>
-        </View>
-
-
         {/* Workouts List */}
 
         <View style={styles.workoutContainer}>
           <ThemedText style={styles.workoutName} type="title">
-            wou_name
+            Example Workout
           </ThemedText>
           <View style={styles.workoutContainerBox}>
             <ThemedText type="subtitle">
-              exercises placeholder,exercises placeholder,exercises placeholder
+              Barbell Bench Press, Incline Dumbbell Press, Dumbbell Flys, ...
             </ThemedText>
             <ThemedText style={styles.button} type="title">
               Start Workout
             </ThemedText>
           </View>
         </View>
-      
+
+        <View style={{flexDirection: "row"}}>
+          <Text style={styles.buttonNew} onPress={() => {}}>Add New Plan</Text>
+          <Text style={styles.buttonNew} onPress={() => {router.push("/blankWou")}}>Begin Empty Workout</Text>
+        </View>
+
+
+
 
       </LinearGradient>
     </ScrollView>
@@ -57,7 +57,7 @@ const styles = StyleSheet.create({
 
   button: {
     color: "white",
-    backgroundColor: "cornflowerblue",
+    backgroundColor: "#ba181b",
     borderRadius: 8,
     padding: 5,
     margin: 0,
@@ -67,7 +67,7 @@ const styles = StyleSheet.create({
 
   buttonNew: {
     color: "white",
-    backgroundColor: "cornflowerblue",
+    backgroundColor: "#ba181b",
     borderRadius: 8,
     padding: 5,
     margin: 10,

@@ -179,6 +179,26 @@ export default function Tab() {
 
   return (
     <LinearGradient colors={['#1E1E1E', 'black']} style={styles.container}>
+
+      <View style={styles.containerData}>
+        <View>
+          <ThemedText style={styles.infoTitle} type="default">Duration</ThemedText>
+          <ThemedText style={styles.infoData} type="default"> 1h12m </ThemedText>
+        </View>
+
+        <View>
+          <ThemedText style={styles.infoTitle} type="default">Volume</ThemedText>
+          <ThemedText style={styles.infoData} type="default"> 13000kg </ThemedText>
+        </View>
+
+        <View>
+          <ThemedText style={styles.infoTitle} type="default">Sets</ThemedText>
+          <ThemedText style={styles.infoData} type="default"> 28 </ThemedText>
+        </View>
+
+        <Text style={styles.buttonFinish} onPress={() => {uploadWorkout()}}>Finish</Text>
+      </View>
+
       <ThemedText style={styles.menuTitle} type="title">New Workout</ThemedText>
       <FlatList
         data={exercises}
@@ -194,8 +214,9 @@ export default function Tab() {
         )}
         keyExtractor={(item) => item.id}
       />
-      <Text style={styles.buttonNew} onPress={() => router.push('/exerciseList')}>Add Exercise</Text>
-      <Text style={styles.buttonNew} onPress={() => {uploadWorkout()}}>Finish Workout</Text>
+      <Text style={styles.buttonAdd} onPress={() => router.push('/exerciseList')}>Add Exercise</Text>
+      
+      
     </LinearGradient>
   );
 }
@@ -211,10 +232,53 @@ const styles = StyleSheet.create({
   input: { flex: 1, fontSize: 16, color: 'lightgray', fontWeight: 'bold', textAlign: 'center' },
   iconContainer: { flexDirection: 'row', justifyContent: 'flex-end', alignItems: 'center' },
   capitalize: { textTransform: "capitalize" },
-  menuTitle: { textAlign: "center", padding: 20, paddingTop: 60, paddingBottom: 60, fontSize: 50 },
+  menuTitle: { textAlign: "center", padding: 20, paddingTop: 30, fontSize: 50 },
   exGif: { width: 80, height: 80, borderRadius: 20 },
   exSet: { color: 'lightgray', fontSize: 16, textTransform: 'capitalize' },
   setText: { fontWeight: 'bold', textAlign: 'center' },
-  buttonNew: { marginTop: 20, marginRight: 30,marginLeft: 30, padding: 10, backgroundColor: '#0a7ea4', borderRadius: 5, textAlign: 'center' },
+  buttonFinish: { 
+    marginTop: 10,
+    height: 40,
+    width: 75,
+    backgroundColor: '#ba181b', 
+    borderRadius: 5, 
+    textAlign: 'center',
+    textAlignVertical: 'center',
+    fontWeight: 'bold',
+    fontSize: 20,
+    color: 'white'
+   },
+   buttonAdd: { 
+    height: 40,
+    width: 140,
+    backgroundColor: '#ba181b', 
+    borderRadius: 5, 
+    textAlign: 'center',
+    textAlignVertical: 'center',
+    fontWeight: 'bold',
+    fontSize: 20,
+    color: 'white',
+    alignSelf: 'center',
+    position: 'absolute',
+    bottom: 20,
+   },
+  containerData: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginHorizontal: 10,
+    paddingTop: 50
+  },
+  infoTitle: {
+    textAlign: 'center',
+    fontSize: 16,
+    color: 'white',
+    fontWeight: 'bold',
+  },
+
+  infoData: {
+    textAlign: 'center',
+    fontSize: 18,
+    padding: 10,
+  }
 });
 
