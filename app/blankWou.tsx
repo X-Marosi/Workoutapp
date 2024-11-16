@@ -17,7 +17,8 @@ const ExerciseItem = ({
   addSet, 
   deleteSet, 
   exerciseSets, 
-  updateSetDetails 
+  updateSetDetails,
+  updateVolume
 }: {
   item: Exercise;
   toggleState: (id: string) => void;
@@ -25,6 +26,7 @@ const ExerciseItem = ({
   deleteSet: (id: string) => void;
   exerciseSets: Record<string, ExerciseSet>;
   updateSetDetails: (exerciseId: string, setNumber: number, field: 'weight' | 'reps', value: number) => void;
+  updateVolume: () => void;
 }) => (
   <View style={[styles.exerciseContainer, exerciseSets[item.id]?.isComplete && styles.finished]}>
     <TouchableOpacity
@@ -51,15 +53,17 @@ const ExerciseItem = ({
           style={styles.input}
           placeholder="0"
           placeholderTextColor="white"
-          value={set.weight.toString()}
-          onChangeText={(text) => updateSetDetails(item.id, set.setNumber, 'weight', parseInt(text))}
+          value={set.weight ? set.weight.toString() : ''} // Empty string if weight is 0
+          keyboardType="numeric"
+          onChangeText={(text) => updateSetDetails(item.id, set.setNumber, 'weight', parseInt(text) || 0)} // Default to 0
         />
         <TextInput
           style={styles.input}
           placeholder="0"
           placeholderTextColor="white"
-          value={set.reps.toString()}
-          onChangeText={(text) => updateSetDetails(item.id, set.setNumber, 'reps', parseInt(text))}
+          value={set.reps ? set.reps.toString() : ''} // Empty string if reps is 0
+          keyboardType="numeric"
+          onChangeText={(text) => updateSetDetails(item.id, set.setNumber, 'reps', parseInt(text) || 0)} // Default to 0
         />
       </View>
     ))}
@@ -77,7 +81,41 @@ export default function Tab() {
   const [exerciseSets, setExerciseSets] = useState<Record<string, ExerciseSet>>({});
   const { selectedExercise } = useLocalSearchParams<{ selectedExercise: string }>();
   const navigation = useNavigation();
+  const [totalWeight, setTotalWeight] = useState(0);
+  const [totalSets, setTotalSets] = useState(0);
 
+  const updateVolume = () => {
+    let total = 0;
+    exercises.forEach((exercise) => {
+      const exerciseData = exerciseSets[exercise.id];
+      if (exerciseData?.isComplete) {
+        exerciseData.sets.forEach((set) => {
+          total += set.weight * set.reps;
+        });
+      }
+    });
+    setTotalWeight(total);
+  };
+
+  const updateTotalSets = () => {
+    let total = 0;
+    exercises.forEach((exercise) => {
+      const exerciseData = exerciseSets[exercise.id];
+      if (exerciseData?.isComplete) {
+        total += exerciseData.sets.length;
+      }
+    });
+    setTotalSets(total);
+  };
+
+  const updateSetDetails = (exerciseId: string, setNumber: number, field: 'weight' | 'reps', value: number) => {
+    setExerciseSets((prev) => {
+      const updatedSets = prev[exerciseId]?.sets.map((set) =>
+        set.setNumber === setNumber ? { ...set, [field]: value || 0 } : set // Default to 0 if input is cleared
+      ) || [];
+      return { ...prev, [exerciseId]: { ...prev[exerciseId], sets: updatedSets } };
+    });
+  };
 
   const toggleState = (exerciseId: string) => {
     setExerciseSets((prevState) => ({
@@ -119,15 +157,6 @@ export default function Tab() {
       return newState;
     });
     router.setParams({ selectedExercise: null });
-  };
-
-  const updateSetDetails = (exerciseId: string, setNumber: number, field: 'weight' | 'reps', value: number) => {
-    setExerciseSets((prev) => {
-      const updatedSets = prev[exerciseId]?.sets.map((set) =>
-        set.setNumber === setNumber ? { ...set, [field]: value } : set
-      ) || [];
-      return { ...prev, [exerciseId]: { ...prev[exerciseId], sets: updatedSets } };
-    });
   };
 
   const uploadWorkout = async () => {
@@ -177,23 +206,29 @@ export default function Tab() {
     return unsubscribe; // Cleanup listener on component unmount
   }, [navigation, router]);
 
+  useEffect(() => {
+    updateVolume();
+    updateTotalSets();
+  }, [exerciseSets]);
+
+  
   return (
     <LinearGradient colors={['#1E1E1E', 'black']} style={styles.container}>
 
       <View style={styles.containerData}>
         <View>
           <ThemedText style={styles.infoTitle} type="default">Duration</ThemedText>
-          <ThemedText style={styles.infoData} type="default"> 1h12m </ThemedText>
+          <ThemedText style={styles.infoData} type="default"> {0}</ThemedText>
         </View>
 
         <View>
           <ThemedText style={styles.infoTitle} type="default">Volume</ThemedText>
-          <ThemedText style={styles.infoData} type="default"> 13000kg </ThemedText>
+          <ThemedText style={styles.infoData} type="default"> {totalWeight+'kg'} </ThemedText>
         </View>
 
         <View>
           <ThemedText style={styles.infoTitle} type="default">Sets</ThemedText>
-          <ThemedText style={styles.infoData} type="default"> 28 </ThemedText>
+          <ThemedText style={styles.infoData} type="default"> {totalSets} </ThemedText>
         </View>
 
         <Text style={styles.buttonFinish} onPress={() => {uploadWorkout()}}>Finish</Text>
@@ -210,11 +245,18 @@ export default function Tab() {
             deleteSet={deleteSet}
             exerciseSets={exerciseSets}
             updateSetDetails={updateSetDetails}
+            updateVolume={updateVolume}
           />
         )}
         keyExtractor={(item) => item.id}
+        ListFooterComponent={
+          <TouchableOpacity style={styles.buttonAdd} onPress={() => router.push('/exerciseList')}>
+            <Text style={styles.buttonAddText}>Add Exercise</Text>
+          </TouchableOpacity>
+        }
       />
-      <Text style={styles.buttonAdd} onPress={() => router.push('/exerciseList')}>Add Exercise</Text>
+
+
       
       
     </LinearGradient>
@@ -248,20 +290,22 @@ const styles = StyleSheet.create({
     fontSize: 20,
     color: 'white'
    },
-   buttonAdd: { 
+   buttonAdd: {
     height: 40,
     width: 140,
-    backgroundColor: '#ba181b', 
-    borderRadius: 5, 
-    textAlign: 'center',
-    textAlignVertical: 'center',
+    backgroundColor: '#ba181b',
+    borderRadius: 5,
+    justifyContent: 'center',
+    alignItems: 'center',
+    alignSelf: 'center',
+    marginVertical: 20, // Spacing from the list and other content
+  },
+  buttonAddText: {
     fontWeight: 'bold',
     fontSize: 20,
     color: 'white',
-    alignSelf: 'center',
-    position: 'absolute',
-    bottom: 20,
-   },
+  },
+  
   containerData: {
     flexDirection: 'row',
     justifyContent: 'space-between',
