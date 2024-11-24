@@ -165,6 +165,7 @@ export default function Tab() {
       createdAt: firestore.FieldValue.serverTimestamp(),
       exercises: exercises.map((exercise) => ({
         id: exercise.id,
+        name: exercise.name,
         sets: exerciseSets[exercise.id].sets.map((set) => ({
           //setNumber: set.setNumber,
           weight: set.weight,
@@ -271,7 +272,7 @@ const styles = StyleSheet.create({
   exerciseInfo: { marginLeft: 10 },
   setContainer: { flexDirection: 'row', justifyContent: 'space-between' },
   setNumbers: { flexDirection: 'row', justifyContent: 'space-between', paddingLeft: 10, paddingRight: 8 },
-  input: { flex: 1, fontSize: 16, color: 'lightgray', fontWeight: 'bold', textAlign: 'center' },
+  input: { flex: 1, fontSize: 16, color: 'lightgray', fontWeight: 'bold', textAlign: 'right' },
   iconContainer: { flexDirection: 'row', justifyContent: 'flex-end', alignItems: 'center' },
   capitalize: { textTransform: "capitalize" },
   menuTitle: { textAlign: "center", padding: 20, paddingTop: 30, fontSize: 50 },
