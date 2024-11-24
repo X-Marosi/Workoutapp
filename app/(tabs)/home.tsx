@@ -7,14 +7,19 @@ import { useEffect, useState } from 'react';
 import { router } from 'expo-router';
 
 export default function Tab() {
-  const [workouts, setWorkouts] = useState<{id: string, name: string; exercises: string }[]>([]);
+  const [workouts, setWorkouts] = useState<{id: string, name: string; exercises: string; volume: string; duration: string }[]>([]);
 
 
   useEffect(() => {
     firestore().collection('workouts').onSnapshot(documentSnapshot => {
       const workoutsList = documentSnapshot.docs.map(doc => {
         const data = doc.data();
-        return {id: doc.id, name: data.name, exercises: data.exercises.map((exercise: { name: string }) => exercise.name).join(', ')};
+        return {
+          id: doc.id, 
+          name: data.name, 
+          volume: data.volume,
+          duration: data.duration,
+          exercises: data.exercises.map((exercise: { name: string }) => exercise.name).slice(0, 5).join(', ') };
       });
       setWorkouts(workoutsList);
     });
@@ -34,8 +39,13 @@ export default function Tab() {
           <TouchableOpacity style={styles.workoutContainer} onPress={() => router.navigate({ pathname: '/viewWou', params: { id: item.id } })}>
             <ThemedText style={styles.workoutName} type="title">{item.name}</ThemedText>
             <View style={styles.workoutContainerBox}>
-              <ThemedText type="subtitle">{item.exercises}</ThemedText>
+              <Text style={styles.exercises}>{item.exercises}</Text>
+              <View style={{flexDirection: "row"}}>
+                <Text style={styles.wouInfo}>Volume: {item.volume}</Text>
+                <Text style={styles.wouInfo}>Duration: {item.duration}</Text>
+              </View>
             </View>
+
           </TouchableOpacity>
         )}
         keyExtractor={item => item.id}
@@ -67,9 +77,6 @@ const styles = StyleSheet.create({
   },
   workoutContainer: {
     justifyContent: "center",
-    //border width and color for debugging
-    //borderWidth: 1,
-    //borderColor: 'red',
   },
   workoutContainerBox: {
     margin: 10,
@@ -81,6 +88,19 @@ const styles = StyleSheet.create({
   workoutName: {
     fontSize: 30,
     paddingLeft: 8,
+    textTransform: 'capitalize',
+  },
+
+  exercises: {
+    fontSize: 20,
+    color: 'white',
+    textTransform: 'capitalize',
+  },
+
+  wouInfo: {
+    fontSize: 15,
+    color: 'white',
+    paddingRight: 10,
   },
 
 });

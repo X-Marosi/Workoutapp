@@ -83,6 +83,7 @@ export default function Tab() {
   const navigation = useNavigation();
   const [totalWeight, setTotalWeight] = useState(0);
   const [totalSets, setTotalSets] = useState(0);
+  const [elapsedTime, setElapsedTime] = useState(0);
 
   const updateVolume = () => {
     let total = 0;
@@ -159,10 +160,20 @@ export default function Tab() {
     router.setParams({ selectedExercise: null });
   };
 
+  const formatTime = (time: number) => {
+    const hours = Math.floor(time / 3600);
+    const minutes = Math.floor((time % 3600) / 60);
+    const seconds = time % 60;
+
+    return `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+  };
+
   const uploadWorkout = async () => {
     const workoutData = {
       name: 'empty workout',
       createdAt: firestore.FieldValue.serverTimestamp(),
+      volume: totalWeight,
+      duration: formatTime(elapsedTime),
       exercises: exercises.map((exercise) => ({
         id: exercise.id,
         name: exercise.name,
@@ -212,6 +223,16 @@ export default function Tab() {
     updateTotalSets();
   }, [exerciseSets]);
 
+  useEffect(() => {
+    const startTime = Date.now();
+
+    const interval = setInterval(() => {
+      const currentTime = Date.now();
+      setElapsedTime(Math.floor((currentTime - startTime) / 1000)); // Calculate elapsed time in seconds
+    }, 1000);
+
+    return () => clearInterval(interval); // Cleanup interval on component unmount
+  }, []);
   
   return (
     <LinearGradient colors={['#1E1E1E', 'black']} style={styles.container}>
@@ -219,7 +240,7 @@ export default function Tab() {
       <View style={styles.containerData}>
         <View>
           <ThemedText style={styles.infoTitle} type="default">Duration</ThemedText>
-          <ThemedText style={styles.infoData} type="default"> {0}</ThemedText>
+          <ThemedText style={styles.infoData} type="default"> {formatTime(elapsedTime)}</ThemedText>
         </View>
 
         <View>

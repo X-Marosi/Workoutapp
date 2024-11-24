@@ -9,6 +9,8 @@ export default function ViewWorkout() {
     const { id: workoutId } = useLocalSearchParams<{ id: string }>(); // Extract workoutId from URL params
     const [data, setData] = useState([]);
     const [workoutName, setWorkoutName] = useState('');
+    const [volume, setVolume] = useState('');
+    const [duration, setDuration] = useState('00:00:00');
 
     useEffect(() => {
     if (workoutId) {
@@ -17,6 +19,8 @@ export default function ViewWorkout() {
             if (fetchedData) {
             setData(fetchedData.exercises || []);
             setWorkoutName(fetchedData.name || '');
+            setVolume(fetchedData.volume || '');
+            setDuration(fetchedData.duration || '00:00:00');
             }
         });
 
@@ -50,6 +54,10 @@ export default function ViewWorkout() {
     return (
     <LinearGradient colors={['#1E1E1E', 'black']} style={styles.container}>
         <ThemedText style={styles.menuTitle} type="title">{workoutName}</ThemedText>
+        <View style={{ flexDirection: 'row', justifyContent: 'space-between', padding: 20 }}>
+            <Text style={{ color: 'white' }}>Volume: {volume}</Text>
+            <Text style={{ color: 'white' }}>Duration: {duration}</Text>
+        </View>
 
         <FlatList
         data={data}
