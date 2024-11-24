@@ -1,11 +1,10 @@
-import { View, Text, StyleSheet, Button, Image, FlatList } from 'react-native';
+import { View, Text, StyleSheet, Button, Image, FlatList, TouchableOpacity } from 'react-native';
 import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
 import { LinearGradient } from 'expo-linear-gradient';
 import firestore from '@react-native-firebase/firestore';
 import { useEffect, useState } from 'react';
-
-const workoutsCollection = firestore().collection('workouts');
+import { router } from 'expo-router';
 
 export default function Tab() {
   const [workouts, setWorkouts] = useState<{id: string, name: string; exercises: string }[]>([]);
@@ -32,12 +31,12 @@ export default function Tab() {
       <FlatList
         data={workouts}
         renderItem={({ item }) => (
-          <View style={styles.workoutContainer}>
+          <TouchableOpacity style={styles.workoutContainer} onPress={() => router.navigate({ pathname: '/viewWou', params: { id: item.id } })}>
             <ThemedText style={styles.workoutName} type="title">{item.name}</ThemedText>
             <View style={styles.workoutContainerBox}>
               <ThemedText type="subtitle">{item.exercises}</ThemedText>
             </View>
-          </View>
+          </TouchableOpacity>
         )}
         keyExtractor={item => item.id}
       />
@@ -54,8 +53,10 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   menuTitle: {
-    textAlign: 'center',
+    textAlign: "center",
     padding: 20,
+    marginTop: 150,
+    paddingBottom: 150,
     fontSize: 50,
   },
   image: {

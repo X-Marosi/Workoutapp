@@ -69,9 +69,9 @@ const ExerciseItem = ({
     ))}
 
     <View style={styles.iconContainer}>
-      <Ionicons name="add" size={24} color="white" onPress={() => addSet(item.id)} />
-      <Ionicons name="remove" size={24} color="white" onPress={() => deleteSet(item.id)} />
-      <Ionicons name="checkmark" size={24} color="white" onPress={() => toggleState(item.id)} />
+      <Ionicons style={styles.icon} name="add" size={32} color="white" onPress={() => addSet(item.id)} />
+      <Ionicons style={styles.icon} name="remove" size={32} color="white" onPress={() => deleteSet(item.id)} />
+      <Ionicons style={styles.icon} name="checkmark" size={32} color="white" onPress={() => toggleState(item.id)} />
     </View>
   </View>
 );
@@ -273,7 +273,8 @@ const styles = StyleSheet.create({
   setContainer: { flexDirection: 'row', justifyContent: 'space-between' },
   setNumbers: { flexDirection: 'row', justifyContent: 'space-between', paddingLeft: 10, paddingRight: 8 },
   input: { flex: 1, fontSize: 16, color: 'lightgray', fontWeight: 'bold', textAlign: 'right' },
-  iconContainer: { flexDirection: 'row', justifyContent: 'flex-end', alignItems: 'center' },
+  iconContainer: { flexDirection: 'row', justifyContent: 'flex-end', alignItems: 'center'},
+  icon: { marginHorizontal: 6, paddingTop: 14 },
   capitalize: { textTransform: "capitalize" },
   menuTitle: { textAlign: "center", padding: 20, paddingTop: 30, fontSize: 50 },
   exGif: { width: 80, height: 80, borderRadius: 20 },
@@ -326,4 +327,3 @@ const styles = StyleSheet.create({
     padding: 10,
   }
 });
-

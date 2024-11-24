@@ -6,7 +6,7 @@ import { router } from "expo-router";
 
 export default function Tab() {
   return (
-    <ScrollView style={{ flex: 1 }}>
+    <View style={{ flex: 1 }}>
       <LinearGradient colors={["#1E1E1E", "black"]} style={styles.container}>
         <ThemedText style={styles.menuTitle} type="title">
           Workouts
@@ -30,28 +30,27 @@ export default function Tab() {
 
         <View style={{flexDirection: "row"}}>
           <Text style={styles.buttonNew} onPress={() => {}}>Add New Plan</Text>
-          <Text style={styles.buttonNew} onPress={() => {router.push("/blankWou")}}>Begin Empty Workout</Text>
+          <Text style={styles.buttonNew} onPress={() => {router.push("/emptyWou")}}>Begin Empty Workout</Text>
         </View>
 
 
 
 
       </LinearGradient>
-    </ScrollView>
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: "center",
   },
 
   menuTitle: {
     textAlign: "center",
     padding: 20,
-    paddingTop: 160,
-    paddingBottom: 160,
+    marginTop: 150,
+    paddingBottom: 150,
     fontSize: 50,
   },
 
