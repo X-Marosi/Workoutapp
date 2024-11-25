@@ -4,8 +4,11 @@ import { LinearGradient } from 'expo-linear-gradient';
 import { useLocalSearchParams } from 'expo-router';
 import { ThemedText } from '../components/ThemedText';
 import firestore from '@react-native-firebase/firestore';
+import auth from '@react-native-firebase/auth';
+
 
 export default function ViewWorkout() {
+    const user = auth().currentUser;
     const { id: workoutId } = useLocalSearchParams<{ id: string }>(); // Extract workoutId from URL params
     const [data, setData] = useState([]);
     const [workoutName, setWorkoutName] = useState('');
@@ -14,14 +17,16 @@ export default function ViewWorkout() {
 
     useEffect(() => {
     if (workoutId) {
-        const unsubscribe = firestore().collection('workouts').doc(workoutId.toString()).onSnapshot((documentSnapshot) => {
-            const fetchedData = documentSnapshot.data();
-            if (fetchedData) {
-            setData(fetchedData.exercises || []);
-            setWorkoutName(fetchedData.name || '');
-            setVolume(fetchedData.volume || '');
-            setDuration(fetchedData.duration || '00:00:00');
-            }
+        const unsubscribe = firestore().collection('users').doc(user?.uid).collection('workouts').onSnapshot(querySnapshot => {
+            querySnapshot.forEach(documentSnapshot => {
+                const fetchedData = documentSnapshot.data();
+                if (fetchedData) {
+                    setData(fetchedData.exercises || []);
+                    setWorkoutName(fetchedData.name || '');
+                    setVolume(fetchedData.volume || '');
+                    setDuration(fetchedData.duration || '00:00:00');
+                }
+            });
         });
 
         return () => unsubscribe(); // Cleanup the Firestore listener on unmount

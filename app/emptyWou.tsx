@@ -6,6 +6,7 @@ import { router, useNavigation } from 'expo-router';
 import { useLocalSearchParams } from 'expo-router';
 import { ThemedText } from '../components/ThemedText';
 import firestore from '@react-native-firebase/firestore';
+import auth from '@react-native-firebase/auth';
 
 type Exercise = { id: string; name: string; target: string; pic: ImageSourcePropType };
 type SetDetails = { setNumber: number; weight: number; reps: number };
@@ -169,6 +170,7 @@ export default function Tab() {
   };
 
   const uploadWorkout = async () => {
+    const user = auth().currentUser;
     const workoutData = {
       name: 'empty workout',
       createdAt: firestore.FieldValue.serverTimestamp(),
@@ -184,7 +186,8 @@ export default function Tab() {
         })),
       })),
     };
-    await firestore().collection('workouts').add(workoutData);
+    await firestore().collection('users').doc(user?.uid).collection('workouts').add(workoutData);
+    await firestore().collection('users').doc(user?.uid).update({ workouts: firestore.FieldValue.increment(1) });
     router.push('/workouts');
   };
 

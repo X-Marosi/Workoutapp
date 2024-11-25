@@ -95,7 +95,7 @@ export default function Tab() {
                 <Button title="Register" onPress={handleRegister} />
               )}
               
-              <Text style={styles.link} onPress={() => router.replace("/")}>Login here</Text>
+              <Text style={styles.link} onPress={() => router.replace("/login")}>Login here</Text>
             </>
           ) : ( // Setup Page
             <>

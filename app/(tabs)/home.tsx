@@ -5,13 +5,15 @@ import { LinearGradient } from 'expo-linear-gradient';
 import firestore from '@react-native-firebase/firestore';
 import { useEffect, useState } from 'react';
 import { router } from 'expo-router';
+import auth from '@react-native-firebase/auth';
 
 export default function Tab() {
   const [workouts, setWorkouts] = useState<{id: string, name: string; exercises: string; volume: string; duration: string }[]>([]);
+  const user = auth().currentUser;
 
 
   useEffect(() => {
-    firestore().collection('workouts').onSnapshot(documentSnapshot => {
+    firestore().collection('users').doc(user?.uid).collection('workouts').onSnapshot(documentSnapshot => {
       const workoutsList = documentSnapshot.docs.map(doc => {
         const data = doc.data();
         return {
@@ -19,9 +21,10 @@ export default function Tab() {
           name: data.name, 
           volume: data.volume,
           duration: data.duration,
-          exercises: data.exercises.map((exercise: { name: string }) => exercise.name).slice(0, 5).join(', ') };
+          exercises: data.exercises ? data.exercises.map((exercise: { name: string }) => exercise.name).slice(0, 5).join(', ') : '' };
       });
       setWorkouts(workoutsList);
+      console.log(workoutsList);
     });
   }, []);
 
@@ -33,23 +36,27 @@ export default function Tab() {
 
       {/*<Image source={require('@/assets/images/icon.png')} style={styles.image} />*/}
 
-      <FlatList
-        data={workouts}
-        renderItem={({ item }) => (
-          <TouchableOpacity style={styles.workoutContainer} onPress={() => router.navigate({ pathname: '/viewWou', params: { id: item.id } })}>
-            <ThemedText style={styles.workoutName} type="title">{item.name}</ThemedText>
-            <View style={styles.workoutContainerBox}>
-              <Text style={styles.exercises}>{item.exercises}</Text>
-              <View style={{flexDirection: "row"}}>
-                <Text style={styles.wouInfo}>Volume: {item.volume}</Text>
-                <Text style={styles.wouInfo}>Duration: {item.duration}</Text>
+      {workouts.length > 0 ? (
+        <FlatList
+          data={workouts}
+          renderItem={({ item }) => (
+            <TouchableOpacity style={styles.workoutContainer} onPress={() => router.navigate({ pathname: '/viewWou', params: { id: item.id } })}>
+              <ThemedText style={styles.workoutName} type="title">{item.name}</ThemedText>
+              <View style={styles.workoutContainerBox}>
+                <Text style={styles.exercises}>{item.exercises}</Text>
+                <View style={{flexDirection: "row"}}>
+                  <Text style={styles.wouInfo}>Volume: {item.volume}</Text>
+                  <Text style={styles.wouInfo}>Duration: {item.duration}</Text>
+                </View>
               </View>
-            </View>
+            </TouchableOpacity>
+          )}
+          keyExtractor={item => item.id}
+        />
+      ) : (
+        <ThemedText style={{textAlign: 'center'}} type="subtitle">No workouts found</ThemedText>
+      )}
 
-          </TouchableOpacity>
-        )}
-        keyExtractor={item => item.id}
-      />
 
     
       </LinearGradient>
