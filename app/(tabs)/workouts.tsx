@@ -30,7 +30,7 @@ export default function Tab() {
 
         <View style={{flexDirection: "row"}}>
           <Text style={styles.buttonNew} onPress={() => {}}>Add New Plan</Text>
-          <Text style={styles.buttonNew} onPress={() => {router.push("/emptyWou")}}>Begin Empty Workout</Text>
+          <Text style={styles.buttonNew} onPress={() => {router.push("/emptyWou")}}>Start New Workout</Text>
         </View>
 
 
@@ -56,7 +56,7 @@ const styles = StyleSheet.create({
 
   button: {
     color: "white",
-    backgroundColor: "#ba181b",
+    backgroundColor: "rebeccapurple",
     borderRadius: 8,
     padding: 5,
     margin: 0,
@@ -66,7 +66,7 @@ const styles = StyleSheet.create({
 
   buttonNew: {
     color: "white",
-    backgroundColor: "#ba181b",
+    backgroundColor: "rebeccapurple",
     borderRadius: 8,
     padding: 5,
     margin: 10,

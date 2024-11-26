@@ -45,7 +45,7 @@ export default function Tab() {
               <View style={styles.workoutContainerBox}>
                 <Text style={styles.exercises}>{item.exercises}</Text>
                 <View style={{flexDirection: "row"}}>
-                  <Text style={styles.wouInfo}>Volume: {item.volume}</Text>
+                  <Text style={styles.wouInfo}>Volume: {item.volume}kg</Text>
                   <Text style={styles.wouInfo}>Duration: {item.duration}</Text>
                 </View>
               </View>

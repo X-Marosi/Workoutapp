@@ -15,18 +15,18 @@ export default function ViewWorkout() {
     const [volume, setVolume] = useState('');
     const [duration, setDuration] = useState('00:00:00');
 
+
     useEffect(() => {
     if (workoutId) {
-        const unsubscribe = firestore().collection('users').doc(user?.uid).collection('workouts').onSnapshot(querySnapshot => {
-            querySnapshot.forEach(documentSnapshot => {
-                const fetchedData = documentSnapshot.data();
+        const unsubscribe = firestore().collection('users').doc(user?.uid).collection('workouts').doc(workoutId)
+        .onSnapshot(querySnapshot => {
+                const fetchedData = querySnapshot.data();
                 if (fetchedData) {
                     setData(fetchedData.exercises || []);
                     setWorkoutName(fetchedData.name || '');
                     setVolume(fetchedData.volume || '');
                     setDuration(fetchedData.duration || '00:00:00');
                 }
-            });
         });
 
         return () => unsubscribe(); // Cleanup the Firestore listener on unmount
@@ -60,7 +60,7 @@ export default function ViewWorkout() {
     <LinearGradient colors={['#1E1E1E', 'black']} style={styles.container}>
         <ThemedText style={styles.menuTitle} type="title">{workoutName}</ThemedText>
         <View style={{ flexDirection: 'row', justifyContent: 'space-between', padding: 20 }}>
-            <Text style={{ color: 'white' }}>Volume: {volume}</Text>
+            <Text style={{ color: 'white' }}>Volume: {volume}kg</Text>
             <Text style={{ color: 'white' }}>Duration: {duration}</Text>
         </View>
 

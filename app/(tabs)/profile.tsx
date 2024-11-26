@@ -81,7 +81,7 @@ const styles = StyleSheet.create({
   settings: {
     textAlign: 'center',
     fontSize: 20,
-    color: '#ba181b',
+    color: 'rebeccapurple',
     padding: 10,
   },
 
@@ -91,7 +91,7 @@ const styles = StyleSheet.create({
     right: 20,
     textAlign: 'center',
     fontSize: 20,
-    color: '#ba181b',
+    color: 'rebeccapurple',
   },
   menuTitle: {
     textAlign: 'center',
@@ -102,7 +102,7 @@ const styles = StyleSheet.create({
 
   userName: {
     textAlign: 'center',
-    color: '#e5383b',
+    color: 'rebeccapurple',
     padding: 20,
     fontSize: 40,
   },

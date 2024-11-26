@@ -18,7 +18,9 @@ web-build/
 
 expo-env.d.ts
 # @end expo-cli
+###########################
 assets/exercises/
 constants/exerciseNew.ts
+###########################
 constants/exercise.ts
 constants/removeList.ts

@@ -78,13 +78,27 @@ const ExerciseItem = ({
 );
 
 export default function Tab() {
-  const [exercises, setExercises] = useState<Exercise[]>([]);
-  const [exerciseSets, setExerciseSets] = useState<Record<string, ExerciseSet>>({});
   const { selectedExercise } = useLocalSearchParams<{ selectedExercise: string }>();
   const navigation = useNavigation();
+  const [exercises, setExercises] = useState<Exercise[]>([]);
+  const [exerciseSets, setExerciseSets] = useState<Record<string, ExerciseSet>>({});
   const [totalWeight, setTotalWeight] = useState(0);
   const [totalSets, setTotalSets] = useState(0);
   const [elapsedTime, setElapsedTime] = useState(0);
+
+  const nameWorkout = () => {
+    let time = new Date().getHours();
+
+    if (time >= 6 && time < 12) {
+      return "Morning Workout";
+    }
+    else if (time > 12 && time <= 18) {
+      return "Afternoon Workout";
+    }
+    else if (time > 18 || time < 6) {
+      return "Evening Workout";
+    }
+  }
 
   const updateVolume = () => {
     let total = 0;
@@ -172,7 +186,7 @@ export default function Tab() {
   const uploadWorkout = async () => {
     const user = auth().currentUser;
     const workoutData = {
-      name: 'empty workout',
+      name: nameWorkout(),
       createdAt: firestore.FieldValue.serverTimestamp(),
       volume: totalWeight,
       duration: formatTime(elapsedTime),
