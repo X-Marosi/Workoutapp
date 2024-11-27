@@ -59,9 +59,9 @@ export default function ViewWorkout() {
     return (
     <LinearGradient colors={['#1E1E1E', 'black']} style={styles.container}>
         <ThemedText style={styles.menuTitle} type="title">{workoutName}</ThemedText>
-        <View style={{ flexDirection: 'row', justifyContent: 'space-between', padding: 20 }}>
-            <Text style={{ color: 'white' }}>Volume: {volume}kg</Text>
-            <Text style={{ color: 'white' }}>Duration: {duration}</Text>
+        <View style={{ flexDirection: 'row', justifyContent: 'space-between', padding: 20,  }}>
+            <Text style={{ color: 'white', fontSize: 16, fontWeight: 'bold' }}>Volume: {volume}kg</Text>
+            <Text style={{ color: 'white', fontSize: 16, fontWeight: 'bold' }}>Duration: {duration}</Text>
         </View>
 
         <FlatList
@@ -78,7 +78,13 @@ export default function ViewWorkout() {
 
 const styles = StyleSheet.create({
   container: { flex: 1 },
-  menuTitle: { textAlign: 'center', padding: 20, paddingTop: 30, fontSize: 30, color: 'white' },
+  menuTitle: {
+    textAlign: "center",
+    padding: 40,
+    marginTop: 80,
+    paddingBottom: 70,
+    fontSize: 40,
+  },
   exerciseContainer: { marginBottom: 20, paddingHorizontal: 20, paddingVertical: 10, backgroundColor: '#2A2A2A', borderRadius: 10 },
   exerciseHeader: { marginBottom: 10 },
   exerciseTitle: { fontSize: 22, color: 'white', fontWeight: 'bold', textTransform: 'capitalize' },

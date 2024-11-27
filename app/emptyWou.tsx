@@ -19,7 +19,6 @@ const ExerciseItem = ({
   deleteSet, 
   exerciseSets, 
   updateSetDetails,
-  updateVolume
 }: {
   item: Exercise;
   toggleState: (id: string) => void;
@@ -98,7 +97,7 @@ export default function Tab() {
     else if (time > 18 || time < 6) {
       return "Evening Workout";
     }
-  }
+  };
 
   const updateVolume = () => {
     let total = 0;
@@ -181,7 +180,7 @@ export default function Tab() {
     const seconds = time % 60;
 
     return `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
-  };
+};
 
   const uploadWorkout = async () => {
     const user = auth().currentUser;
@@ -322,7 +321,7 @@ const styles = StyleSheet.create({
     marginTop: 10,
     height: 40,
     width: 75,
-    backgroundColor: '#ba181b', 
+    backgroundColor: 'rebeccapurple', 
     borderRadius: 5, 
     textAlign: 'center',
     textAlignVertical: 'center',
@@ -333,7 +332,7 @@ const styles = StyleSheet.create({
    buttonAdd: {
     height: 40,
     width: 140,
-    backgroundColor: '#ba181b',
+    backgroundColor: 'rebeccapurple',
     borderRadius: 5,
     justifyContent: 'center',
     alignItems: 'center',

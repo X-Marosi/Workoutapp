@@ -102,6 +102,7 @@ const styles = StyleSheet.create({
 
   userName: {
     textAlign: 'center',
+    fontWeight: 'bold',
     color: 'rebeccapurple',
     padding: 20,
     fontSize: 40,
