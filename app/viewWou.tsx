@@ -20,13 +20,25 @@ export default function ViewWorkout() {
     if (workoutId) {
         const unsubscribe = firestore().collection('users').doc(user?.uid).collection('workouts').doc(workoutId)
         .onSnapshot(querySnapshot => {
-                const fetchedData = querySnapshot.data();
-                if (fetchedData) {
-                    setData(fetchedData.exercises || []);
-                    setWorkoutName(fetchedData.name || '');
-                    setVolume(fetchedData.volume || '');
-                    setDuration(fetchedData.duration || '00:00:00');
-                }
+            const fetchedData = querySnapshot.data();
+            if (fetchedData) {
+                setData(fetchedData.exercises || []);
+                setWorkoutName(fetchedData.name || '');
+                setVolume(fetchedData.volume || '');
+                setDuration(fetchedData.duration || '00:00:00');
+            } else {
+                // If workout not found in 'workouts', check 'workoutPlans'
+                firestore().collection('users').doc(user?.uid).collection('workoutPlans').doc(workoutId)
+                .onSnapshot(planSnapshot => {
+                    const planData = planSnapshot.data();
+                    if (planData) {
+                        setData(planData.exercises || []);
+                        setWorkoutName(planData.name || '');
+                        setVolume(planData.volume || '');
+                        setDuration(planData.duration || '00:00:00');
+                    }
+                });
+            }
         });
 
         return () => unsubscribe(); // Cleanup the Firestore listener on unmount

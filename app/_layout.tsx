@@ -74,7 +74,7 @@ export default function RootLayout() {
         <Stack.Screen name="index" options={{ headerShown: false }}/>
         <Stack.Screen name="(tabs)" options={{ headerShown: false }}/>
         <Stack.Screen name="+not-found" options={{ headerShown: false }}/>
-        <Stack.Screen name="emptyWou" options={{ headerShown: false }}/>
+        <Stack.Screen name="newWou" options={{ headerShown: false }}/>
         <Stack.Screen name="viewWou" options={{ headerShown: false }}/>
         <Stack.Screen name="exerciseList" options={{ headerShown: false }}/>
         <Stack.Screen name="settings" options={{ headerShown: false }}/>

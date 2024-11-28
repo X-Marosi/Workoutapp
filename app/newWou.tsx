@@ -193,15 +193,31 @@ export default function Tab() {
         id: exercise.id,
         name: exercise.name,
         sets: exerciseSets[exercise.id].sets.map((set) => ({
-          //setNumber: set.setNumber,
           weight: set.weight,
           reps: set.reps,
         })),
       })),
     };
-    await firestore().collection('users').doc(user?.uid).collection('workouts').add(workoutData);
-    await firestore().collection('users').doc(user?.uid).update({ workouts: firestore.FieldValue.increment(1) });
-    router.push('/workouts');
+
+    //Save workout as Workout Plan?
+    Alert.alert(
+      'Save workout?',
+      'Do you want to save this workout as a workout plan?',
+      [
+        { text: "Don't save", onPress: async () => {
+          await firestore().collection('users').doc(user?.uid).collection('workouts').add(workoutData);
+          await firestore().collection('users').doc(user?.uid).update({ workouts: firestore.FieldValue.increment(1) });
+          router.push('/workouts');
+        } },
+        { text: 'Save', onPress: async () => {
+          workoutData.name = 'Workout Plan';
+          await firestore().collection('users').doc(user?.uid).collection('workouts').add(workoutData);
+          await firestore().collection('users').doc(user?.uid).collection('workoutPlans').add(workoutData);
+          await firestore().collection('users').doc(user?.uid).update({ workouts: firestore.FieldValue.increment(1) });
+          router.push('/workouts');
+        } },
+      ]
+    );
   };
 
   useEffect(() => {

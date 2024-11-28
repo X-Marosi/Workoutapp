@@ -24,7 +24,6 @@ export default function Tab() {
           exercises: data.exercises ? data.exercises.map((exercise: { name: string }) => exercise.name).slice(0, 5).join(', ') : '' };
       });
       setWorkouts(workoutsList);
-      console.log(workoutsList);
     });
   }, []);
 
@@ -35,6 +34,8 @@ export default function Tab() {
       <ThemedText style={styles.menuTitle} type="title">Home</ThemedText>
 
       {/*<Image source={require('@/assets/images/icon.png')} style={styles.image} />*/}
+
+      <ThemedText style={{ fontWeight: '400', padding: 20}} type="subtitle">Workout History</ThemedText>
 
       {workouts.length > 0 ? (
         <FlatList
@@ -70,10 +71,9 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   menuTitle: {
-    textAlign: "center",
+    textAlign: 'center',
+    marginTop: 100,
     padding: 20,
-    marginTop: 150,
-    paddingBottom: 150,
     fontSize: 50,
   },
   image: {
