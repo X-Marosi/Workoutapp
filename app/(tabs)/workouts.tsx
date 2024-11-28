@@ -4,13 +4,21 @@ import { LinearGradient } from "expo-linear-gradient";
 import { router } from "expo-router";
 import { useEffect, useState } from "react";
 import auth from '@react-native-firebase/auth';
-import firestore from '@react-native-firebase/firestore';
+import firestore, { Timestamp } from '@react-native-firebase/firestore';
+
 
 
 export default function Tab() {
 
-  const [workouts, setWorkouts] = useState<{id: string, name: string; exercises: string; volume: string; duration: string }[]>([]);
+  const [workouts, setWorkouts] = useState<{id: string, name: string; exercises: string; volume: string; duration: string; date:Timestamp }[]>([]);
   const user = auth().currentUser;
+
+  const lastSession = (date: Timestamp) => {
+    const now = Timestamp.now();
+    const diff = now.seconds - date.seconds;
+    const days = Math.floor(diff / 86400);
+    return `Last session: ${days} days ago`;
+  };
   
   
   useEffect(() => {
@@ -22,6 +30,7 @@ export default function Tab() {
           name: data.name, 
           volume: data.volume,
           duration: data.duration,
+          date: data.createdAt,
           exercises: data.exercises ? data.exercises.map((exercise: { name: string }) => exercise.name).slice(0, 5).join(', ') : '' };
       });
       setWorkouts(workoutsList);
@@ -31,12 +40,10 @@ export default function Tab() {
   return (
     <View style={{ flex: 1 }}>
       <LinearGradient colors={["#1E1E1E", "black"]} style={styles.container}>
-        <ThemedText style={styles.menuTitle} type="title">
-          Workouts
-        </ThemedText>
+        <ThemedText style={styles.menuTitle} type="title">Workouts</ThemedText>
 
         <View style={{flexDirection: "row", justifyContent: 'space-around'}}>
-          <Text style={styles.buttonNew} onPress={() => {}}>Create Plan</Text>
+          <Text style={styles.buttonNew} onPress={() => {}}>Smart Plan</Text>
           <Text style={styles.buttonNew} onPress={() => {router.push("/newWou")}}>New workout</Text>
         </View>
 
@@ -46,12 +53,13 @@ export default function Tab() {
           data={workouts}
           renderItem={({ item }) => (
             <TouchableOpacity style={styles.workoutContainer} onPress={() => router.navigate({ pathname: '/viewWou', params: { id: item.id } })}>
-              <ThemedText style={styles.workoutName} type="title">{item.name}</ThemedText>
               <View style={styles.workoutContainerBox}>
-                <Text style={styles.exercises}>{item.exercises}</Text>
-                <View style={{flexDirection: "row"}}>
-                  <Text style={styles.wouInfo}>Volume: {item.volume}kg</Text>
-                  <Text style={styles.wouInfo}>Duration: {item.duration}</Text>
+                <ThemedText style={styles.workoutName} type="subtitle">{item.name}</ThemedText>
+                <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+                  <Text style={styles.lastSession}>{lastSession(item.date)}</Text>
+                  <Text style={styles.buttonStartPlan} onPress={() => {
+                    router.navigate({ pathname: '/newWou', params: { selectedWorkout: item.id } });
+                  }}>Start Workout</Text>
                 </View>
               </View>
             </TouchableOpacity>
@@ -110,8 +118,8 @@ const styles = StyleSheet.create({
   },
 
   workoutName: {
-    fontSize: 30,
-    paddingLeft: 8,
+    fontSize: 26,
+    //paddingLeft: 8,
     textTransform: 'capitalize',
   },
 
@@ -125,5 +133,19 @@ const styles = StyleSheet.create({
     fontSize: 15,
     color: 'white',
     paddingRight: 10,
+  },
+  buttonStartPlan: {
+    color: "white",
+    backgroundColor: "rebeccapurple",
+    borderRadius: 8,
+    padding: 6,
+    fontSize: 20,
+    fontWeight: "bold",
+    alignSelf: "flex-end",
+  },
+  lastSession: {
+    color: 'lightgrey',
+    fontSize: 16,
+    paddingTop: 8,
   },
 });

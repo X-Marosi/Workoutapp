@@ -36,7 +36,7 @@ export default function Tab() {
             onPress={() => {
               //console.log(item);
               // Navigate back to the previous screen and pass the selected exercise
-              router.navigate({ pathname: '/emptyWou', params: { selectedExercise: JSON.stringify(item) } });
+              router.navigate({ pathname: '/newWou', params: { selectedExercise: JSON.stringify(item) } });
             }}>
             <View style={styles.containerBox}>
 

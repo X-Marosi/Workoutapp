@@ -33,7 +33,7 @@ const ExerciseItem = ({
       style={styles.containerBox}
       onPress={() => router.push({ pathname: '/exerciseDetails', params: { item: JSON.stringify(item) } })}
     >
-      <Image source={item.pic || require('@/assets/images/icon.png')} style={styles.exGif} />
+      <Image source={item.pic || require('@/assets/images/icon.png')} style={styles.exPic} />
       <View style={styles.exerciseInfo}>
         <ThemedText style={styles.capitalize} type="subtitle">{item.name}</ThemedText>
         <ThemedText style={styles.capitalize}>{item.target}</ThemedText>
@@ -77,7 +77,9 @@ const ExerciseItem = ({
 );
 
 export default function Tab() {
+  const user = auth().currentUser;
   const { selectedExercise } = useLocalSearchParams<{ selectedExercise: string }>();
+  const { selectedWorkout } = useLocalSearchParams<{ selectedWorkout: string }>();
   const navigation = useNavigation();
   const [exercises, setExercises] = useState<Exercise[]>([]);
   const [exerciseSets, setExerciseSets] = useState<Record<string, ExerciseSet>>({});
@@ -183,7 +185,6 @@ export default function Tab() {
 };
 
   const uploadWorkout = async () => {
-    const user = auth().currentUser;
     const workoutData = {
       name: nameWorkout(),
       createdAt: firestore.FieldValue.serverTimestamp(),
@@ -194,6 +195,7 @@ export default function Tab() {
         name: exercise.name,
         sets: exerciseSets[exercise.id].sets.map((set) => ({
           weight: set.weight,
+          setNumber: set.setNumber,
           reps: set.reps,
         })),
       })),
@@ -204,6 +206,7 @@ export default function Tab() {
       'Save workout?',
       'Do you want to save this workout as a workout plan?',
       [
+        { text: "Back", style: 'cancel', onPress: () => {} },
         { text: "Don't save", onPress: async () => {
           await firestore().collection('users').doc(user?.uid).collection('workouts').add(workoutData);
           await firestore().collection('users').doc(user?.uid).update({ workouts: firestore.FieldValue.increment(1) });
@@ -230,6 +233,25 @@ export default function Tab() {
       }));
     }
   }, [selectedExercise]);
+
+  useEffect(() => {
+    if (selectedWorkout && selectedWorkout !== 'null') {
+      const workoutRef = firestore().collection('users').doc(user?.uid).collection('workoutPlans').doc(selectedWorkout);
+
+      workoutRef.get().then((doc) => {
+        if (doc.exists) {
+          const data = doc.data();
+          setExercises(data?.exercises || []);
+          setExerciseSets(
+            data?.exercises.reduce((acc: Record<string, ExerciseSet>, exercise: { id: string, sets: SetDetails[] }) => {
+            acc[exercise.id] = { isComplete: false, sets: exercise.sets };
+              return acc;
+            }, {})
+          );
+        }
+      });
+    }
+  }, [selectedWorkout]);
 
   useEffect(() => {
     const unsubscribe = navigation.addListener('beforeRemove', (event) => {
@@ -320,9 +342,14 @@ export default function Tab() {
 const styles = StyleSheet.create({
   container: { flex: 1 },
   exerciseContainer: { padding: 10, marginVertical: 5 },
-  finished: { backgroundColor: "rgba(0, 255, 0, 0.2)" },
-  containerBox: { flexDirection: "row", alignItems: "center", marginBottom: 16 },
-  exerciseInfo: { marginLeft: 10 },
+  finished: { backgroundColor: "rgba(40, 191, 55, 0.25)" },
+  containerBox: { flexDirection: "row", alignItems: "center", marginBottom: 16 , width: '100%'},
+  exerciseInfo: { 
+    marginLeft: 10, 
+    width: '70%', 
+    justifyContent: 'center', 
+    alignItems: 'center',
+  },
   setContainer: { flexDirection: 'row', justifyContent: 'space-between' },
   setNumbers: { flexDirection: 'row', justifyContent: 'space-between', paddingLeft: 10, paddingRight: 8 },
   input: { flex: 1, fontSize: 16, color: 'lightgray', fontWeight: 'bold', textAlign: 'right' },
@@ -330,7 +357,7 @@ const styles = StyleSheet.create({
   icon: { marginHorizontal: 6, paddingTop: 14 },
   capitalize: { textTransform: "capitalize" },
   menuTitle: { textAlign: "center", padding: 20, paddingTop: 30, fontSize: 50 },
-  exGif: { width: 80, height: 80, borderRadius: 20 },
+  exPic: { width: 60, height: 60, borderRadius: 20 },
   exSet: { color: 'lightgray', fontSize: 16, textTransform: 'capitalize' },
   setText: { fontWeight: 'bold', textAlign: 'center' },
   buttonFinish: { 

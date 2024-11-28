@@ -2,15 +2,21 @@ import { View, Text, StyleSheet, Button, Image, FlatList, TouchableOpacity } fro
 import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
 import { LinearGradient } from 'expo-linear-gradient';
-import firestore from '@react-native-firebase/firestore';
 import { useEffect, useState } from 'react';
 import { router } from 'expo-router';
 import auth from '@react-native-firebase/auth';
+import firestore, { Timestamp } from '@react-native-firebase/firestore';
 
 export default function Tab() {
-  const [workouts, setWorkouts] = useState<{id: string, name: string; exercises: string; volume: string; duration: string }[]>([]);
+  const [workouts, setWorkouts] = useState<{id: string, name: string; exercises: string; volume: string; duration: string, date: Timestamp }[]>([]);
   const user = auth().currentUser;
 
+  const lastSession = (date: Timestamp) => {
+    const now = Timestamp.now();
+    const diff = now.seconds - date.seconds;
+    const days = Math.floor(diff / 86400);
+    return `${days} days ago`;
+  };
 
   useEffect(() => {
     firestore().collection('users').doc(user?.uid).collection('workouts').onSnapshot(documentSnapshot => {
@@ -21,6 +27,7 @@ export default function Tab() {
           name: data.name, 
           volume: data.volume,
           duration: data.duration,
+          date: data.createdAt,
           exercises: data.exercises ? data.exercises.map((exercise: { name: string }) => exercise.name).slice(0, 5).join(', ') : '' };
       });
       setWorkouts(workoutsList);
@@ -35,7 +42,7 @@ export default function Tab() {
 
       {/*<Image source={require('@/assets/images/icon.png')} style={styles.image} />*/}
 
-      <ThemedText style={{ fontWeight: '400', padding: 20}} type="subtitle">Workout History</ThemedText>
+      <ThemedText style={{ fontWeight: '400', padding: 20, alignSelf: 'center'}} type="subtitle">Workout History</ThemedText>
 
       {workouts.length > 0 ? (
         <FlatList
@@ -45,9 +52,9 @@ export default function Tab() {
               <ThemedText style={styles.workoutName} type="title">{item.name}</ThemedText>
               <View style={styles.workoutContainerBox}>
                 <Text style={styles.exercises}>{item.exercises}</Text>
-                <View style={{flexDirection: "row"}}>
-                  <Text style={styles.wouInfo}>Volume: {item.volume}kg</Text>
+                <View style={{flexDirection: "row", justifyContent: 'space-between'}}>
                   <Text style={styles.wouInfo}>Duration: {item.duration}</Text>
+                  <Text style={styles.wouInfo}>{lastSession(item.date)}</Text>
                 </View>
               </View>
             </TouchableOpacity>
@@ -89,17 +96,17 @@ const styles = StyleSheet.create({
     margin: 10,
     padding: 10,
     backgroundColor: "#222",
-    borderRadius: 8,
+    borderRadius: 4,
   },
 
   workoutName: {
-    fontSize: 30,
+    fontSize: 24,
     paddingLeft: 8,
     textTransform: 'capitalize',
   },
 
   exercises: {
-    fontSize: 20,
+    fontSize: 16,
     color: 'white',
     textTransform: 'capitalize',
   },
@@ -107,6 +114,7 @@ const styles = StyleSheet.create({
   wouInfo: {
     fontSize: 15,
     color: 'white',
+    paddingTop: 10,
     paddingRight: 10,
   },
 
