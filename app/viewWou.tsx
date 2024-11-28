@@ -54,13 +54,13 @@ export default function ViewWorkout() {
         <View style={styles.setContainer}>
         <View style={styles.setRow}>
             <Text style={[styles.setHeader, styles.headerIndex]}>Set</Text>
-            <Text style={styles.setHeader}>Weight (kg)</Text>
+            <Text style={styles.setHeader}>Weight</Text>
             <Text style={styles.setHeader}>Reps</Text>
         </View>
         {item.sets.map((set, index) => (
             <View key={index} style={styles.setRow}>
             <Text style={[styles.setCell, styles.cellIndex]}>{index + 1}</Text>
-            <Text style={styles.setCell}>{set.weight}</Text>
+            <Text style={styles.setCell}>{set.weight}kg</Text>
             <Text style={styles.setCell}>{set.reps}</Text>
             </View>
         ))}
@@ -97,7 +97,7 @@ const styles = StyleSheet.create({
     paddingBottom: 70,
     fontSize: 40,
   },
-  exerciseContainer: { marginBottom: 20, paddingHorizontal: 20, paddingVertical: 10, backgroundColor: '#2A2A2A', borderRadius: 10 },
+  exerciseContainer: { marginBottom: 20,marginHorizontal: 20, paddingHorizontal: 15, paddingVertical: 10, backgroundColor: '#222', borderRadius: 10 },
   exerciseHeader: { marginBottom: 10 },
   exerciseTitle: { fontSize: 22, color: 'white', fontWeight: 'bold', textTransform: 'capitalize' },
   setContainer: { marginTop: 10 },

@@ -38,24 +38,26 @@ export default function Tab() {
           <ThemedText style={styles.menuTitle} type="title">Welcome</ThemedText>
 
           <TextInput
+            placeholderTextColor={'grey'}
             style={styles.input}
             value={email}
             onChangeText={setEmail}
-            placeholder="Email"
+            placeholder="EMAIL"
             keyboardType="email-address"
           />
 
           <TextInput
+            placeholderTextColor={'grey'}
             style={styles.input}
             value={password}
             onChangeText={setPassword}
-            placeholder="Password"
+            placeholder="PASSWORD"
             secureTextEntry
           />
           
-          {loading ? (<ActivityIndicator size="large" color="#0a7ea4" />) : (
+          {loading ? (<ActivityIndicator size="large" color="rebeccapurple" />) : (
               <>
-              <Button title="Login" onPress={handleLogin} />
+              <Text style={styles.buttonNew} onPress={handleLogin}>Login</Text>
               </>
             )}
 
@@ -72,6 +74,26 @@ const styles = StyleSheet.create({
   container: { flex: 1, justifyContent: 'center' },
   menuTitle: { textAlign: 'center', padding: 20, fontSize: 50 },
   image: { width: 150, height: 150, borderRadius: 150 / 2, alignSelf: 'center' },
-  input: { backgroundColor: 'white', padding: 10, margin: 10 },
-  link: { textAlign: 'center', color: '#0a7ea4', padding: 10,},
+  input: { 
+    color: 'white',
+    padding: 10,
+    margin: 10,
+    alignSelf: 'center',
+    fontSize: 22,
+    backgroundColor: '#222',
+    borderRadius: 4,
+    width: '80%',
+  },
+  link: { textAlign: 'center', color: 'rebeccapurple', padding: 10, fontSize: 16 },
+  buttonNew: {
+    color: "white",
+    backgroundColor: "rebeccapurple",
+    borderRadius: 8,
+    padding: 6,
+    paddingHorizontal: 20,
+    margin: 10,
+    fontSize: 22,
+    alignSelf: "center",
+    fontWeight: "bold",
+  },
 });
