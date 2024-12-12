@@ -11,12 +11,26 @@ export default function Tab() {
   const [workouts, setWorkouts] = useState<{id: string, name: string; exercises: string; volume: string; duration: string, date: Timestamp }[]>([]);
   const user = auth().currentUser;
 
-  const lastSession = (date: Timestamp) => {
+  const lastSession = (date: Timestamp | null | undefined) => {
+    if (!date) {
+      return "Last session: N/A";
+    }
     const now = Timestamp.now();
     const diff = now.seconds - date.seconds;
     const days = Math.floor(diff / 86400);
-    return `${days} days ago`;
+
+    if (days < 1) {
+      const hours = Math.floor(diff / 3600);
+      if(hours < 1) {
+        return `now`;
+      }
+      return `${hours} hours ago`;
+    }
+    else {
+      return `${days} days ago`;
+    }
   };
+  
 
   useEffect(() => {
     firestore().collection('users').doc(user?.uid).collection('workouts').onSnapshot(documentSnapshot => {
@@ -49,8 +63,8 @@ export default function Tab() {
           data={workouts}
           renderItem={({ item }) => (
             <TouchableOpacity style={styles.workoutContainer} onPress={() => router.navigate({ pathname: '/viewWou', params: { id: item.id } })}>
-              <ThemedText style={styles.workoutName} type="title">{item.name}</ThemedText>
               <View style={styles.workoutContainerBox}>
+                <ThemedText style={styles.workoutName} type="title">{item.name}</ThemedText>
                 <Text style={styles.exercises}>{item.exercises}</Text>
                 <View style={{flexDirection: "row", justifyContent: 'space-between'}}>
                   <Text style={styles.wouInfo}>Duration: {item.duration}</Text>
@@ -91,17 +105,17 @@ const styles = StyleSheet.create({
   },
   workoutContainer: {
     justifyContent: "center",
+    marginVertical: 6,
+    marginHorizontal: 8,
   },
   workoutContainerBox: {
-    margin: 10,
     padding: 10,
     backgroundColor: "#222",
-    borderRadius: 4,
+    borderRadius: 6,
   },
 
   workoutName: {
     fontSize: 24,
-    paddingLeft: 8,
     textTransform: 'capitalize',
   },
 

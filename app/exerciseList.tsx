@@ -29,7 +29,7 @@ export default function Tab() {
     <ThemedView style={styles.container}>
       <LinearGradient colors={["#1E1E1E", "black"]} style={{ padding: 16, flex: 1 }}>
 
-        <TextInput style={styles.searchBar} placeholder="Search exercises" value={searchQuery} onChangeText={setSearchQuery}/>
+        <TextInput style={styles.searchBar} placeholderTextColor={'white'} placeholder="Search exercises" value={searchQuery} onChangeText={setSearchQuery}/>
 
         <FlatList data={filteredExercises} renderItem={({ item }) => (
             <TouchableOpacity 
@@ -65,12 +65,13 @@ const styles = StyleSheet.create({
   },
   searchBar: {
     height: 40,
-    borderColor: "gray",
-    borderWidth: 1,
-    borderRadius: 8,
-    paddingHorizontal: 8,
+    paddingHorizontal: 12,
     marginBottom: 16,
-    backgroundColor: "white",
+    marginTop: 40,
+    borderRadius: 8,
+    color: "white",
+    backgroundColor: "#222",
+    fontSize: 18,
   },
   containerBox: {
     flexDirection: "row",

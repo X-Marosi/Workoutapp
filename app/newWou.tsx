@@ -201,6 +201,15 @@ export default function Tab() {
       })),
     };
 
+    //If workout is an existing workout plan, update the workout plan
+    if (selectedWorkout && selectedWorkout !== 'null') {
+      workoutData.name = 'Workout Plan';
+      await firestore().collection('users').doc(user?.uid).collection('workouts').add(workoutData);
+      await firestore().collection('users').doc(user?.uid).collection('workoutPlans').doc(selectedWorkout).update(workoutData);
+      router.push('/workouts');
+      return;
+    }
+
     //Save workout as Workout Plan?
     Alert.alert(
       'Save workout?',

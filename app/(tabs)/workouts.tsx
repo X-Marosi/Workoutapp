@@ -13,12 +13,28 @@ export default function Tab() {
   const [workouts, setWorkouts] = useState<{id: string, name: string; exercises: string; volume: string; duration: string; date:Timestamp }[]>([]);
   const user = auth().currentUser;
 
-  const lastSession = (date: Timestamp) => {
+  const lastSession = (date: Timestamp | null | undefined) => {
+    if (!date) {
+      return "Last session: N/A";
+    }
+  
     const now = Timestamp.now();
     const diff = now.seconds - date.seconds;
     const days = Math.floor(diff / 86400);
-    return `Last session: ${days} days ago`;
+
+    if (days < 1) {
+      const hours = Math.floor(diff / 3600);
+      if(hours < 1) {
+        return `Last session: now`;
+      }
+      return `Last session: ${hours} hours ago`;
+    }
+    else {
+      return `Last session: ${days} days ago`;
+    }
+    
   };
+  
   
   
   useEffect(() => {
@@ -109,12 +125,13 @@ const styles = StyleSheet.create({
   },
   workoutContainer: {
     justifyContent: "center",
+    marginVertical: 6,
+    marginHorizontal: 8,
   },
   workoutContainerBox: {
-    margin: 10,
     padding: 10,
     backgroundColor: "#222",
-    borderRadius: 8,
+    borderRadius: 6,
   },
 
   workoutName: {
