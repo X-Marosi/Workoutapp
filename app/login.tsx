@@ -56,9 +56,9 @@ export default function Tab() {
           />
           
           {loading ? (<ActivityIndicator size="large" color="rebeccapurple" />) : (
-              <>
-              <Text style={styles.buttonNew} onPress={handleLogin}>Login</Text>
-              </>
+              <View>
+                <Text style={styles.buttonNew} onPress={handleLogin}>Login</Text>
+              </View>
             )}
 
           <Text style={styles.link} onPress={() => router.push("/register")}>Don't have an account? Register here</Text>

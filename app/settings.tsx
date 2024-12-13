@@ -8,18 +8,13 @@ import firestore from '@react-native-firebase/firestore';
 import { useEffect, useState } from 'react';
 
 export default function Tab() {
-  const [page, setPage] = useState<'settings' | 'change'>('settings');
+  const [page, setPage] = useState<'none' | 'weight' | 'name' | 'height' | 'age'>('none');
   const user = auth().currentUser;
   const [name, setName] = useState('');
   const [weight, setWeight] = useState('');
   const [height, setHeight] = useState('');
   const [age, setAge] = useState('');
   const [current, setCurrent] = useState('');
-
-  const changeData = (data: string) => {
-    setCurrent(data);
-    setPage('change');
-  }
 
   useEffect(() => {
     const subscriber = firestore().collection('users').doc(user?.uid).onSnapshot(documentSnapshot => {
@@ -35,43 +30,71 @@ export default function Tab() {
     <ThemedView style={styles.container}>
       <LinearGradient colors={['#1E1E1E', 'black']} style={styles.container}>
 
-        {page === 'settings' ? (
-          <View>
-            <ThemedText style={styles.menuTitle} type="title">Settings</ThemedText>
+        <ThemedText style={styles.menuTitle} type="title">Settings</ThemedText>
 
-            <Text style={styles.settingText}>Name</Text>
-            <View style={styles.settingOption}>
-              <Text style={styles.settingText}>{name}</Text>
-              <Text style={styles.link} onPress={()=>{changeData(name)}}>Change</Text>
-            </View>
+        {page === 'name' ? (
+          <View style={styles.settingOption}>
+            <Text style={styles.button} onPress={()=>{setPage('none')}}>Back</Text>
 
-            <Text style={styles.settingText}>Weight</Text>
-            <View style={styles.settingOption}>
-              <Text style={styles.settingText}>{weight}kg</Text>
-              <Text style={styles.link} onPress={()=>{}}>Change</Text>
-            </View>
+            <TextInput placeholder={name} placeholderTextColor='darkgrey' style={styles.input} onChangeText={setCurrent}/>
 
-            <Text style={styles.settingText}>Height</Text>
-            <View style={styles.settingOption}>
-              <Text style={styles.settingText}>{height}cm</Text>
-              <Text style={styles.link} onPress={()=>{}}>Change</Text>
-            </View>
-
-            <Text style={styles.settingText}>Age</Text>
-            <View style={styles.settingOption}>
-              <Text style={styles.settingText}>{age}</Text>
-              <Text style={styles.link} onPress={()=>{}}>Change</Text>
-            </View>
-
+            <Text style={styles.button} onPress={()=>{setPage('none'); if (current != '') { firestore().collection('users').doc(user?.uid).update({username: current}) }}}>Save</Text>
           </View>
         ) : (
-          <View>
-            <TextInput placeholder={current}  placeholderTextColor='white' style={styles.input}/>
-          </View>
+        <View style={styles.settingOption}>
+          <Text style={styles.settingName}>Name</Text>
+          <Text style={styles.settingText}>{name}</Text>
+          <Text style={styles.button} onPress={()=>{setCurrent(''); setPage('name')}}>Change</Text>
+        </View>
         )}
 
-      
-     
+        {page === 'weight' ? (
+          <View style={styles.settingOption}>
+            <Text style={styles.button} onPress={()=>{setPage('none')}}>Back</Text>
+
+            <TextInput placeholder={weight} placeholderTextColor='darkgrey' style={styles.input} onChangeText={setCurrent}/>
+
+            <Text style={styles.button} onPress={()=>{setPage('none'); if (current != '') { firestore().collection('users').doc(user?.uid).update({weight: current}) }}}>Save</Text>
+          </View>
+        ) : (
+        <View style={styles.settingOption}>
+          <Text style={styles.settingName}>Weight</Text>
+          <Text style={styles.settingText}>{weight}</Text>
+          <Text style={styles.button} onPress={()=>{setCurrent(''); setPage('weight')}}>Change</Text>
+        </View>
+        )}
+
+        {page === 'height' ? (
+          <View style={styles.settingOption}>
+            <Text style={styles.button} onPress={()=>{setPage('none')}}>Back</Text>
+
+            <TextInput placeholder={height} placeholderTextColor='darkgrey' style={styles.input} onChangeText={setCurrent}/>
+
+            <Text style={styles.button} onPress={()=>{setPage('none'); if (current != '') { firestore().collection('users').doc(user?.uid).update({height: current}) }}}>Save</Text>
+          </View>
+        ) : (
+        <View style={styles.settingOption}>
+          <Text style={styles.settingName}>Height</Text>
+          <Text style={styles.settingText}>{height}</Text>
+          <Text style={styles.button} onPress={()=>{setCurrent(''); setPage('height')}}>Change</Text>
+        </View>
+        )}
+
+        {page === 'age' ? (
+          <View style={styles.settingOption}>
+            <Text style={styles.button} onPress={()=>{setPage('none')}}>Back</Text>
+
+            <TextInput placeholder={age} placeholderTextColor='darkgrey' style={styles.input} onChangeText={setCurrent}/>
+
+            <Text style={styles.button} onPress={()=>{setPage('none'); if (current != '') { firestore().collection('users').doc(user?.uid).update({age: current}) }}}>Save</Text>
+          </View>
+        ) : (
+        <View style={styles.settingOption}>
+          <Text style={styles.settingName}>Age</Text>
+          <Text style={styles.settingText}>{age}</Text>
+          <Text style={styles.button} onPress={()=>{setCurrent(''); setPage('age')}}>Change</Text>
+        </View>
+        )}
 
       </LinearGradient>
     </ThemedView>
@@ -80,11 +103,17 @@ export default function Tab() {
 
 const styles = StyleSheet.create({
   container: { flex: 1, justifyContent: 'center', },
-  menuTitle: { textAlign: 'center', padding: 20, fontSize: 50, },
+  menuTitle: {
+    textAlign: 'center',
+    marginVertical: 100,
+    padding: 20,
+    fontSize: 50,
+  },
   settingOption: { flexDirection: 'row', justifyContent: 'space-between', padding: 20},
-  settingText: { color: 'white' },
+  settingText: { alignSelf: 'center', fontSize: 25, color: 'white', fontWeight: 'bold', textAlign: 'center', width: 100 },
+  settingName: { fontSize: 24, color: 'darkgrey', fontWeight: 'bold', width: 100 },
   settingTitle: { fontSize: 20, color: 'white', textAlign: 'center', padding: 20 },
-  link: { textAlign: 'center', color: '#0a7ea4'},
-  input: { textAlign: 'center', padding: 20, fontSize: 60, color: 'white', fontWeight: 'bold' },
+  button: { textAlign: 'center', color: 'rebeccapurple', fontSize: 18, padding: 10, width: 100  },
+  input: { textAlign: 'center', fontSize: 24, color: 'white', fontWeight: 'bold', backgroundColor: '#222', borderRadius: 8, width: 100},
 });
 
