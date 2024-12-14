@@ -34,11 +34,7 @@ export default function Tab() {
         <FlatList data={filteredExercises} renderItem={({ item }) => (
             <TouchableOpacity 
             onPress={() => {
-              //console.log(item);
-              // Navigate back to the previous screen and pass the selected exercise
-              router.navigate({ pathname: '/newWou', params: { selectedExercise: JSON.stringify(item) } });
-
-              
+              router.push({ pathname: '/exerciseDetails', params: { item: JSON.stringify(item) } })
             }}>
             <View style={styles.containerBox}>
 

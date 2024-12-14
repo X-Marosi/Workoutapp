@@ -33,6 +33,15 @@ export default function TabLayout() {
         }}
       />
       <Tabs.Screen
+        name="exercisesList"
+        options={{
+          title: 'Exercises',
+          tabBarIcon: ({ color, focused }) => (
+            <TabBarIcon name={focused ? 'podium' : 'podium'} color={color} />
+          ),
+        }}
+      />
+      <Tabs.Screen
         name="profile"
         options={{
           title: 'Profile',
