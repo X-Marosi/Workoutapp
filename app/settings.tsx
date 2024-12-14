@@ -19,12 +19,21 @@ export default function Tab() {
   useEffect(() => {
     const subscriber = firestore().collection('users').doc(user?.uid).onSnapshot(documentSnapshot => {
       setName(documentSnapshot.data()?.username);
-      setWeight(documentSnapshot.data()?.weight);
+      setWeight(documentSnapshot.data()?.weight[documentSnapshot.data()?.weight.length - 1]);
       setHeight(documentSnapshot.data()?.height);
       setAge(documentSnapshot.data()?.age);
     });
     return subscriber;
   }, []);
+
+  const addWeight = async (current: string) => {
+
+      const userDoc = firestore().collection('users').doc(user?.uid);
+      const userSnapshot = await userDoc.get();
+      const currentWeights = userSnapshot.data()?.weight || []; // Default to empty array if undefined
+      const updatedWeights = [...currentWeights, parseInt(current)];
+      await userDoc.update({ weight: updatedWeights });
+  };
 
   return (
     <ThemedView style={styles.container}>
@@ -36,7 +45,7 @@ export default function Tab() {
           <View style={styles.settingOption}>
             <Text style={styles.button} onPress={()=>{setPage('none')}}>Back</Text>
 
-            <TextInput placeholder={name} placeholderTextColor='darkgrey' style={styles.input} onChangeText={setCurrent}/>
+            <TextInput placeholder={name} placeholderTextColor='darkgrey' keyboardType='numeric' style={styles.input} onChangeText={setCurrent}/>
 
             <Text style={styles.button} onPress={()=>{setPage('none'); if (current != '') { firestore().collection('users').doc(user?.uid).update({username: current}) }}}>Save</Text>
           </View>
@@ -52,9 +61,13 @@ export default function Tab() {
           <View style={styles.settingOption}>
             <Text style={styles.button} onPress={()=>{setPage('none')}}>Back</Text>
 
-            <TextInput placeholder={weight} placeholderTextColor='darkgrey' style={styles.input} onChangeText={setCurrent}/>
+            <TextInput placeholder={weight.toString()} placeholderTextColor='darkgrey' keyboardType='numeric' style={styles.input} onChangeText={setCurrent}/>
 
-            <Text style={styles.button} onPress={()=>{setPage('none'); if (current != '') { firestore().collection('users').doc(user?.uid).update({weight: current}) }}}>Save</Text>
+            <Text style={styles.button} onPress={()=> {
+                setPage('none'); 
+                if (current != '') { addWeight(current);} 
+              }}>Save
+            </Text>
           </View>
         ) : (
         <View style={styles.settingOption}>
@@ -68,7 +81,7 @@ export default function Tab() {
           <View style={styles.settingOption}>
             <Text style={styles.button} onPress={()=>{setPage('none')}}>Back</Text>
 
-            <TextInput placeholder={height} placeholderTextColor='darkgrey' style={styles.input} onChangeText={setCurrent}/>
+            <TextInput placeholder={height} placeholderTextColor='darkgrey' keyboardType='numeric' style={styles.input} onChangeText={setCurrent}/>
 
             <Text style={styles.button} onPress={()=>{setPage('none'); if (current != '') { firestore().collection('users').doc(user?.uid).update({height: current}) }}}>Save</Text>
           </View>
@@ -84,7 +97,7 @@ export default function Tab() {
           <View style={styles.settingOption}>
             <Text style={styles.button} onPress={()=>{setPage('none')}}>Back</Text>
 
-            <TextInput placeholder={age} placeholderTextColor='darkgrey' style={styles.input} onChangeText={setCurrent}/>
+            <TextInput placeholder={age} placeholderTextColor='darkgrey' keyboardType='numeric' style={styles.input} onChangeText={setCurrent}/>
 
             <Text style={styles.button} onPress={()=>{setPage('none'); if (current != '') { firestore().collection('users').doc(user?.uid).update({age: current}) }}}>Save</Text>
           </View>

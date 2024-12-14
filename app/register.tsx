@@ -14,14 +14,14 @@ export default function Tab() {
   const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [weight, setWeight] = useState('');
+  const [weight, setWeight] = useState<number[]>([]);
   const [height, setHeight] = useState('');
   const [age, setAge] = useState('');
 
   // Registration Handler
   const handleRegister = async () => {
-    if (!username.trim()) {
-      alert("Username is required");
+    if (!username.trim() || !email.trim() || !password.trim()) {
+      alert("Missing required field");
       return;
     }
     setLoading(true);
@@ -36,14 +36,10 @@ export default function Tab() {
         username,
         email,
         createdAt: firestore.FieldValue.serverTimestamp(),
-        weight: 0,
+        weight,
         height: 0,
         age: 0,
         workouts: 0,
-      });
-      //Create a collection for the user's workouts
-      await firestore().collection('users').doc(user.user?.uid).collection('workouts').doc().set({
-        createdAt: firestore.FieldValue.serverTimestamp()
       });
 
       // Navigate to setup page
@@ -58,7 +54,7 @@ export default function Tab() {
 
   // Setup Handler
   const handleSetup = async () => {
-    if (!weight.trim() || !height.trim() || !age.trim()) {
+    if (!weight || !height.trim() || !age.trim()) {
       alert("Missing required fields");
       return;
     }
@@ -69,6 +65,7 @@ export default function Tab() {
         height,
         age,
       });
+      await firestore().collection('users').doc(auth().currentUser?.uid).collection('records').doc().set({ weight: weight});
       router.replace("/(tabs)/home");
     } catch (error) {
       const err = error as FirebaseError;
@@ -99,14 +96,14 @@ export default function Tab() {
             </>
           ) : ( // Setup Page
             <>
-              <ThemedText style={styles.menuTitle} type="title">Setting up your account</ThemedText>
-              <TextInput style={styles.input} placeholderTextColor={'grey'} value={weight} onChangeText={setWeight} placeholder="WEIGHT" keyboardType="numeric"/>
-              <TextInput style={styles.input} placeholderTextColor={'grey'} value={height} onChangeText={setHeight} placeholder="HEIGHT" keyboardType="numeric"/>
-              <TextInput style={styles.input} placeholderTextColor={'grey'} value={age} onChangeText={setAge} placeholder="AGE" keyboardType="numeric"/>
+                <ThemedText style={styles.menuTitle} type="title">Setting up your account</ThemedText>
+                <TextInput style={styles.input} placeholderTextColor={'grey'} value={weight[0]?.toString()} onChangeText={(text) => setWeight([parseFloat(text)])} placeholder="WEIGHT" keyboardType="numeric"/>
+                <TextInput style={styles.input} placeholderTextColor={'grey'} value={height} onChangeText={setHeight} placeholder="HEIGHT" keyboardType="numeric"/>
+                <TextInput style={styles.input} placeholderTextColor={'grey'} value={age} onChangeText={setAge} placeholder="AGE" keyboardType="numeric"/>
 
-              {loading ? (
+                {loading ? (
                 <ActivityIndicator size="large" color="rebeccapurple" />
-              ) : (
+                ) : (
                 <Text style={styles.buttonNew} onPress={handleSetup}>Continue</Text>
               )}
             </>

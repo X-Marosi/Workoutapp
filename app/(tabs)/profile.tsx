@@ -15,14 +15,17 @@ export default function Tab() {
 
   const user = auth().currentUser;
   const [name, setName] = useState('');
-  const [weight, setWeight] = useState('');
+  const [weight, setWeight] = useState();
+  const [weigthRecords, setWeightRecords] = useState<number[]>([]);
   const [height, setHeight] = useState('');
   const [workouts, setWorkouts] = useState('');
 
   useEffect(() => {
     const subscriber = firestore().collection('users').doc(user?.uid).onSnapshot(documentSnapshot => {
       setName(documentSnapshot.data()?.username);
-      setWeight(documentSnapshot.data()?.weight);
+      setWeight(documentSnapshot.data()?.weight[documentSnapshot.data()?.weight.length - 1]);
+      setWeightRecords(documentSnapshot.data()?.weight.map((weight: number) => weight));
+      console.log(weigthRecords);
       setHeight(documentSnapshot.data()?.height);
       setWorkouts(documentSnapshot.data()?.workouts);
     });
@@ -33,7 +36,7 @@ export default function Tab() {
     labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
     datasets: [
       {
-        data: [50, 60, 70, 80, 90, 100],
+        data: weigthRecords,
         color: (opacity = 1) => `rgba(134, 65, 244, ${opacity})`,
         strokeWidth: 2
       }

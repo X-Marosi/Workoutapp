@@ -11,13 +11,18 @@ import { router } from 'expo-router';
 export default function Tab() {
 
 
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
 
   const handleLogin = async () => {
     setLoading(true);
     try {
+      if (!email.trim() || !password.trim()) {
+        alert("Missing required fields");
+        setLoading(false);
+        return;
+      }
       const user = await auth().signInWithEmailAndPassword(email, password);
       console.log(user);
     } catch (error) {
