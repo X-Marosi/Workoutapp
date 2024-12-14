@@ -9,23 +9,23 @@ import { useEffect, useState } from 'react';
 import { LineChart, BarChart } from 'react-native-chart-kit';
 import { Dimensions } from 'react-native';
 
-const screenWidth = Dimensions.get('window').width;
 
 export default function Tab() {
 
   const user = auth().currentUser;
   const [name, setName] = useState('');
   const [weight, setWeight] = useState();
-  const [weigthRecords, setWeightRecords] = useState<number[]>([]);
+  const [weightRecords, setWeigthRecords] = useState<number[]>([0]);
   const [height, setHeight] = useState('');
   const [workouts, setWorkouts] = useState('');
+  const screenWidth = Dimensions.get('window').width;
+
 
   useEffect(() => {
     const subscriber = firestore().collection('users').doc(user?.uid).onSnapshot(documentSnapshot => {
       setName(documentSnapshot.data()?.username);
       setWeight(documentSnapshot.data()?.weight[documentSnapshot.data()?.weight.length - 1]);
-      setWeightRecords(documentSnapshot.data()?.weight.map((weight: number) => weight));
-      console.log(weigthRecords);
+      setWeigthRecords(documentSnapshot.data()?.weight.map((weight: number) => weight));
       setHeight(documentSnapshot.data()?.height);
       setWorkouts(documentSnapshot.data()?.workouts);
     });
@@ -34,11 +34,12 @@ export default function Tab() {
 
   const lineChartData = {
     labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
+    
     datasets: [
       {
-        data: weigthRecords,
-        color: (opacity = 1) => `rgba(134, 65, 244, ${opacity})`,
-        strokeWidth: 2
+        data: weightRecords.slice(weightRecords.length - 10, weightRecords.length),
+        color: () => 'rebeccapurple',
+        strokeWidth: 2,
       }
     ],
     legend: ['Weight Over Time']
@@ -92,7 +93,7 @@ export default function Tab() {
               backgroundColor: '#1E1E1E',
               backgroundGradientFrom: '#1E1E1E',
               backgroundGradientTo: 'black',
-              color: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
+              color: (opacity = 1) => `rgba(102, 51, 153, ${opacity})`,
               labelColor: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
               style: {
                 borderRadius: 16
@@ -100,7 +101,7 @@ export default function Tab() {
               propsForDots: {
                 r: '6',
                 strokeWidth: '2',
-                stroke: '#ffa726'
+                stroke: 'transparent'
               }
             }}
             bezier
