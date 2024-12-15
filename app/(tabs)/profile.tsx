@@ -8,29 +8,14 @@ import firestore from '@react-native-firebase/firestore';
 import { useEffect, useState } from 'react';
 import { LineChart, BarChart } from 'react-native-chart-kit';
 import { Dimensions } from 'react-native';
+import { useUser } from '@/context/userContext';
 
 
 export default function Tab() {
 
-  const user = auth().currentUser;
-  const [name, setName] = useState('');
-  const [weight, setWeight] = useState();
-  const [weightRecords, setWeigthRecords] = useState<number[]>([0]);
-  const [height, setHeight] = useState('');
-  const [workouts, setWorkouts] = useState('');
+  //const user = auth().currentUser;
+  const { name, weight, weightRecords, height, workouts } = useUser()
   const screenWidth = Dimensions.get('window').width;
-
-
-  useEffect(() => {
-    const subscriber = firestore().collection('users').doc(user?.uid).onSnapshot(documentSnapshot => {
-      setName(documentSnapshot.data()?.username);
-      setWeight(documentSnapshot.data()?.weight[documentSnapshot.data()?.weight.length - 1]);
-      setWeigthRecords(documentSnapshot.data()?.weight.map((weight: number) => weight));
-      setHeight(documentSnapshot.data()?.height);
-      setWorkouts(documentSnapshot.data()?.workouts);
-    });
-    return subscriber;
-  }, []);
 
   const lineChartData = {
     labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],

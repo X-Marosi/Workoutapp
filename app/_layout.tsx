@@ -13,11 +13,13 @@ import { ThemedView } from '@/components/ThemedView';
 SplashScreen.preventAutoHideAsync();
 
 export default function RootLayout() {
-  const colorScheme = useColorScheme();
-  const [initializing, setInitializing] = useState(true);
-  const [user, setUser] = useState<FirebaseAuthTypes.User | null>(null);
   const router = useRouter();
   const segments = useSegments();
+  const colorScheme = useColorScheme();
+
+  const [initializing, setInitializing] = useState(true);
+  const [user, setUser] = useState<FirebaseAuthTypes.User | null>(null);
+
 
   const onAuthStateChanged = (user: FirebaseAuthTypes.User | null) => {
     //console.log('onAuthStateChanged', user);
@@ -43,9 +45,7 @@ export default function RootLayout() {
 
   
   useEffect(() => {
-    if (initializing) {
-      return;
-    }
+    if (initializing) return;
 
     const inAuthGroup = segments[0] === '(tabs)';
     const inRegisterGroup = segments[0] === 'register';
@@ -59,6 +59,7 @@ export default function RootLayout() {
     }
 
   }, [user, initializing]); 
+
 
   if (initializing) {
     return (
