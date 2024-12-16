@@ -9,7 +9,6 @@ export default function TabLayout() {
   const colorScheme = useColorScheme();
 
   return (
-    <UserProvider>
       <Tabs
         screenOptions={{
           tabBarActiveTintColor: Colors[colorScheme ?? 'light'].tint,
@@ -34,7 +33,7 @@ export default function TabLayout() {
           }}
         />
         <Tabs.Screen
-          name="exercisesList"
+          name="exercises"
           options={{
             title: 'Exercises',
             tabBarIcon: ({ color, focused }) => (
@@ -52,7 +51,6 @@ export default function TabLayout() {
           }}
         />
       </Tabs>
-    </UserProvider>
 
   );
 }

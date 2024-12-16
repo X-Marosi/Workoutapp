@@ -1,25 +1,22 @@
-import { View, Text, StyleSheet, Button, Image, ScrollView } from 'react-native';
+import { View, Text, StyleSheet, ScrollView } from 'react-native';
 import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
 import { LinearGradient } from 'expo-linear-gradient';
-import auth from '@react-native-firebase/auth';
 import { router } from 'expo-router';
-import firestore from '@react-native-firebase/firestore';
-import { useEffect, useState } from 'react';
 import { LineChart, BarChart } from 'react-native-chart-kit';
 import { Dimensions } from 'react-native';
 import { useUser } from '@/context/userContext';
-
+import auth from '@react-native-firebase/auth';
+import Body from "react-native-body-highlighter";
 
 export default function Tab() {
 
   //const user = auth().currentUser;
-  const { name, weight, weightRecords, height, workouts } = useUser()
+  const { name, weight, weightRecords, height, workouts, gender } = useUser()
   const screenWidth = Dimensions.get('window').width;
 
   const lineChartData = {
-    labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
-    
+    labels: [],
     datasets: [
       {
         data: weightRecords.slice(weightRecords.length - 10, weightRecords.length),
@@ -31,10 +28,12 @@ export default function Tab() {
   };
 
   const barChartData = {
-    labels: ['Push-ups', 'Squats', 'Running', 'Plank'],
+    labels: ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12'],
     datasets: [
       {
-        data: [20, 45, 28, 80]
+        data: [20, 45, 28, 80],
+        color: () => 'rebeccapurple',
+        strokeWidth: 2,
       }
     ]
   };
@@ -96,16 +95,38 @@ export default function Tab() {
               alignSelf: 'center'
             }}
           />
+
+        <View style={styles.body}>
+          <Body
+            data={[
+              { slug: "pectorals", intensity: 3 },
+              { slug: "biceps", intensity: 3 },
+              { slug: "triceps", intensity: 3 },
+              { slug: "forearm", intensity: 1 },
+              { slug: "deltoids", intensity: 2 },
+            ]}
+            gender= {gender}
+            side="front"
+            scale={1}
+            border="#222"
+          />
+          <Body
+            data={[
+              { slug: "pectorals", intensity: 1 },
+              { slug: "biceps", intensity: 2 },
+              { slug: "triceps", intensity: 3 },
+              { slug: "forearm", intensity: 1 },
+              { slug: "deltoids", intensity: 2 },
+            ]}
+            gender= {gender}
+            side="back"
+            scale={1}
+            border="#222"
+          />
+        </View>
           
-          <BarChart
-            data={{
-              labels: ['Push-ups', 'Squats', 'Running', 'Plank'],
-              datasets: [
-                {
-                  data: [20, 45, 28, 80],
-                },
-              ],
-            }}
+         {/* <BarChart
+            data={barChartData}
             width={screenWidth - 40}
             height={220}
             yAxisLabel=""
@@ -127,7 +148,7 @@ export default function Tab() {
               alignSelf: 'center',
             }}
           />
-
+*/}
 
           <Text style={styles.settings} onPress={() => { router.push("/settings") }}>Edit Profile</Text>
           <Text style={styles.logout} onPress={() => auth().signOut()}>Logout</Text>
@@ -201,6 +222,9 @@ const styles = StyleSheet.create({
     fontSize: 24,
     padding: 10,
     fontWeight: 'bold',
-  }
-
+  },
+  body: {
+    alignItems: 'center',
+    flexDirection: 'row',
+  },
 });

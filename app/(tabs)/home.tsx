@@ -52,12 +52,6 @@ export default function Tab() {
     <ThemedView style={styles.container}>
       <LinearGradient colors={['#1E1E1E', 'black']} style={styles.container}>
 
-      <ThemedText style={styles.menuTitle} type="title">Home</ThemedText>
-
-      {/*<Image source={require('@/assets/images/icon.png')} style={styles.image} />*/}
-
-      <ThemedText style={{ fontWeight: '400', padding: 20, alignSelf: 'center'}} type="subtitle">Workout History</ThemedText>
-
       {workouts.length > 0 ? (
         <FlatList
           data={workouts}
@@ -74,9 +68,19 @@ export default function Tab() {
             </TouchableOpacity>
           )}
           keyExtractor={item => item.id}
+          ListHeaderComponent={
+            <View>
+              <ThemedText style={styles.menuTitle} type="title">Home</ThemedText>
+              <ThemedText style={{ fontWeight: '400', padding: 20, alignSelf: 'center'}} type="subtitle">Workout History</ThemedText>
+            </View>
+          }
         />
       ) : (
-        <ThemedText style={{textAlign: 'center'}} type="subtitle">No workouts found</ThemedText>
+        <View>
+          <ThemedText style={styles.menuTitle} type="title">Home</ThemedText>
+          <ThemedText style={{ fontWeight: '400', padding: 20, alignSelf: 'center'}} type="subtitle">Workout History</ThemedText>
+          <ThemedText style={{textAlign: 'center'}} type="subtitle">No workouts found</ThemedText>
+        </View>
       )}
 
 

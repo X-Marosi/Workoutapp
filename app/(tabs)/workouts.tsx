@@ -14,9 +14,7 @@ export default function Tab() {
   const user = auth().currentUser;
 
   const lastSession = (date: Timestamp | null | undefined) => {
-    if (!date) {
-      return "Last session: N/A";
-    }
+    if (!date) return "Last session: N/A";
   
     const now = Timestamp.now();
     const diff = now.seconds - date.seconds;
@@ -24,18 +22,12 @@ export default function Tab() {
 
     if (days < 1) {
       const hours = Math.floor(diff / 3600);
-      if(hours < 1) {
-        return `Last session: now`;
-      }
+      if(hours < 1) return `Last session: now`;
       return `Last session: ${hours} hours ago`;
     }
-    else {
-      return `Last session: ${days} days ago`;
-    }
+    else return `Last session: ${days} days ago`;
     
   };
-  
-  
   
   useEffect(() => {
     firestore().collection('users').doc(user?.uid).collection('workoutPlans').onSnapshot(documentSnapshot => {
@@ -56,13 +48,6 @@ export default function Tab() {
   return (
     <View style={{ flex: 1 }}>
       <LinearGradient colors={["#1E1E1E", "black"]} style={styles.container}>
-        <ThemedText style={styles.menuTitle} type="title">Workouts</ThemedText>
-
-        <View style={{flexDirection: "row", justifyContent: 'space-around'}}>
-          <Text style={styles.buttonNew} onPress={() => {}}>Smart Plan</Text>
-          <Text style={styles.buttonNew} onPress={() => {router.push("/newWou")}}>New workout</Text>
-        </View>
-
 
       {workouts.length > 0 ? (
         <FlatList
@@ -81,9 +66,30 @@ export default function Tab() {
             </TouchableOpacity>
           )}
           keyExtractor={item => item.id}
+          ListHeaderComponent={
+            <View>
+              <ThemedText style={styles.menuTitle} type="title">Workouts</ThemedText>
+              
+
+              <View style={{flexDirection: "row", justifyContent: 'space-around'}}>
+                <Text style={styles.buttonNew} onPress={() => {}}>Smart Plan</Text>
+                <Text style={styles.buttonNew} onPress={() => {router.push("/newWou")}}>New workout</Text>
+              </View>
+            </View>
+          }
         />
       ) : (
+        <View>
+        <ThemedText style={styles.menuTitle} type="title">Workouts</ThemedText>
+
+        <View style={{flexDirection: "row", justifyContent: 'space-around'}}>
+          <Text style={styles.buttonNew} onPress={() => {}}>Smart Plan</Text>
+          <Text style={styles.buttonNew} onPress={() => {router.push("/newWou")}}>New workout</Text>
+        </View>
+
         <ThemedText style={{textAlign: 'center'}} type="subtitle">No workouts found</ThemedText>
+      </View>
+        
       )}
 
       </LinearGradient>

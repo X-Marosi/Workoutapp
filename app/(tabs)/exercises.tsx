@@ -29,7 +29,7 @@ export default function Tab() {
     <ThemedView style={styles.container}>
       <LinearGradient colors={["#1E1E1E", "black"]} style={{ padding: 16, flex: 1 }}>
 
-        <TextInput style={styles.searchBar} placeholderTextColor={'white'} placeholder="Search exercises" value={searchQuery} onChangeText={setSearchQuery}/>
+       
 
         <FlatList data={filteredExercises} renderItem={({ item }) => (
             <TouchableOpacity 
@@ -50,6 +50,12 @@ export default function Tab() {
             </TouchableOpacity>
           )}
           keyExtractor={(item) => item.id}
+          ListHeaderComponent={
+            <View>
+              <ThemedText style={styles.menuTitle} type="title">Exercises</ThemedText>
+              <TextInput style={styles.searchBar} placeholderTextColor={'white'} placeholder="Search exercises" value={searchQuery} onChangeText={setSearchQuery}/>
+            </View>
+          }
         />
 
       </LinearGradient>
@@ -88,5 +94,11 @@ const styles = StyleSheet.create({
   },
   capitalize: {
     textTransform: "capitalize",
+  },
+  menuTitle: {
+    textAlign: 'center',
+    marginTop: 100,
+    padding: 20,
+    fontSize: 50,
   },
 });

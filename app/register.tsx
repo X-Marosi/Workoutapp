@@ -17,6 +17,7 @@ export default function Tab() {
   const [weight, setWeight] = useState<number[]>([]);
   const [height, setHeight] = useState('');
   const [age, setAge] = useState('');
+  const [gender, setGender] = useState('');
 
   // Registration Handler
   const handleRegister = async () => {
@@ -40,6 +41,7 @@ export default function Tab() {
         height: 0,
         age: 0,
         workouts: 0,
+        gender: 'male'
       });
 
       // Navigate to setup page
@@ -54,7 +56,7 @@ export default function Tab() {
 
   // Setup Handler
   const handleSetup = async () => {
-    if (!weight || !height.trim() || !age.trim()) {
+    if (!weight || !height.trim() || !age.trim() || !gender.trim()) {
       alert("Missing required fields");
       return;
     }
@@ -64,6 +66,7 @@ export default function Tab() {
         weight,
         height,
         age,
+        gender,
       });
       await firestore().collection('users').doc(auth().currentUser?.uid).collection('records').doc().set({ weight: weight});
       router.replace("/(tabs)/home");
@@ -100,6 +103,24 @@ export default function Tab() {
                 <TextInput style={styles.input} placeholderTextColor={'grey'} value={weight[0]?.toString()} onChangeText={(text) => setWeight([parseFloat(text)])} placeholder="WEIGHT" keyboardType="numeric"/>
                 <TextInput style={styles.input} placeholderTextColor={'grey'} value={height} onChangeText={setHeight} placeholder="HEIGHT" keyboardType="numeric"/>
                 <TextInput style={styles.input} placeholderTextColor={'grey'} value={age} onChangeText={setAge} placeholder="AGE" keyboardType="numeric"/>
+
+                <View style={styles.genderOptions}>
+                  <Text style={{color: 'grey',fontSize: 22,alignSelf: 'center'}}>GENDER</Text>
+                    <Text 
+                      style={[styles.genderOption, gender === 'male' && styles.genderOptionSelected]} 
+                      onPress={() => setGender('male')}
+                    >
+                      MALE
+                    </Text>
+                    <Text 
+                      style={[styles.genderOption, gender === 'female' && styles.genderOptionSelected]} 
+                      onPress={() => setGender('female')}
+                    >
+                      FEMALE
+                    </Text>
+
+                </View>
+
 
                 {loading ? (
                 <ActivityIndicator size="large" color="rebeccapurple" />
@@ -138,5 +159,32 @@ const styles = StyleSheet.create({
     fontSize: 22,
     alignSelf: "center",
     fontWeight: "bold",
+  },
+  genderLabel: {
+    color: 'white',
+    fontSize: 20,
+    textAlign: 'center',
+    marginBottom: 10,
+  },
+  genderOptions: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    padding: 10,
+    margin: 10,
+    alignSelf: 'center',
+    fontSize: 22,
+    backgroundColor: '#222',
+    borderRadius: 4,
+    width: '80%',
+  },
+  genderOption: {
+    color: 'grey',
+    fontSize: 18,
+    padding: 10,
+  },
+  genderOptionSelected: {
+    backgroundColor: 'rebeccapurple',
+    color: 'white',
+    borderRadius: 4,
   },
 });

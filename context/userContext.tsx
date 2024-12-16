@@ -9,6 +9,7 @@ type UserContextType = {
   weightRecords: number[];
   height: string;
   workouts: string;
+  gender: string;
   loading: boolean;
 };
 
@@ -21,6 +22,7 @@ export const UserProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const [weightRecords, setWeightRecords] = useState<number[]>([]);
   const [height, setHeight] = useState('');
   const [workouts, setWorkouts] = useState('');
+  const [gender, setGender] = useState('');
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -36,10 +38,7 @@ export const UserProvider: React.FC<{ children: React.ReactNode }> = ({ children
       return;
     }
 
-    const unsubscribe = firestore()
-      .collection('users')
-      .doc(user.uid)
-      .onSnapshot((documentSnapshot) => {
+    const unsubscribe = firestore().collection('users').doc(user.uid).onSnapshot((documentSnapshot) => {
         const data = documentSnapshot.data();
 
         setName(data?.username || '');
@@ -47,6 +46,7 @@ export const UserProvider: React.FC<{ children: React.ReactNode }> = ({ children
         setWeightRecords(data?.weight || []);
         setHeight(data?.height || '');
         setWorkouts(data?.workouts || '');
+        setGender(data?.gender || '');
         setLoading(false);
       });
 
@@ -54,7 +54,7 @@ export const UserProvider: React.FC<{ children: React.ReactNode }> = ({ children
   }, [user]);
 
   return (
-    <UserContext.Provider value={{ user, name, weight, weightRecords, height, workouts, loading }} >
+    <UserContext.Provider value={{ user, name, weight, weightRecords, height, workouts, gender, loading }} >
       {children}
     </UserContext.Provider>
   );
