@@ -8,7 +8,8 @@ type UserContextType = {
   weight: number;
   weightRecords: number[];
   height: string;
-  workouts: string;
+  workoutCount: string;
+  workoutRecords: [Date, number][];
   gender: string;
   loading: boolean;
 };
@@ -20,8 +21,9 @@ export const UserProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const [name, setName] = useState('');
   const [weight, setWeight] = useState(0);
   const [weightRecords, setWeightRecords] = useState<number[]>([]);
+  const [ workoutRecords, setWorkoutRecords ] = useState<[Date, number][]>([]);
   const [height, setHeight] = useState('');
-  const [workouts, setWorkouts] = useState('');
+  const [workoutCount, setWorkoutCount] = useState('');
   const [gender, setGender] = useState('');
   const [loading, setLoading] = useState(true);
 
@@ -38,23 +40,52 @@ export const UserProvider: React.FC<{ children: React.ReactNode }> = ({ children
       return;
     }
 
-    const unsubscribe = firestore().collection('users').doc(user.uid).onSnapshot((documentSnapshot) => {
+    const unsubscribeUser = firestore()
+      .collection('users')
+      .doc(user.uid)
+      .onSnapshot((documentSnapshot) => {
         const data = documentSnapshot.data();
 
         setName(data?.username || '');
         setWeight(data?.weight?.[data?.weight.length - 1] || 0);
         setWeightRecords(data?.weight || []);
         setHeight(data?.height || '');
-        setWorkouts(data?.workouts || '');
+        setWorkoutCount(data?.workoutCount || '');
         setGender(data?.gender || '');
+
         setLoading(false);
       });
 
-    return unsubscribe;
+      const unsubscribeWorkouts = firestore()
+      .collection('users')
+      .doc(user.uid)
+      .collection('workouts')
+      .onSnapshot((documentSnapshot) => {
+        const workoutsList = documentSnapshot.docs.map((doc) => {
+          const data = doc.data();
+          const date = data.createdAt.toDate(); // Convert Firestore Timestamp to JS Date
+          const formattedDate = date.toISOString().split('T')[0]; // Format as 'YYYY-MM-DD'
+          return {
+            volume: 1,
+            date: formattedDate,
+          };
+        });
+  
+        setWorkoutRecords(workoutsList.map((workout) => [workout.date, workout.volume]));
+      });
+
+      console.log(workoutRecords);
+
+    return () => {
+      unsubscribeUser();
+      unsubscribeWorkouts();
+    };
   }, [user]);
 
+
+
   return (
-    <UserContext.Provider value={{ user, name, weight, weightRecords, height, workouts, gender, loading }} >
+    <UserContext.Provider value={{ user, name, weight, weightRecords, height, workoutCount, workoutRecords, gender, loading }} >
       {children}
     </UserContext.Provider>
   );

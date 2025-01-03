@@ -20,7 +20,7 @@ expo-env.d.ts
 # @end expo-cli
 ###########################
 #eas build -p android --profile preview
-assets/exercises/
+assets/images/exercises/
 constants/exerciseNew.ts
 ###########################
 constants/exercise.ts
