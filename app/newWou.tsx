@@ -186,8 +186,8 @@ export default function Tab() {
 
   const uploadWorkout = async () => {
     const workoutData = {
-      name: nameWorkout(),
-      createdAt: firestore.FieldValue.serverTimestamp(),
+      name: nameWorkout() || 'Unnamed Workout',
+      createdAt: new Date(),
       volume: totalWeight,
       duration: formatTime(elapsedTime),
       exercises: exercises.map((exercise) => ({

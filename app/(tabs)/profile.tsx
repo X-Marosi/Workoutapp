@@ -28,10 +28,9 @@ export default function Tab() {
     legend: []
   };
 
-  console.log(workoutRecords);
+  console.log(workoutCount);
 
   const commitsData = workoutRecords.map(([date, value]) => {
-    console
     return { date: date, value };
   });
 
@@ -120,7 +119,7 @@ export default function Tab() {
                 stroke: 'transparent'
               }
             }}
-            bezier
+            //bezier
             style={{
               marginVertical: 8,
               borderRadius: 16,

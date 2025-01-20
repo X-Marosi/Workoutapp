@@ -72,7 +72,7 @@ export default function Tab() {
               
 
               <View style={{flexDirection: "row", justifyContent: 'space-around'}}>
-                <Text style={styles.buttonNew} onPress={() => {}}>Smart Plan</Text>
+                <Text style={styles.buttonNew} onPress={() => {router.push("/smartPlan")}}>Smart Plan</Text>
                 <Text style={styles.buttonNew} onPress={() => {router.push("/newWou")}}>New workout</Text>
               </View>
             </View>
@@ -83,7 +83,7 @@ export default function Tab() {
         <ThemedText style={styles.menuTitle} type="title">Workouts</ThemedText>
 
         <View style={{flexDirection: "row", justifyContent: 'space-around'}}>
-          <Text style={styles.buttonNew} onPress={() => {}}>Smart Plan</Text>
+          <Text style={styles.buttonNew} onPress={() => {router.push("/smartPlan")}}>Smart Plan</Text>
           <Text style={styles.buttonNew} onPress={() => {router.push("/newWou")}}>New workout</Text>
         </View>
 

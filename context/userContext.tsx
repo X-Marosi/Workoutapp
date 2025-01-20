@@ -50,7 +50,7 @@ export const UserProvider: React.FC<{ children: React.ReactNode }> = ({ children
         setWeight(data?.weight?.[data?.weight.length - 1] || 0);
         setWeightRecords(data?.weight || []);
         setHeight(data?.height || '');
-        setWorkoutCount(data?.workoutCount || '');
+        setWorkoutCount(data?.workouts || '');
         setGender(data?.gender || '');
 
         setLoading(false);
