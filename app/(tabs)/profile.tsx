@@ -126,7 +126,7 @@ export default function Tab() {
               alignSelf: 'center'
             }}
           />
-
+{/*
           <ThemedText style={{ textAlign: 'center', fontSize: 22, fontWeight: 'bold' }} type="default">Workout Volume</ThemedText>
 
           <BarChart
@@ -182,7 +182,7 @@ export default function Tab() {
             />
           </View>
           
-
+*/}
 
           <Text style={styles.settings} onPress={() => { router.push("/settings") }}>Edit Profile</Text>
           <Text style={styles.logout} onPress={() => auth().signOut()}>Logout</Text>

@@ -44,6 +44,8 @@ export default function Tab() {
           date: data.createdAt,
           exercises: data.exercises ? data.exercises.map((exercise: { name: string }) => exercise.name).slice(0, 5).join(', ') : '' };
       });
+      workoutsList.sort((a, b) => b.date.seconds - a.date.seconds);
+      workoutsList.splice(40);
       setWorkouts(workoutsList);
     });
   }, []);

@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import { View, FlatList, TextInput, StyleSheet, TouchableOpacity, Image, Alert, ImageSourcePropType, Text } from 'react-native';
+import { View, FlatList, TextInput, StyleSheet, TouchableOpacity, Image, Alert, ImageSourcePropType, Text, Modal, KeyboardAvoidingView } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
 import { router, useNavigation } from 'expo-router';
@@ -86,6 +86,8 @@ export default function Tab() {
   const [totalWeight, setTotalWeight] = useState(0);
   const [totalSets, setTotalSets] = useState(0);
   const [elapsedTime, setElapsedTime] = useState(0);
+  const [page, setPage] = useState<'name' | 'none'>('name');
+  const [isModalVisible, setIsModalVisible] = useState(false);
 
   const nameWorkout = () => {
     let time = new Date().getHours();
@@ -100,6 +102,8 @@ export default function Tab() {
       return "Evening Workout";
     }
   };
+
+  const [workoutName, setWorkoutName] = useState(nameWorkout());
 
   const updateVolume = () => {
     let total = 0;
@@ -182,11 +186,12 @@ export default function Tab() {
     const seconds = time % 60;
 
     return `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
-};
+  };
 
+  {/*
   const uploadWorkout = async () => {
     const workoutData = {
-      name: nameWorkout() || 'Unnamed Workout',
+      name: workoutName || 'Unnamed Workout',
       createdAt: new Date(),
       volume: totalWeight,
       duration: formatTime(elapsedTime),
@@ -231,6 +236,33 @@ export default function Tab() {
       ]
     );
   };
+  */}
+
+  const finishWorkout = async (saveAsPlan: boolean) => {
+    const workoutData = {
+      name: workoutName || 'Unnamed Workout',
+      createdAt: new Date(),
+      volume: totalWeight,
+      duration: formatTime(elapsedTime),
+      exercises: exercises.map((exercise) => ({
+        id: exercise.id,
+        name: exercise.name,
+        sets: exerciseSets[exercise.id]?.sets.map((set) => ({
+          weight: set.weight,
+          setNumber: set.setNumber,
+          reps: set.reps,
+        })),
+      })),
+    };
+
+    await firestore().collection('users').doc(user?.uid).collection('workouts').add(workoutData);
+
+    if (saveAsPlan) {
+      await firestore().collection('users').doc(user?.uid).collection('workoutPlans').doc(selectedWorkout).update(workoutData);
+    }
+
+    router.push('/workouts');
+  };
 
   useEffect(() => {
     if (selectedExercise && selectedExercise !== 'null') {
@@ -246,6 +278,11 @@ export default function Tab() {
   useEffect(() => {
     if (selectedWorkout && selectedWorkout !== 'null') {
       const workoutRef = firestore().collection('users').doc(user?.uid).collection('workoutPlans').doc(selectedWorkout);
+      workoutRef.get().then((doc) => {
+        if (doc.exists) {
+          setWorkoutName(doc.data()?.name);
+        }
+      });
 
       workoutRef.get().then((doc) => {
         if (doc.exists) {
@@ -300,6 +337,7 @@ export default function Tab() {
   return (
     <LinearGradient colors={['#1E1E1E', 'black']} style={styles.container}>
 
+
       <View style={styles.containerData}>
         <View>
           <ThemedText style={styles.infoTitle} type="default">Duration</ThemedText>
@@ -316,10 +354,13 @@ export default function Tab() {
           <ThemedText style={styles.infoData} type="default"> {totalSets} </ThemedText>
         </View>
 
-        <Text style={styles.buttonFinish} onPress={() => {uploadWorkout()}}>Finish</Text>
+        <Text style={styles.buttonFinish} onPress={() => {selectedWorkout? finishWorkout(true) : setIsModalVisible(true)}}>Finish</Text>
       </View>
 
-      <ThemedText style={styles.menuTitle} type="title">New Workout</ThemedText>
+
+      <ThemedText style={styles.menuTitle} type="title">{workoutName || 'New Workout'}</ThemedText>
+
+
       <FlatList
         data={exercises}
         renderItem={({ item }) => (
@@ -341,6 +382,32 @@ export default function Tab() {
         }
       />
 
+      {/* Modal for Saving Workout */}
+      <Modal visible={isModalVisible} transparent={true} animationType="slide">
+        <KeyboardAvoidingView style={styles.modalContainer}>
+          <View style={styles.modalContent}>
+            <Text style={styles.modalTitle}>Save Workout</Text>
+            <TextInput
+              style={styles.modalInput}
+              placeholder="Workout Name"
+              placeholderTextColor="gray"
+              value={workoutName}
+              onChangeText={setWorkoutName}
+            />
+            <View style={styles.modalButtons}>
+              <TouchableOpacity style={styles.modalButton} onPress={() => finishWorkout(false)}>
+                <Text style={styles.modalButtonText}>Save</Text>
+              </TouchableOpacity>
+              <TouchableOpacity style={styles.modalButton } onPress={() => finishWorkout(true)}>
+                <Text style={styles.modalButtonText}>Save as Plan</Text>
+              </TouchableOpacity>
+              <TouchableOpacity style={[styles.modalButton, { backgroundColor: '#222' }]} onPress={() => setIsModalVisible(false)}>
+                <Text style={styles.modalButtonText}>Cancel</Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+        </KeyboardAvoidingView>
+      </Modal>
 
       
       
@@ -365,7 +432,7 @@ const styles = StyleSheet.create({
   iconContainer: { flexDirection: 'row', justifyContent: 'flex-end', alignItems: 'center'},
   icon: { marginHorizontal: 6, paddingTop: 14 },
   capitalize: { textTransform: "capitalize" },
-  menuTitle: { textAlign: "center", padding: 20, paddingTop: 30, fontSize: 50 },
+  menuTitle: { textAlign: "center", padding: 20, paddingTop: 30, fontSize: 50, lineHeight: 50 },
   exPic: { width: 60, height: 60, borderRadius: 20 },
   exSet: { color: 'lightgray', fontSize: 16, textTransform: 'capitalize' },
   setText: { fontWeight: 'bold', textAlign: 'center' },
@@ -414,5 +481,54 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     fontSize: 18,
     padding: 10,
-  }
+  },
+  modalContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'rgba(0, 0, 0, 0.6)',
+  },
+  modalContent: {
+    backgroundColor: '#101010',
+    padding: 20,
+    borderRadius: 10,
+    width: '80%',
+    alignItems: 'center',
+  },
+  modalTitle: {
+    color: 'white',
+    fontSize: 24,
+    fontWeight: 'bold',
+    marginBottom: 16,
+  },
+  modalInput: {
+    borderWidth: 1,
+    color: 'white',
+    textAlign: 'center',
+    fontSize: 18,
+    fontStyle: 'italic',
+    borderColor: 'transparent',
+    backgroundColor: '#222',
+    borderRadius: 5,
+    width: '100%',
+    padding: 5,
+  },
+  modalButtons: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginTop: 20,
+  },
+  modalButton: {
+    backgroundColor: '#663399',
+    borderRadius: 5,
+    paddingVertical: 5,
+    paddingHorizontal: 10,
+    marginHorizontal: 5,
+    alignItems: 'center',
+  },
+  modalButtonText: {
+    color: 'white',
+    fontSize: 18,
+    fontWeight: 'bold',
+  },
 });
