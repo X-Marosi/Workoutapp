@@ -44,7 +44,7 @@ if (getRNMinorVersion() >= 75) {
   }
 }
 
-rootProject.name = 'Workoutapp'
+rootProject.name = 'testapp'
 
 dependencyResolutionManagement {
   versionCatalogs {

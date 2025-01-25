@@ -1,8 +1,8 @@
 {
   "expo": {
-    "name": "test-app",
+    "name": "testapp",
     "displayName": "Might",
-    "slug": "test-app",
+    "slug": "testapp",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
@@ -15,14 +15,15 @@
     },
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.jaeger666.test-app"
+      "bundleIdentifier": "com.jaeger666.testapp"
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
-      "package": "com.jaeger666.test-app"
+      "package": "com.jaeger666.testapp",
+      "googleServicesFile": "./google-services.json"
     },
     "web": {
       "bundler": "metro",
@@ -39,7 +40,7 @@
     },
     "extra": {
       "eas": {
-        "projectId": "8a9aefb4-dac3-4e47-91ac-fa346beb8e54"
+        "projectId": "fd413286-75bc-4e84-ac0d-99ac7e4e9319"
       }
     }
   }

@@ -1,4 +1,4 @@
-package com.example.Workoutapp
+package com.jaeger666.testapp
 
 import android.app.Application
 import android.content.res.Configuration

@@ -109,9 +109,9 @@ android {
     buildToolsVersion rootProject.ext.buildToolsVersion
     compileSdk rootProject.ext.compileSdkVersion
 
-    namespace 'com.example.Workoutapp'
+    namespace 'com.jaeger666.testapp'
     defaultConfig {
-        applicationId 'com.example.Workoutapp'
+        applicationId 'com.jaeger666.testapp'
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1

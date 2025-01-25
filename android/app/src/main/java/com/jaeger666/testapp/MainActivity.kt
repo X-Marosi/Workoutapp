@@ -1,4 +1,4 @@
-package com.example.Workoutapp
+package com.jaeger666.testapp
 
 import android.os.Build
 import android.os.Bundle
