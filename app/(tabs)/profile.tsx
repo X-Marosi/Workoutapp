@@ -20,7 +20,7 @@ export default function Tab() {
     labels: [],
     datasets: [
       {
-        data: weightRecords.length > 10 ? weightRecords.slice(weightRecords.length - 10) : weightRecords,
+        data: weightRecords.length > 15 ? weightRecords.slice(weightRecords.length - 15) : weightRecords,
         color: () => 'rebeccapurple',
         strokeWidth: 2,
       }
@@ -75,7 +75,7 @@ export default function Tab() {
             
           </View>
           
-            <ThemedText style={{ textAlign: 'center', fontSize: 22, fontWeight: 'bold' }} type="default">Your Workouts</ThemedText>
+            <ThemedText style={{ textAlign: 'center', fontSize: 22, fontWeight: 'bold' }} type="default">Workout Calendar</ThemedText>
 
             <ContributionGraph
             values={commitsData}
@@ -98,7 +98,7 @@ export default function Tab() {
             tooltipDataAttrs={({ value }) => ({ rx: 6, ry: 6, height: 18, width: 18, fill: value > 0 ? 'rebeccapurple' : '#1E1E1E' })}
             />
 
-          <ThemedText style={{ textAlign: 'center', fontSize: 22, fontWeight: 'bold' }} type="default">Weight</ThemedText>
+          <ThemedText style={{ textAlign: 'center', fontSize: 22, fontWeight: 'bold' }} type="default">Bodyweight</ThemedText>
 
           <LineChart
             data={lineChartData}

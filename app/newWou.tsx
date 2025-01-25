@@ -203,10 +203,15 @@ export default function Tab() {
       })),
     };
 
+    // Save as a workout
     await firestore().collection('users').doc(user?.uid).collection('workouts').add(workoutData);
 
-    if (saveAsPlan) {
+    // Save as a workout plan
+    if (saveAsPlan && selectedWorkout) {
       await firestore().collection('users').doc(user?.uid).collection('workoutPlans').doc(selectedWorkout).update(workoutData);
+    }
+    else if (saveAsPlan) {
+      await firestore().collection('users').doc(user?.uid).collection('workoutPlans').add(workoutData);
     }
 
     router.push('/workouts');
@@ -317,9 +322,6 @@ export default function Tab() {
       </View>
 
 
-      <ThemedText style={styles.menuTitle} type="title">{workoutName || 'New Workout'}</ThemedText>
-
-
       <FlatList
         data={exercises}
         renderItem={({ item }) => (
@@ -338,6 +340,9 @@ export default function Tab() {
           <TouchableOpacity style={styles.buttonAdd} onPress={() => router.push('/exerciseList')}>
             <Text style={styles.buttonAddText}>Add Exercise</Text>
           </TouchableOpacity>
+        }
+        ListHeaderComponent={
+          <ThemedText style={styles.menuTitle} type="title">{workoutName || 'New Workout'}</ThemedText>
         }
       />
 
