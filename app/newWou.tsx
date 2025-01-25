@@ -86,25 +86,19 @@ export default function Tab() {
   const [totalWeight, setTotalWeight] = useState(0);
   const [totalSets, setTotalSets] = useState(0);
   const [elapsedTime, setElapsedTime] = useState(0);
-  const [page, setPage] = useState<'name' | 'none'>('name');
   const [isModalVisible, setIsModalVisible] = useState(false);
 
   const nameWorkout = () => {
     let time = new Date().getHours();
 
-    if (time >= 6 && time < 12) {
-      return "Morning Workout";
-    }
-    else if (time > 12 && time <= 18) {
-      return "Afternoon Workout";
-    }
-    else if (time > 18 || time < 6) {
-      return "Evening Workout";
-    }
+    if (time >= 6 && time < 12) { return "Morning Workout"; }
+    else if (time > 12 && time <= 18) { return "Afternoon Workout"; }
+    else if (time > 18 || time < 6) { return "Evening Workout"; }
   };
 
   const [workoutName, setWorkoutName] = useState(nameWorkout());
 
+  //Update the total weight lifted
   const updateVolume = () => {
     let total = 0;
     exercises.forEach((exercise) => {
@@ -118,6 +112,7 @@ export default function Tab() {
     setTotalWeight(total);
   };
 
+  //Update the total number of sets completed
   const updateTotalSets = () => {
     let total = 0;
     exercises.forEach((exercise) => {
@@ -129,6 +124,7 @@ export default function Tab() {
     setTotalSets(total);
   };
 
+  //Update the details of a set
   const updateSetDetails = (exerciseId: string, setNumber: number, field: 'weight' | 'reps', value: number) => {
     setExerciseSets((prev) => {
       const updatedSets = prev[exerciseId]?.sets.map((set) =>
@@ -138,6 +134,7 @@ export default function Tab() {
     });
   };
 
+  //Toggle the completion state of an exercise (complete or incomplete)
   const toggleState = (exerciseId: string) => {
     setExerciseSets((prevState) => ({
       ...prevState,
@@ -188,56 +185,7 @@ export default function Tab() {
     return `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
   };
 
-  {/*
-  const uploadWorkout = async () => {
-    const workoutData = {
-      name: workoutName || 'Unnamed Workout',
-      createdAt: new Date(),
-      volume: totalWeight,
-      duration: formatTime(elapsedTime),
-      exercises: exercises.map((exercise) => ({
-        id: exercise.id,
-        name: exercise.name,
-        sets: exerciseSets[exercise.id].sets.map((set) => ({
-          weight: set.weight,
-          setNumber: set.setNumber,
-          reps: set.reps,
-        })),
-      })),
-    };
-
-    //If workout is an existing workout plan, update the workout plan
-    if (selectedWorkout && selectedWorkout !== 'null') {
-      workoutData.name = 'Workout Plan';
-      await firestore().collection('users').doc(user?.uid).collection('workouts').add(workoutData);
-      await firestore().collection('users').doc(user?.uid).collection('workoutPlans').doc(selectedWorkout).update(workoutData);
-      router.push('/workouts');
-      return;
-    }
-
-    //Save workout as Workout Plan?
-    Alert.alert(
-      'Save workout?',
-      'Do you want to save this workout as a workout plan?',
-      [
-        { text: "Back", style: 'cancel', onPress: () => {} },
-        { text: "Don't save", onPress: async () => {
-          await firestore().collection('users').doc(user?.uid).collection('workouts').add(workoutData);
-          await firestore().collection('users').doc(user?.uid).update({ workouts: firestore.FieldValue.increment(1) });
-          router.push('/workouts');
-        } },
-        { text: 'Save', onPress: async () => {
-          workoutData.name = 'Workout Plan';
-          await firestore().collection('users').doc(user?.uid).collection('workouts').add(workoutData);
-          await firestore().collection('users').doc(user?.uid).collection('workoutPlans').add(workoutData);
-          await firestore().collection('users').doc(user?.uid).update({ workouts: firestore.FieldValue.increment(1) });
-          router.push('/workouts');
-        } },
-      ]
-    );
-  };
-  */}
-
+  //Finish the workout and save it to the database
   const finishWorkout = async (saveAsPlan: boolean) => {
     const workoutData = {
       name: workoutName || 'Unnamed Workout',
@@ -264,6 +212,7 @@ export default function Tab() {
     router.push('/workouts');
   };
 
+  //Add the selected exercise in the exercise list to the workout
   useEffect(() => {
     if (selectedExercise && selectedExercise !== 'null') {
       const exercise = JSON.parse(selectedExercise);
@@ -275,15 +224,21 @@ export default function Tab() {
     }
   }, [selectedExercise]);
 
+  //Load the selected workout plan from the database
   useEffect(() => {
     if (selectedWorkout && selectedWorkout !== 'null') {
+
+      //Get the workout reference
       const workoutRef = firestore().collection('users').doc(user?.uid).collection('workoutPlans').doc(selectedWorkout);
+
+      //Get the workout name
       workoutRef.get().then((doc) => {
         if (doc.exists) {
           setWorkoutName(doc.data()?.name);
         }
       });
 
+      //Get the exercises and sets
       workoutRef.get().then((doc) => {
         if (doc.exists) {
           const data = doc.data();
@@ -299,6 +254,7 @@ export default function Tab() {
     }
   }, [selectedWorkout]);
 
+  //Prompt the user to confirm before leaving the screen
   useEffect(() => {
     const unsubscribe = navigation.addListener('beforeRemove', (event) => {
       // Prevent default behavior of leaving the screen
@@ -318,11 +274,14 @@ export default function Tab() {
     return unsubscribe; // Cleanup listener on component unmount
   }, [navigation, router]);
 
+
+  //Update the total volume and sets completed when the exercise sets change
   useEffect(() => {
     updateVolume();
     updateTotalSets();
   }, [exerciseSets]);
 
+  //Calculate elapsed time
   useEffect(() => {
     const startTime = Date.now();
 

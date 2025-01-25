@@ -59,7 +59,7 @@ export default function Tab() {
                 <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
                   <Text style={styles.lastSession}>{lastSession(item.date)}</Text>
                   <Text style={styles.buttonStartPlan} onPress={() => {
-                    router.navigate({ pathname: '/newWou', params: { selectedWorkout: item.id } });
+                    router.push({ pathname: '/newWou', params: { selectedWorkout: item.id } });
                   }}>Start Workout</Text>
                 </View>
               </View>
