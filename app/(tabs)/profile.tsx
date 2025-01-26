@@ -11,10 +11,9 @@ import Body from "react-native-body-highlighter";
 
 export default function Tab() {
 
-  //const user = auth().currentUser;
+  //User Data from Context
   const { name, weight, weightRecords, height, workoutCount, workoutRecords, gender } = useUser()
   const screenWidth = Dimensions.get('window').width;
-
 
   const lineChartData = {
     labels: [],
@@ -54,30 +53,35 @@ export default function Tab() {
             Profile
           </ThemedText>
 
+          {/* User Name */}
           <ThemedText style={styles.userName} type="default"> {name} </ThemedText>
 
+          {/* User Data */}
           <View style={styles.containerData}>
 
             <View>
+              {/* Weight */}
               <ThemedText style={styles.infoTitle} type="default">Weight</ThemedText>
               <ThemedText style={styles.infoData} type="default"> {weight} </ThemedText>
             </View>
             
             <View>
+              {/* Height */}
               <ThemedText style={styles.infoTitle} type="default">Height</ThemedText>
               <ThemedText style={styles.infoData} type="default"> {height} </ThemedText>
             </View>
 
             <View>
+              {/* Workouts */}
               <ThemedText style={styles.infoTitle} type="default">Workouts</ThemedText>
               <ThemedText style={styles.infoData} type="default"> {workoutCount} </ThemedText>
             </View>
             
           </View>
           
-            <ThemedText style={{ textAlign: 'center', fontSize: 22, fontWeight: 'bold' }} type="default">Workout Calendar</ThemedText>
-
-            <ContributionGraph
+          {/* Workout Calendar Graph */}
+          <ThemedText style={{ textAlign: 'center', fontSize: 22, fontWeight: 'bold' }} type="default">Workout Calendar</ThemedText>
+          <ContributionGraph
             values={commitsData}
             endDate={new Date()}
             numDays={93}
@@ -96,10 +100,10 @@ export default function Tab() {
               alignSelf: 'center'
             }}
             tooltipDataAttrs={({ value }) => ({ rx: 6, ry: 6, height: 18, width: 18, fill: value > 0 ? 'rebeccapurple' : '#1E1E1E' })}
-            />
+          />
 
+          {/* Weight Graph */}
           <ThemedText style={{ textAlign: 'center', fontSize: 22, fontWeight: 'bold' }} type="default">Bodyweight</ThemedText>
-
           <LineChart
             data={lineChartData}
             width={screenWidth - 40}

@@ -85,8 +85,9 @@ export default function Tab() {
   const [exerciseSets, setExerciseSets] = useState<Record<string, ExerciseSet>>({});
   const [totalWeight, setTotalWeight] = useState(0);
   const [totalSets, setTotalSets] = useState(0);
-  const [elapsedTime, setElapsedTime] = useState(0);
   const [isModalVisible, setIsModalVisible] = useState(false);
+  const [timerState, setTimerState] = useState('paused');
+  const [elapsedTime, setElapsedTime] = useState(0);
 
   const nameWorkout = () => {
     let time = new Date().getHours();
@@ -288,15 +289,19 @@ export default function Tab() {
 
   //Calculate elapsed time
   useEffect(() => {
-    const startTime = Date.now();
+    let interval: NodeJS.Timeout;
 
-    const interval = setInterval(() => {
-      const currentTime = Date.now();
-      setElapsedTime(Math.floor((currentTime - startTime) / 1000)); // Calculate elapsed time in seconds
-    }, 1000);
+    if (timerState === 'running') {
+      const startTime = Date.now() - elapsedTime * 1000;
 
-    return () => clearInterval(interval); // Cleanup interval on component unmount
-  }, []);
+      interval = setInterval(() => {
+        const currentTime = Date.now();
+        setElapsedTime(Math.floor((currentTime - startTime) / 1000)); // Calculate elapsed time in seconds
+      }, 1000);
+    }
+
+    return () => clearInterval(interval); // Cleanup interval on component unmount or when timerState changes
+  }, [timerState]);
   
   return (
     <LinearGradient colors={['#1E1E1E', 'black']} style={styles.container}>
@@ -305,7 +310,15 @@ export default function Tab() {
       <View style={styles.containerData}>
         <View>
           <ThemedText style={styles.infoTitle} type="default">Duration</ThemedText>
-          <ThemedText style={styles.infoData} type="default"> {formatTime(elapsedTime)}</ThemedText>
+          <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
+            <ThemedText style={styles.infoData} type="default"> {formatTime(elapsedTime)}</ThemedText>
+            {timerState === 'running' ? 
+              <Ionicons name="pause" size={18} color="white" style={{margin: -6}} onPress={() => setTimerState('paused')} />
+              :
+              <Ionicons name="play" size={18} color="white" style={{margin: -6}} onPress={() => setTimerState('running')} />
+            }
+          </View>
+
         </View>
 
         <View>
@@ -320,6 +333,8 @@ export default function Tab() {
 
         <Text style={styles.buttonFinish} onPress={() => {selectedWorkout? finishWorkout(true) : setIsModalVisible(true)}}>Finish</Text>
       </View>
+
+
 
 
       <FlatList
