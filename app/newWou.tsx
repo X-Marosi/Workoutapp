@@ -46,6 +46,7 @@ const ExerciseItem = ({
       <ThemedText style={styles.exSet}>Reps</ThemedText>
     </View>
 
+
     {exerciseSets[item.id]?.sets.map((set) => (
       <View key={set.setNumber} style={styles.setNumbers}>
         <ThemedText style={styles.setText}>{set.setNumber}</ThemedText>
@@ -201,6 +202,7 @@ export default function Tab() {
           setNumber: set.setNumber,
           reps: set.reps,
         })),
+        pic: exercise.pic,
       })),
     };
 
@@ -333,8 +335,6 @@ export default function Tab() {
 
         <Text style={styles.buttonFinish} onPress={() => {selectedWorkout? finishWorkout(true) : setIsModalVisible(true)}}>Finish</Text>
       </View>
-
-
 
 
       <FlatList

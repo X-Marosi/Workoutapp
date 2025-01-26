@@ -7,11 +7,27 @@ import { LinearGradient } from 'expo-linear-gradient';
 import Video from 'react-native-video';
 import Body from "react-native-body-highlighter";
 import { useUser } from '@/context/userContext';
+import { exerciseListAll } from "@/constants/exerciseNew";
 
 export default function ExerciseDetails() {
   const { item } = useLocalSearchParams<{ item: string }>();
-  const exercise = item ? JSON.parse(item) : {};
   const { gender } = useUser();
+
+  // Parse the item and determine whether it's an ID or full exercise data
+  const parsedItem = JSON.parse(item);
+
+  // If parsedItem contains `id` only, find the exercise from exerciseListAll
+  const exercise = parsedItem.id
+    ? exerciseListAll.find(ex => ex.id === parsedItem.id)
+    : parsedItem;
+
+  if (!exercise) {
+    return (
+      <View style={styles.errorContainer}>
+        <ThemedText style={styles.errorText}>Exercise not found</ThemedText>
+      </View>
+    );
+  }
 
   return (
     <ScrollView>
@@ -29,18 +45,18 @@ export default function ExerciseDetails() {
             ) : null
             }
 
-            <View style={{ alignItems: 'center',    backgroundColor: '#222', borderRadius: 6, margin: 10,  }}>
+            <View style={{ alignItems: 'center', backgroundColor: '#222', borderRadius: 6, margin: 10 }}>
               <ThemedText style={{fontSize: 24, paddingTop:20, fontWeight: 'bold'}}>Targeted muscles</ThemedText>
               <View style={styles.body}>
                 <Body
                   data={[
                     { slug: exercise.target, intensity: 3 },
-                    { slug: exercise.secondaryMuscles[0], intensity: 2 },
-                    { slug: exercise.secondaryMuscles[1], intensity: 1 },
-                    { slug: exercise.secondaryMuscles[2], intensity: 1 },
-                    { slug: exercise.secondaryMuscles[3], intensity: 1 },
+                    ...exercise.secondaryMuscles.map((muscle: string, idx: number) => ({
+                      slug: muscle,
+                      intensity: idx === 0 ? 2 : 1, // Set intensity based on index
+                    }))
                   ]}
-                  gender= {gender}
+                  gender={gender}
                   side="front"
                   scale={1}
                   border="#111"
@@ -48,12 +64,12 @@ export default function ExerciseDetails() {
                 <Body
                   data={[
                     { slug: exercise.target, intensity: 3 },
-                    { slug: exercise.secondaryMuscles[0], intensity: 2 },
-                    { slug: exercise.secondaryMuscles[1], intensity: 1 },
-                    { slug: exercise.secondaryMuscles[2], intensity: 1 },
-                    { slug: exercise.secondaryMuscles[3], intensity: 1 },
+                    ...exercise.secondaryMuscles.map((muscle: string, idx: number) => ({
+                      slug: muscle,
+                      intensity: idx === 0 ? 2 : 1,
+                    }))
                   ]}
-                  gender= {gender}
+                  gender={gender}
                   side="back"
                   scale={1}
                   border="#111"
@@ -104,5 +120,16 @@ const styles = StyleSheet.create({
   body: {
     alignItems: 'center',
     flexDirection: 'row',
+  },
+  errorContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#1E1E1E',
+  },
+  errorText: {
+    color: 'white',
+    fontSize: 20,
+    textAlign: 'center',
   },
 });
