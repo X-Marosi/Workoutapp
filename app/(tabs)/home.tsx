@@ -8,7 +8,7 @@ import auth from '@react-native-firebase/auth';
 import firestore, { Timestamp } from '@react-native-firebase/firestore';
 
 export default function Tab() {
-  const [workouts, setWorkouts] = useState<{id: string, name: string; exercises: string; volume: string; duration: string, date: Timestamp }[]>([]);
+  const [workouts, setWorkouts] = useState<{ id: string, name: string; exercises: string; volume: string; duration: string, date: Timestamp }[]>([]);
   const user = auth().currentUser;
 
   const lastSession = (date: Timestamp | null | undefined) => {
@@ -42,7 +42,8 @@ export default function Tab() {
           volume: data.volume,
           duration: data.duration,
           date: data.createdAt,
-          exercises: data.exercises ? data.exercises.map((exercise: { name: string }) => exercise.name).slice(0, 5).join(', ') : '' };
+          exercises: data.exercises ? data.exercises.map((exercise: { name: string, sets: Array<number> }) => exercise.sets.length + 'x  ' + exercise.name)/*.slice(0, 5)*/.join('\n') : ''
+        };
       });
       workoutsList.sort((a, b) => b.date.seconds - a.date.seconds);
       workoutsList.splice(40);
