@@ -38,7 +38,7 @@ export default function ExerciseDetails() {
             { exercise.video ? (
                 <Video
                   source={exercise.video}
-                  style={{ width: '95%', height: 243, backgroundColor: '#222', borderRadius: 6, overflow: 'hidden', alignSelf: 'center' }}
+                  style={{ width: '95%', height: 221, backgroundColor: '#222', borderRadius: 6, overflow: 'hidden', alignSelf: 'center' }}
                   resizeMode="contain"
                   repeat
                 />

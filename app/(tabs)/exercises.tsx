@@ -23,7 +23,7 @@ export default function Tab() {
       exercise.target.toLowerCase().includes(searchQuery.toLowerCase()) ||
       exercise.equipment.toLowerCase().includes(searchQuery.toLowerCase()) ||
       exercise.bodyPart.toLowerCase().includes(searchQuery.toLowerCase())
-  );
+  ).sort((a, b) => a.name.localeCompare(b.name));
 
   return (
     <ThemedView style={styles.container}>

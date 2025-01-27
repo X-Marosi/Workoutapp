@@ -3,6 +3,8 @@ export const exerciseListAll = [
       "bodyPart": "back",
       "equipment": "body weight",
       "id": "3293",
+      "pic": require("@/assets/images/exercises/3293.jpg"),
+      "video": require("@/assets/images/exercises/3293.mp4"),
       "name": "archer pull up",
       "target": "lats",
       "secondaryMuscles": [
@@ -22,6 +24,8 @@ export const exerciseListAll = [
       "bodyPart": "chest",
       "equipment": "body weight",
       "id": "3294",
+      "pic": require("@/assets/images/exercises/3294.jpg"),
+      "video": require("@/assets/images/exercises/3294.mp4"),
       "name": "archer push up",
       "target": "pectorals",
       "secondaryMuscles": [
@@ -43,6 +47,8 @@ export const exerciseListAll = [
       "equipment": "body weight",
       "id": "0011",
       "name": "hanging knee raise",
+      "pic": require("@/assets/images/exercises/0011.jpg"),
+      "video": require("@/assets/images/exercises/0011.mp4"),
       "target": "abs",
       "secondaryMuscles": [
           "hip flexors"
@@ -60,6 +66,8 @@ export const exerciseListAll = [
       "equipment": "machine",
       "id": "0017",
       "name": "assisted pull up",
+      "pic": require("@/assets/images/exercises/0017.jpg"),
+      "video": require("@/assets/images/exercises/0017.mp4"),
       "target": "lats",
       "secondaryMuscles": [
           "biceps",
@@ -80,6 +88,8 @@ export const exerciseListAll = [
       "equipment": "body weight",
       "id": "3297",
       "name": "back lever",
+      "pic": require("@/assets/images/exercises/3297.jpg"),
+      "video": require("@/assets/images/exercises/3297.mp4"),
       "target": "upper back",
       "secondaryMuscles": [
           "biceps",
@@ -100,6 +110,8 @@ export const exerciseListAll = [
       "equipment": "band",
       "id": "0970",
       "name": "band assisted pull up",
+      "pic": require("@/assets/images/exercises/0970.jpg"),
+      "video": require("@/assets/images/exercises/0970.mp4"),
       "target": "lats",
       "secondaryMuscles": [
           "biceps",
@@ -141,6 +153,8 @@ export const exerciseListAll = [
       "equipment": "barbell",
       "id": "0027",
       "name": "barbell bent over row",
+      "pic": require("@/assets/images/exercises/0027.jpg"),
+      "video": require("@/assets/images/exercises/0027.mp4"),
       "target": "upper back",
       "secondaryMuscles": [
           "biceps",
@@ -182,6 +196,8 @@ export const exerciseListAll = [
       "equipment": "barbell",
       "id": "0030",
       "name": "barbell close grip bench press",
+      "pic": require("@/assets/images/exercises/0030.jpg"),
+      "video": require("@/assets/images/exercises/0030.mp4"),
       "target": "triceps",
       "secondaryMuscles": [
           "chest",
@@ -200,6 +216,8 @@ export const exerciseListAll = [
       "bodyPart": "upper arms",
       "equipment": "barbell",
       "id": "0031",
+      "pic": require("@/assets/images/exercises/0031.jpg"),
+      "video": require("@/assets/images/exercises/0031.mp4"),
       "name": "barbell curl",
       "target": "biceps",
       "secondaryMuscles": [
@@ -218,6 +236,8 @@ export const exerciseListAll = [
       "bodyPart": "upper legs",
       "equipment": "barbell",
       "id": "0032",
+      "pic": require("@/assets/images/exercises/0032.jpg"),
+      "video": require("@/assets/images/exercises/0032.mp4"),
       "name": "barbell deadlift",
       "target": "glutes",
       "secondaryMuscles": [
@@ -238,6 +258,8 @@ export const exerciseListAll = [
       "equipment": "barbell",
       "id": "0033",
       "name": "barbell decline bench press",
+      "pic": require("@/assets/images/exercises/0033.jpg"),
+      "video": require("@/assets/images/exercises/0033.mp4"),
       "target": "pectorals",
       "secondaryMuscles": [
           "triceps",
@@ -277,6 +299,8 @@ export const exerciseListAll = [
       "equipment": "barbell",
       "id": "0043",
       "name": "barbell back squat",
+      "pic": require("@/assets/images/exercises/0043.jpg"),
+      "video": require("@/assets/images/exercises/0043.mp4"),
       "target": "glutes",
       "secondaryMuscles": [
           "quadriceps",
@@ -336,6 +360,8 @@ export const exerciseListAll = [
       "equipment": "barbell",
       "id": "0047",
       "name": "barbell incline bench press",
+      "pic": require("@/assets/images/exercises/0047.jpg"),
+      "video": require("@/assets/images/exercises/0047.mp4"),
       "target": "pectorals",
       "secondaryMuscles": [
           "shoulders",
@@ -355,6 +381,8 @@ export const exerciseListAll = [
       "equipment": "barbell",
       "id": "0049",
       "name": "barbell incline row",
+      "pic": require("@/assets/images/exercises/0049.jpg"),
+      "video": require("@/assets/images/exercises/0049.mp4"),
       "target": "upper back",
       "secondaryMuscles": [
           "biceps",
@@ -411,7 +439,9 @@ export const exerciseListAll = [
       "bodyPart": "upper arms",
       "equipment": "barbell",
       "id": "0060",
-      "name": "barbell lying triceps extension skull crusher",
+      "name": "triceps extension skull crusher",
+      "pic": require("@/assets/images/exercises/0060.jpg"),
+      "video": require("@/assets/images/exercises/0060.mp4"),
       "target": "triceps",
       "secondaryMuscles": [
           "shoulders"
@@ -429,6 +459,8 @@ export const exerciseListAll = [
       "equipment": "barbell",
       "id": "0070",
       "name": "barbell preacher curl",
+      "pic": require("@/assets/images/exercises/0070.jpg"),
+      "video": require("@/assets/images/exercises/0070.mp4"),
       "target": "biceps",
       "secondaryMuscles": [
           "forearm"
@@ -447,6 +479,8 @@ export const exerciseListAll = [
       "equipment": "barbell",
       "id": "0080",
       "name": "barbell reverse curl",
+      "pic": require("@/assets/images/exercises/0080.jpg"),
+      "video": require("@/assets/images/exercises/0080.mp4"),
       "target": "biceps",
       "secondaryMuscles": [
           "forearm"
@@ -465,6 +499,8 @@ export const exerciseListAll = [
       "equipment": "barbell",
       "id": "0082",
       "name": "barbell reverse wrist curl",
+      "pic": require("@/assets/images/exercises/0082.jpg"),
+      "video": require("@/assets/images/exercises/0082.mp4"),
       "target": "forearm",
       "secondaryMuscles": [
           "biceps",
@@ -483,6 +519,8 @@ export const exerciseListAll = [
       "equipment": "barbell",
       "id": "0085",
       "name": "barbell romanian deadlift",
+      "pic": require("@/assets/images/exercises/0085.jpg"),
+      "video": require("@/assets/images/exercises/0085.mp4"),
       "target": "glutes",
       "secondaryMuscles": [
           "hamstrings",
@@ -523,6 +561,8 @@ export const exerciseListAll = [
       "equipment": "barbell",
       "id": "0095",
       "name": "barbell shrug",
+      "pic": require("@/assets/images/exercises/0095.jpg"),
+      "video": require("@/assets/images/exercises/0095.mp4"),
       "target": "traps",
       "secondaryMuscles": [
           "shoulders"
@@ -578,6 +618,8 @@ export const exerciseListAll = [
       "equipment": "barbell",
       "id": "0120",
       "name": "barbell upright row",
+      "pic": require("@/assets/images/exercises/0120.jpg"),
+      "video": require("@/assets/images/exercises/0120.mp4"),
       "target": "delts",
       "secondaryMuscles": [
           "traps",
@@ -596,6 +638,8 @@ export const exerciseListAll = [
       "equipment": "barbell",
       "id": "0122",
       "name": "barbell wide bench press",
+      "pic": require("@/assets/images/exercises/0122.jpg"),
+      "video": require("@/assets/images/exercises/0122.mp4"),
       "target": "pectorals",
       "secondaryMuscles": [
           "shoulders",
@@ -615,6 +659,8 @@ export const exerciseListAll = [
       "equipment": "barbell",
       "id": "0126",
       "name": "barbell wrist curl",
+      "pic": require("@/assets/images/exercises/0126.jpg"),
+      "video": require("@/assets/images/exercises/0126.mp4"),
       "target": "forearm",
       "secondaryMuscles": [
           "biceps",
@@ -651,6 +697,8 @@ export const exerciseListAll = [
       "equipment": "body weight",
       "id": "0129",
       "name": "bench dip (knees bent)",
+      "pic": require("@/assets/images/exercises/0129.jpg"),
+      "video": require("@/assets/images/exercises/0129.mp4"),
       "target": "triceps",
       "secondaryMuscles": [
           "chest",
@@ -687,6 +735,8 @@ export const exerciseListAll = [
       "equipment": "body weight",
       "id": "1160",
       "name": "burpee",
+      "pic": require("@/assets/images/exercises/1160.jpg"),
+      "video": require("@/assets/images/exercises/1160.mp4"),
       "target": "cardiovascular system",
       "secondaryMuscles": [
           "quadriceps",
@@ -1086,6 +1136,8 @@ export const exerciseListAll = [
       "equipment": "cable",
       "id": "0227",
       "name": "cable fly",
+      "pic": require("@/assets/images/exercises/0227.jpg"),
+      "video": require("@/assets/images/exercises/0227.mp4"),
       "target": "pectorals",
       "secondaryMuscles": [
           "deltoids",
@@ -2523,6 +2575,8 @@ export const exerciseListAll = [
       "equipment": "body weight",
       "id": "0814",
       "name": "triceps dip",
+      "pic": require("@/assets/images/exercises/0814.jpg"),
+      "video": require("@/assets/images/exercises/0814.mp4"),
       "target": "triceps",
       "secondaryMuscles": [
           "chest",
@@ -2577,6 +2631,8 @@ export const exerciseListAll = [
       "equipment": "weighted",
       "id": "1755",
       "name": "weighted tricep dips",
+      "pic": require("@/assets/images/exercises/1755.jpg"),
+      "video": require("@/assets/images/exercises/1755.mp4"),
       "target": "triceps",
       "secondaryMuscles": [
           "chest",
@@ -2625,6 +2681,49 @@ export const exerciseListAll = [
         "Exhale and push the handles forward, bringing them together in front of your chest.",
         "Pause for a moment, squeezing your chest muscles.",
         "Inhale and slowly return to the starting position, allowing your chest muscles to stretch.",
+        "Repeat for the desired number of repetitions."
+    ]
+},
+{
+    "bodyPart": "back",
+    "equipment": "machine",
+    "id": "0673",
+    "pic": require("@/assets/images/exercises/0673.jpg"),
+    "video": require("@/assets/images/exercises/0673.mp4"),
+    "name": "machine lat pulldown",
+    "target": "lats",
+    "secondaryMuscles": [
+        "biceps",
+        "forearms"
+    ],
+    "instructions": [
+        "Adjust the seat height and position yourself on the machine with your knees under the pads and your feet flat on the ground.",
+        "Grasp the handles slightly wider than shoulder-width apart.",
+        "Sit upright with your chest out and shoulders back, maintaining a slight arch in your lower back.",
+        "Pull the handles down towards your chest, squeezing your shoulder blades together.",
+        "Pause for a moment at the bottom of the movement, then slowly release the handles back to the starting position.",
+        "Repeat for the desired number of repetitions."
+    ]
+},
+{
+    "bodyPart": "back",
+    "equipment": "cable",
+    "id": "2330",
+    "name": "cable lat pulldown",
+    "pic": require("@/assets/images/exercises/2330.jpg"),
+    "video": require("@/assets/images/exercises/2330.mp4"),
+    "target": "lats",
+    "secondaryMuscles": [
+        "biceps",
+        "rhomboids",
+        "rear deltoids"
+    ],
+    "instructions": [
+        "Sit on the lat pulldown machine with your knees positioned under the pads.",
+        "Grasp the cable bar with an overhand grip, slightly wider than shoulder-width apart.",
+        "Lean back slightly and keep your chest up, maintaining a slight arch in your lower back.",
+        "Pull the bar down towards your upper chest, squeezing your shoulder blades together.",
+        "Pause for a moment at the bottom of the movement, then slowly release the bar back to the starting position.",
         "Repeat for the desired number of repetitions."
     ]
 },
