@@ -202,7 +202,7 @@ export default function Tab() {
           setNumber: set.setNumber,
           reps: set.reps,
         })),
-        pic: exercise.pic,
+        pic: exercise.pic || null,
       })),
     };
 

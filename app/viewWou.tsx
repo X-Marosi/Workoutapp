@@ -44,37 +44,38 @@ export default function ViewWorkout() {
         return () => unsubscribe(); // Cleanup the Firestore listener on unmount
     }
     }, [workoutId]);
+    const renderExercise = ({ item }: { item: { id: string; name: string; pic: number; sets: { weight: number; reps: number }[] } }) => {
+        console.log('Exercise picture data:', item.pic);
+        return (
+            <View style={styles.exerciseContainer}>
+                <View style={styles.exerciseHeader}>
+                    <Image source={item.pic || require('@/assets/images/icon.png')} style={styles.exPic} />
+                    <ThemedText style={styles.exerciseTitle}>{item.name}</ThemedText>
+                </View>
 
-    const renderExercise = ({ item }: { item: { id: string; name: string; sets: { weight: number; reps: number }[] } }) => (
-    <View style={styles.exerciseContainer}>
-        <View style={styles.exerciseHeader}>
-        <ThemedText style={styles.exerciseTitle}>{item.name}</ThemedText>
-        </View>
-
-        <View style={styles.setContainer}>
-        <View style={styles.setRow}>
-            <Text style={[styles.setHeader, styles.headerIndex]}>Set</Text>
-            <Text style={styles.setHeader}>Weight</Text>
-            <Text style={styles.setHeader}>Reps</Text>
-        </View>
-        {item.sets.map((set, index) => (
-            <View key={index} style={styles.setRow}>
-            <Text style={[styles.setCell, styles.cellIndex]}>{index + 1}</Text>
-            <Text style={styles.setCell}>{set.weight}kg</Text>
-            <Text style={styles.setCell}>{set.reps}</Text>
+                <View style={styles.setContainer}>
+                    <View style={styles.setRow}>
+                        <Text style={[styles.setHeader, styles.headerIndex]}>Set</Text>
+                        <Text style={styles.setHeader}>Weight</Text>
+                        <Text style={styles.setHeader}>Reps</Text>
+                    </View>
+                    {item.sets.map((set, index) => (
+                        <View key={index} style={styles.setRow}>
+                            <Text style={[styles.setCell, styles.cellIndex]}>{index + 1}</Text>
+                            <Text style={styles.setCell}>{set.weight}kg</Text>
+                            <Text style={styles.setCell}>{set.reps}</Text>
+                        </View>
+                    ))}
+                </View>
             </View>
-        ))}
-        </View>
-    </View>
-    );
+        );
+    };
+
+    
 
     return (
     <LinearGradient colors={['#1E1E1E', 'black']} style={styles.container}>
-        <ThemedText style={styles.menuTitle} type="title">{workoutName}</ThemedText>
-        <View style={{ flexDirection: 'row', justifyContent: 'space-between', padding: 20,  }}>
-            <Text style={{ color: 'white', fontSize: 16, fontWeight: 'bold' }}>Volume: {volume}kg</Text>
-            <Text style={{ color: 'white', fontSize: 16, fontWeight: 'bold' }}>Duration: {duration}</Text>
-        </View>
+
 
         <FlatList
         data={data}
@@ -82,6 +83,15 @@ export default function ViewWorkout() {
         keyExtractor={(item) => item.id}
         ListEmptyComponent={
             <Text style={styles.emptyMessage}>No exercises found in this workout.</Text>
+        }
+        ListHeaderComponent={
+            <View>
+                <ThemedText style={styles.menuTitle} type="title">{workoutName}</ThemedText>
+                <View style={{ flexDirection: 'row', justifyContent: 'space-between', padding: 20,  }}>
+                    <Text style={{ color: 'white', fontSize: 16, fontWeight: 'bold' }}>Volume: {volume}kg</Text>
+                    <Text style={{ color: 'white', fontSize: 16, fontWeight: 'bold' }}>Duration: {duration}</Text>
+                </View>
+            </View>
         }
         />
     </LinearGradient>
@@ -97,8 +107,18 @@ const styles = StyleSheet.create({
     paddingBottom: 70,
     fontSize: 40,
   },
-  exerciseContainer: { marginBottom: 20,marginHorizontal: 20, paddingHorizontal: 15, paddingVertical: 10, backgroundColor: '#222', borderRadius: 10 },
-  exerciseHeader: { marginBottom: 10 },
+  exerciseContainer: { 
+    marginBottom: 20,
+    marginHorizontal: 20, 
+    paddingVertical: 10,
+  },
+  exerciseHeader: { 
+    marginBottom: 10,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'flex-start',
+    
+  },
   exerciseTitle: { fontSize: 22, color: 'white', fontWeight: 'bold', textTransform: 'capitalize' },
   setContainer: { marginTop: 10 },
   setRow: { flexDirection: 'row', justifyContent: 'space-between', marginVertical: 5 },
@@ -107,4 +127,5 @@ const styles = StyleSheet.create({
   headerIndex: { flex: 0.5 },
   cellIndex: { flex: 0.5 },
   emptyMessage: { textAlign: 'center', color: 'lightgray', marginTop: 50 },
+  exPic: { width: 60, height: 60, borderRadius: 20, marginRight: 10 },
 });
