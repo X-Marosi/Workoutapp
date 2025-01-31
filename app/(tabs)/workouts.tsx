@@ -5,7 +5,7 @@ import { router } from "expo-router";
 import { useEffect, useState } from "react";
 import auth from '@react-native-firebase/auth';
 import firestore, { Timestamp } from '@react-native-firebase/firestore';
-
+import { Ionicons } from "@expo/vector-icons";
 
 
 export default function Tab() {
@@ -56,6 +56,10 @@ export default function Tab() {
             <TouchableOpacity style={styles.workoutContainer} onPress={() => router.navigate({ pathname: '/viewWou', params: { id: item.id } })}>
               <View style={styles.workoutContainerBox}>
                 <ThemedText style={styles.workoutName} type="subtitle">{item.name}</ThemedText>
+
+
+                  <Ionicons name="ellipsis-horizontal" size={24} color="white" style={{position: 'absolute', right: 10, top: 10}} />
+
                 <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
                   <Text style={styles.lastSession}>{lastSession(item.date)}</Text>
                   <Text style={styles.buttonStartPlan} onPress={() => {

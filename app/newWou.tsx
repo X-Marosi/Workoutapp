@@ -87,7 +87,7 @@ export default function Tab() {
   const [totalWeight, setTotalWeight] = useState(0);
   const [totalSets, setTotalSets] = useState(0);
   const [isModalVisible, setIsModalVisible] = useState(false);
-  const [timerState, setTimerState] = useState('paused');
+  const [timerState, setTimerState] = useState('running');
   const [elapsedTime, setElapsedTime] = useState(0);
 
   const nameWorkout = () => {
