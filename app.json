@@ -21,6 +21,10 @@
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
+      "androidStatusBar": {
+        "backgroundColor": "transparent",
+        "translucent": true
+      },
       "package": "com.example.Workoutapp",
       "googleServicesFile": "./google-services.json"
     },

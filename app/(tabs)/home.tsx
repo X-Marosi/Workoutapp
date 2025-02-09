@@ -12,7 +12,7 @@ export default function Tab() {
   const user = auth().currentUser;
 
   const lastSession = (date: Timestamp | null | undefined) => {
-    if (!date) {
+    if (!date || !date.seconds || !date.toDate) {
       return "Last session: N/A";
     }
     const now = Timestamp.now();
@@ -45,7 +45,12 @@ export default function Tab() {
           exercises: data.exercises ? data.exercises.map((exercise: { name: string, sets: Array<number> }) => exercise.sets.length + 'x  ' + exercise.name)/*.slice(0, 5)*/.join('\n') : ''
         };
       });
-      workoutsList.sort((a, b) => b.date.seconds - a.date.seconds);
+      workoutsList.sort((a, b) => {
+        if (a.date && b.date) {
+          return b.date.seconds - a.date.seconds;
+        }
+        return 0;
+      });
       workoutsList.splice(40);
       setWorkouts(workoutsList);
     });
