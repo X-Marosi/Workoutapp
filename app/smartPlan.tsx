@@ -3,7 +3,7 @@ import { useUser } from '@/context/userContext';
 import auth from '@react-native-firebase/auth';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useState } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, ScrollView } from 'react-native';
 
 export default function Tab() {
 
@@ -11,7 +11,9 @@ export default function Tab() {
 
     const [selectedLevel, setSelectedLevel] = useState("beginner");
     const [selectedGoal, setSelectedGoal] = useState("");
+    const [selectedPlan, setSelectedPlan] = useState("workout");
     const [equipment, setEquipment] = useState<string[]>([]);
+    const [selectedGender, setSelectedGender] = useState("");
 
     const handleEquipmentToggle = (item: string) => {
         if (equipment.includes(item)) {
@@ -32,17 +34,45 @@ export default function Tab() {
     };
 
     return (
-        <View style={{ flex: 1 }}>
+        <ScrollView style={{ flex: 1 }}>
             <LinearGradient colors={["#1E1E1E", "black"]} style={styles.container}>
                 <ThemedText style={styles.menuTitle} type="title">Smart Plan</ThemedText>
                 <ThemedText style={{ fontWeight: '400', padding: 20, alignSelf: 'center' }} type="subtitle">Create your workout plan</ThemedText>
 
+                {/* Workout / Plan */}
+                <ThemedText style={styles.sectionTitle} type="subtitle">Generate</ThemedText>
+                <View style={styles.skillLevels}>
+                    <Text style={[styles.button, selectedPlan === "workout" && styles.selected]} onPress={() => setSelectedPlan("workout")}> Workout </Text>
+                    <Text style={[styles.button, selectedPlan === "plan" && styles.selected]} onPress={() => setSelectedPlan("plan")}> Plan </Text>
+                </View>
+
+
                 {/* Skill Levels */}
+                <ThemedText style={styles.sectionTitle} type="subtitle">Skill Level</ThemedText>
                 <View style={styles.skillLevels}>
                     <Text style={[styles.button, selectedLevel === "beginner" && styles.selected]} onPress={() => setSelectedLevel("beginner")}> Beginner </Text>
                     <Text style={[styles.button, selectedLevel === "intermediate" && styles.selected]} onPress={() => setSelectedLevel("intermediate")}> Intermediate </Text>
                     <Text style={[styles.button, selectedLevel === "advanced" && styles.selected]} onPress={() => setSelectedLevel("advanced")}> Advanced </Text>
                 </View>
+
+                { selectedPlan === "workout" ? (
+                    /* Muscle Groups */
+                    <View>
+                        <ThemedText style={styles.sectionTitle} type="subtitle">Muscle Groups</ThemedText>
+                        <View style={styles.equipmentOptions}>
+                            {["Chest", "Back", "Shoulders", "Biceps", "Triceps", "Quads", "Glutes", "Hamstrings", "Calves"].map((item, index) => (
+                                <TouchableOpacity
+                                    key={index}
+                                    onPress={() => handleEquipmentToggle(item)}
+                                    style={[styles.equipmentButton, equipment.includes(item) && styles.selectedEquipment]}
+                                >
+                                    <Text style={styles.equipmentText}>{item}</Text>
+                                </TouchableOpacity>
+                            ))}
+                        </View>
+                    </View>
+                ) : null
+                }
 
                 {/* Workout Goals */}
                 <ThemedText style={styles.sectionTitle} type="subtitle">Workout Goal</ThemedText>
@@ -66,12 +96,18 @@ export default function Tab() {
                     ))}
                 </View>
 
+                {/* Gender */}
+                <ThemedText style={styles.sectionTitle} type="subtitle">Gender</ThemedText>
+                <View style={styles.skillLevels}>
+                    <Text style={[styles.button, selectedGender === "male" && styles.selected]} onPress={() => setSelectedGender("male")}>Male</Text>
+                    <Text style={[styles.button, selectedGender === "female" && styles.selected]} onPress={() => setSelectedGender("female")}>Female</Text>
+                </View>
                 {/* Generate Plan Button */}
                 <TouchableOpacity onPress={handleGeneratePlan} style={styles.generateButton}>
                     <Text style={styles.generateButtonText}>Generate Plan</Text>
                 </TouchableOpacity>
             </LinearGradient>
-        </View>
+        </ScrollView>
     );
 }
 
@@ -101,7 +137,6 @@ const styles = StyleSheet.create({
         marginHorizontal: 25,
         padding: 5,
         borderRadius: 8,
-        backgroundColor: "#111",
     },
     selected: {
         backgroundColor: "rebeccapurple",
@@ -118,8 +153,6 @@ const styles = StyleSheet.create({
         justifyContent: "space-evenly",
         marginHorizontal: 25,
         padding: 5,
-        borderRadius: 8,
-        backgroundColor: "#111",
         marginTop: 10,
     },
     equipmentOptions: {
