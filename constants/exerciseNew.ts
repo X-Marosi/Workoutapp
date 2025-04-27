@@ -170,7 +170,7 @@ export const exerciseListAll = [
       ]
   },
   {
-      "bodyPart": "upper legs",
+      "bodyPart": "quads",
       "equipment": "barbell",
       "id": "0028",
       "name": "barbell clean and press",
@@ -192,7 +192,7 @@ export const exerciseListAll = [
       ]
   },
   {
-      "bodyPart": "upper arms",
+      "bodyPart": "triceps",
       "equipment": "barbell",
       "id": "0030",
       "name": "barbell close grip bench press",
@@ -213,7 +213,7 @@ export const exerciseListAll = [
       ]
   },
   {
-      "bodyPart": "upper arms",
+      "bodyPart": "biceps",
       "equipment": "barbell",
       "id": "0031",
       "pic": require("@/assets/images/exercises/0031.jpg"),
@@ -233,7 +233,7 @@ export const exerciseListAll = [
       ]
   },
   {
-      "bodyPart": "upper legs",
+      "bodyPart": "back",
       "equipment": "barbell",
       "id": "0032",
       "pic": require("@/assets/images/exercises/0032.jpg"),
@@ -274,13 +274,13 @@ export const exerciseListAll = [
       ]
   },
   {
-      "bodyPart": "upper legs",
+      "bodyPart": "quads",
       "equipment": "barbell",
       "id": "0042",
       "name": "barbell front squat",
-      "target": "glutes",
+      "target": "quads",
       "secondaryMuscles": [
-          "quadriceps",
+          "glutes",
           "hamstrings",
           "calves",
           "core"
@@ -295,15 +295,15 @@ export const exerciseListAll = [
       ]
   },
   {
-      "bodyPart": "upper legs",
+      "bodyPart": "quads",
       "equipment": "barbell",
       "id": "0043",
       "name": "barbell back squat",
       "pic": require("@/assets/images/exercises/0043.jpg"),
       "video": require("@/assets/images/exercises/0043.mp4"),
-      "target": "glutes",
+      "target": "quads",
       "secondaryMuscles": [
-          "quadriceps",
+          "quads",
           "hamstrings",
           "calves",
           "core"
@@ -320,7 +320,7 @@ export const exerciseListAll = [
       ]
   },
   {
-      "bodyPart": "upper legs",
+      "bodyPart": "glutes",
       "equipment": "barbell",
       "id": "1409",
       "name": "barbell glute bridge",
@@ -339,7 +339,7 @@ export const exerciseListAll = [
       ]
   },
   {
-      "bodyPart": "upper legs",
+      "bodyPart": "hamstrings",
       "equipment": "barbell",
       "id": "0044",
       "name": "barbell good morning",
@@ -399,13 +399,13 @@ export const exerciseListAll = [
       ]
   },
   {
-      "bodyPart": "upper legs",
+      "bodyPart": "glutes",
       "equipment": "barbell",
       "id": "0054",
       "name": "barbell lunge",
       "target": "glutes",
       "secondaryMuscles": [
-          "quadriceps",
+          "quads",
           "hamstrings",
           "calves"
       ],
@@ -418,7 +418,7 @@ export const exerciseListAll = [
       ]
   },
   {
-      "bodyPart": "upper arms",
+      "bodyPart": "biceps",
       "equipment": "barbell",
       "id": "0059",
       "name": "barbell lying preacher curl",
@@ -436,7 +436,7 @@ export const exerciseListAll = [
       ]
   },
   {
-      "bodyPart": "upper arms",
+      "bodyPart": "triceps",
       "equipment": "barbell",
       "id": "0060",
       "name": "triceps extension skull crusher",
@@ -455,7 +455,7 @@ export const exerciseListAll = [
       ]
   },
   {
-      "bodyPart": "upper arms",
+      "bodyPart": "biceps",
       "equipment": "barbell",
       "id": "0070",
       "name": "barbell preacher curl",
@@ -475,7 +475,7 @@ export const exerciseListAll = [
       ]
   },
   {
-      "bodyPart": "upper arms",
+      "bodyPart": "biceps",
       "equipment": "barbell",
       "id": "0080",
       "name": "barbell reverse curl",
@@ -515,15 +515,15 @@ export const exerciseListAll = [
       ]
   },
   {
-      "bodyPart": "upper legs",
+      "bodyPart": "hamstrings",
       "equipment": "barbell",
       "id": "0085",
       "name": "barbell romanian deadlift",
       "pic": require("@/assets/images/exercises/0085.jpg"),
       "video": require("@/assets/images/exercises/0085.mp4"),
-      "target": "glutes",
+      "target": "hamstrings",
       "secondaryMuscles": [
-          "hamstrings",
+          "glutes",
           "lower back"
       ],
       "instructions": [
@@ -593,15 +593,15 @@ export const exerciseListAll = [
       ]
   },
   {
-      "bodyPart": "upper legs",
+      "bodyPart": "back",
       "equipment": "barbell",
       "id": "0117",
       "name": "barbell sumo deadlift",
-      "target": "glutes",
+      "target": "lower back",
       "secondaryMuscles": [
           "hamstrings",
-          "quadriceps",
-          "lower back"
+          "quads",
+          "glutes"
       ],
       "instructions": [
           "Stand with your feet wider than shoulder width apart, toes pointing outwards.",
@@ -693,7 +693,7 @@ export const exerciseListAll = [
       ]
   },
   {
-      "bodyPart": "upper arms",
+      "bodyPart": "triceps",
       "equipment": "body weight",
       "id": "0129",
       "name": "bench dip (knees bent)",
@@ -739,7 +739,7 @@ export const exerciseListAll = [
       "video": require("@/assets/images/exercises/1160.mp4"),
       "target": "cardiovascular system",
       "secondaryMuscles": [
-          "quadriceps",
+          "quads",
           "hamstrings",
           "calves",
           "shoulders",
@@ -756,7 +756,7 @@ export const exerciseListAll = [
       ]
   },
   {
-      "bodyPart": "upper arms",
+      "bodyPart": "biceps",
       "equipment": "cable",
       "id": "1631",
       "name": "cable concentration curl",
@@ -792,7 +792,7 @@ export const exerciseListAll = [
       ]
   },
   {
-      "bodyPart": "upper arms",
+      "bodyPart": "biceps",
       "equipment": "cable",
       "id": "0868",
       "name": "cable curl",
@@ -849,7 +849,7 @@ export const exerciseListAll = [
       ]
   },
   {
-      "bodyPart": "upper arms",
+      "bodyPart": "biceps",
       "equipment": "cable",
       "id": "0165",
       "name": "cable hammer curl (with rope)",
@@ -925,7 +925,7 @@ export const exerciseListAll = [
       ]
   },
   {
-      "bodyPart": "upper arms",
+      "bodyPart": "biceps",
       "equipment": "cable",
       "id": "0190",
       "name": "cable one arm curl",
@@ -960,7 +960,7 @@ export const exerciseListAll = [
       ]
   },
   {
-      "bodyPart": "upper arms",
+      "bodyPart": "triceps",
       "equipment": "cable",
       "id": "1723",
       "name": "cable one arm tricep pushdown",
@@ -980,10 +980,10 @@ export const exerciseListAll = [
       ]
   },
   {
-      "bodyPart": "upper arms",
+      "bodyPart": "triceps",
       "equipment": "cable",
       "id": "0194",
-      "name": "cable overhead triceps extension (rope attachment)",
+      "name": "cable overhead triceps extension",
       "target": "triceps",
       "secondaryMuscles": [
           "shoulders"
@@ -1019,7 +1019,7 @@ export const exerciseListAll = [
       ]
   },
   {
-      "bodyPart": "upper arms",
+      "bodyPart": "triceps",
       "equipment": "cable",
       "id": "0201",
       "name": "cable pushdown",
@@ -1038,10 +1038,10 @@ export const exerciseListAll = [
       ]
   },
   {
-      "bodyPart": "upper arms",
+      "bodyPart": "triceps",
       "equipment": "cable",
       "id": "0200",
-      "name": "cable pushdown (with rope attachment)",
+      "name": "cable pushdown (with rope)",
       "target": "triceps",
       "secondaryMuscles": [
           "forearm"
@@ -1057,7 +1057,7 @@ export const exerciseListAll = [
       ]
   },
   {
-      "bodyPart": "upper arms",
+      "bodyPart": "biceps",
       "equipment": "cable",
       "id": "0206",
       "name": "cable reverse curl",
@@ -1156,7 +1156,7 @@ export const exerciseListAll = [
       ]
   },
   {
-      "bodyPart": "upper arms",
+      "bodyPart": "triceps",
       "equipment": "cable",
       "id": "0231",
       "name": "cable standing one arm triceps extension",
@@ -1177,7 +1177,7 @@ export const exerciseListAll = [
       "bodyPart": "shoulders",
       "equipment": "cable",
       "id": "0233",
-      "name": "cable standing rear delt row (with rope)",
+      "name": "cable standing rear delt row",
       "target": "delts",
       "secondaryMuscles": [
           "trapezius",
@@ -1213,10 +1213,10 @@ export const exerciseListAll = [
       ]
   },
   {
-      "bodyPart": "upper arms",
+      "bodyPart": "triceps",
       "equipment": "cable",
       "id": "0241",
-      "name": "cable triceps pushdown (v bar)",
+      "name": "cable triceps pushdown",
       "target": "triceps",
       "secondaryMuscles": [
           "forearm"
@@ -1287,7 +1287,7 @@ export const exerciseListAll = [
       ]
   },
   {
-      "bodyPart": "upper arms",
+      "bodyPart": "triceps",
       "equipment": "body weight",
       "id": "0283",
       "name": "diamond push up",
@@ -1360,7 +1360,7 @@ export const exerciseListAll = [
       ]
   },
   {
-      "bodyPart": "upper arms",
+      "bodyPart": "biceps",
       "equipment": "dumbbell",
       "id": "0294",
       "name": "dumbbell biceps curl",
@@ -1378,7 +1378,7 @@ export const exerciseListAll = [
       ]
   },
   {
-      "bodyPart": "upper arms",
+      "bodyPart": "biceps",
       "equipment": "dumbbell",
       "id": "0298",
       "name": "dumbbell cross body hammer curl",
@@ -1414,7 +1414,7 @@ export const exerciseListAll = [
       ]
   },
   {
-      "bodyPart": "upper arms",
+      "bodyPart": "biceps",
       "equipment": "dumbbell",
       "id": "0313",
       "name": "dumbbell hammer curl",
@@ -1453,7 +1453,7 @@ export const exerciseListAll = [
       ]
   },
   {
-      "bodyPart": "upper arms",
+      "bodyPart": "biceps",
       "equipment": "dumbbell",
       "id": "0315",
       "name": "dumbbell incline biceps curl",
@@ -1489,7 +1489,7 @@ export const exerciseListAll = [
       ]
   },
   {
-      "bodyPart": "upper arms",
+      "bodyPart": "biceps",
       "equipment": "dumbbell",
       "id": "0322",
       "name": "dumbbell incline inner biceps curl",
@@ -1545,7 +1545,7 @@ export const exerciseListAll = [
       ]
   },
   {
-      "bodyPart": "upper arms",
+      "bodyPart": "triceps",
       "equipment": "dumbbell",
       "id": "0333",
       "name": "dumbbell kickback",
@@ -1580,13 +1580,13 @@ export const exerciseListAll = [
       ]
   },
   {
-      "bodyPart": "upper legs",
+      "bodyPart": "glutes",
       "equipment": "dumbbell",
       "id": "0336",
       "name": "dumbbell lunge",
       "target": "glutes",
       "secondaryMuscles": [
-          "quadriceps",
+          "quads",
           "hamstrings",
           "calves"
       ],
@@ -1600,7 +1600,7 @@ export const exerciseListAll = [
       ]
   },
   {
-      "bodyPart": "upper arms",
+      "bodyPart": "triceps",
       "equipment": "dumbbell",
       "id": "0352",
       "name": "dumbbell neutral grip bench press",
@@ -1618,7 +1618,7 @@ export const exerciseListAll = [
       ]
   },
   {
-      "bodyPart": "upper arms",
+      "bodyPart": "triceps",
       "equipment": "dumbbell",
       "id": "0362",
       "name": "dumbbell one arm triceps extension (on bench)",
@@ -1636,7 +1636,7 @@ export const exerciseListAll = [
       ]
   },
   {
-      "bodyPart": "upper arms",
+      "bodyPart": "biceps",
       "equipment": "dumbbell",
       "id": "0372",
       "name": "dumbbell preacher curl",
@@ -1673,7 +1673,7 @@ export const exerciseListAll = [
       ]
   },
   {
-      "bodyPart": "upper arms",
+      "bodyPart": "biceps",
       "equipment": "dumbbell",
       "id": "0382",
       "name": "dumbbell revers grip biceps curl",
@@ -1710,7 +1710,7 @@ export const exerciseListAll = [
       ]
   },
   {
-      "bodyPart": "upper legs",
+      "bodyPart": "glutes",
       "equipment": "dumbbell",
       "id": "1459",
       "name": "dumbbell romanian deadlift",
@@ -1727,7 +1727,7 @@ export const exerciseListAll = [
       ]
   },
   {
-      "bodyPart": "upper arms",
+      "bodyPart": "biceps",
       "equipment": "dumbbell",
       "id": "1677",
       "name": "dumbbell seated bicep curl",
@@ -1762,7 +1762,7 @@ export const exerciseListAll = [
       ]
   },
   {
-      "bodyPart": "upper arms",
+      "bodyPart": "biceps",
       "equipment": "dumbbell",
       "id": "1678",
       "name": "dumbbell seated hammer curl",
@@ -1798,7 +1798,7 @@ export const exerciseListAll = [
       ]
   },
   {
-      "bodyPart": "upper arms",
+      "bodyPart": "biceps",
       "equipment": "dumbbell",
       "id": "0402",
       "name": "dumbbell seated preacher curl",
@@ -1833,7 +1833,7 @@ export const exerciseListAll = [
       ]
   },
   {
-      "bodyPart": "upper arms",
+      "bodyPart": "triceps",
       "equipment": "dumbbell",
       "id": "2188",
       "name": "dumbbell seated triceps extension",
@@ -1884,7 +1884,7 @@ export const exerciseListAll = [
       ]
   },
   {
-      "bodyPart": "upper legs",
+      "bodyPart": "quads",
       "equipment": "dumbbell",
       "id": "0410",
       "name": "dumbbell single leg split squat",
@@ -1903,13 +1903,13 @@ export const exerciseListAll = [
       ]
   },
   {
-      "bodyPart": "upper legs",
+      "bodyPart": "quads",
       "equipment": "dumbbell",
       "id": "0411",
       "name": "dumbbell single leg squat",
-      "target": "glutes",
+      "target": "quads",
       "secondaryMuscles": [
-          "quadriceps",
+          "glutes",
           "hamstrings",
           "calves"
       ],
@@ -1941,7 +1941,7 @@ export const exerciseListAll = [
       ]
   },
   {
-      "bodyPart": "upper arms",
+      "bodyPart": "biceps",
       "equipment": "dumbbell",
       "id": "0416",
       "name": "dumbbell standing biceps curl",
@@ -1975,7 +1975,7 @@ export const exerciseListAll = [
       ]
   },
   {
-      "bodyPart": "upper arms",
+      "bodyPart": "triceps",
       "equipment": "dumbbell",
       "id": "0423",
       "name": "dumbbell standing one arm extension",
@@ -2010,7 +2010,7 @@ export const exerciseListAll = [
       ]
   },
   {
-      "bodyPart": "upper arms",
+      "bodyPart": "biceps",
       "equipment": "dumbbell",
       "id": "0429",
       "name": "dumbbell standing reverse curl",
@@ -2027,7 +2027,7 @@ export const exerciseListAll = [
       ]
   },
   {
-      "bodyPart": "upper arms",
+      "bodyPart": "triceps",
       "equipment": "dumbbell",
       "id": "0430",
       "name": "dumbbell standing triceps extension",
@@ -2044,13 +2044,13 @@ export const exerciseListAll = [
       ]
   },
   {
-      "bodyPart": "upper legs",
+      "bodyPart": "glutes",
       "equipment": "dumbbell",
       "id": "0431",
       "name": "dumbbell step up",
       "target": "glutes",
       "secondaryMuscles": [
-          "quadriceps",
+          "quads",
           "hamstrings",
           "calves"
       ],
@@ -2064,7 +2064,7 @@ export const exerciseListAll = [
       ]
   },
   {
-      "bodyPart": "upper arms",
+      "bodyPart": "biceps",
       "equipment": "ez barbell",
       "id": "0447",
       "name": "ez barbell curl",
@@ -2081,7 +2081,7 @@ export const exerciseListAll = [
       ]
   },
   {
-      "bodyPart": "upper legs",
+      "bodyPart": "quads",
       "equipment": "dumbbell",
       "id": "2133",
       "name": "farmers walk",
@@ -2160,7 +2160,7 @@ export const exerciseListAll = [
       ]
   },
   {
-      "bodyPart": "upper arms",
+      "bodyPart": "triceps",
       "equipment": "body weight",
       "id": "0471",
       "name": "handstand push up",
@@ -2322,7 +2322,7 @@ export const exerciseListAll = [
       ]
   },
   {
-      "bodyPart": "upper legs",
+      "bodyPart": "quads",
       "equipment": "machine",
       "id": "0585",
       "name": "machine leg extension",
@@ -2340,7 +2340,7 @@ export const exerciseListAll = [
       ]
   },
   {
-      "bodyPart": "upper legs",
+      "bodyPart": "hamstrings",
       "equipment": "machine",
       "id": "0586",
       "name": "lying leg curl machine",
@@ -2359,7 +2359,7 @@ export const exerciseListAll = [
       ]
   },
   {
-      "bodyPart": "upper arms",
+      "bodyPart": "biceps",
       "equipment": "machine",
       "id": "0592",
       "name": "machine preacher curl",
@@ -2378,7 +2378,7 @@ export const exerciseListAll = [
       ]
   },
   {
-      "bodyPart": "upper arms",
+      "bodyPart": "triceps",
       "equipment": "machine",
       "id": "1451",
       "name": "seated dip machine",
@@ -2436,13 +2436,13 @@ export const exerciseListAll = [
       ]
   },
   {
-      "bodyPart": "upper legs",
+      "bodyPart": "quads",
       "equipment": "body weight",
       "id": "1476",
       "name": "one leg squat",
-      "target": "glutes",
+      "target": "quads",
       "secondaryMuscles": [
-          "quadriceps",
+          "glutes",
           "hamstrings",
           "calves"
       ],
@@ -2494,7 +2494,7 @@ export const exerciseListAll = [
       ]
   },
   {
-      "bodyPart": "upper arms",
+      "bodyPart": "triceps",
       "equipment": "body weight",
       "id": "0677",
       "name": "ring dips",
@@ -2552,7 +2552,7 @@ export const exerciseListAll = [
       ]
   },
   {
-      "bodyPart": "upper legs",
+      "bodyPart": "quads",
       "equipment": "body weight",
       "id": "1489",
       "name": "sissy squat",
@@ -2571,7 +2571,7 @@ export const exerciseListAll = [
       ]
   },
   {
-      "bodyPart": "upper arms",
+      "bodyPart": "triceps",
       "equipment": "body weight",
       "id": "0814",
       "name": "triceps dip",
@@ -2627,7 +2627,7 @@ export const exerciseListAll = [
       ]
   },
   {
-      "bodyPart": "upper arms",
+      "bodyPart": "triceps",
       "equipment": "weighted",
       "id": "1755",
       "name": "weighted tricep dips",

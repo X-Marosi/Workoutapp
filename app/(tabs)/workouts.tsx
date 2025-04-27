@@ -6,15 +6,17 @@ import { useEffect, useState } from "react";
 import auth from '@react-native-firebase/auth';
 import firestore, { Timestamp } from '@react-native-firebase/firestore';
 import { Ionicons } from "@expo/vector-icons";
-import { Menu, Divider, Provider } from 'react-native-paper';
+import { Menu, Provider } from 'react-native-paper';
 
 
 
 export default function Tab() {
   const [workouts, setWorkouts] = useState<{ id: string, name: string, exercises: string, volume: string, duration: string, date: Timestamp }[]>([]);
-  const [visibleMenuId, setVisibleMenuId] = useState<string | null>(null); // Track which menu is open
+  const [visibleMenuId, setVisibleMenuId] = useState<string | null>(null);
   const user = auth().currentUser;
 
+
+  // Fetch user workouts from Firestore
   useEffect(() => {
     if (!user) return;
 
@@ -40,7 +42,7 @@ export default function Tab() {
     return () => unsubscribe();
   }, [user]);
 
-  // Function to delete a workout
+  // Delete workout from Firestore
   const deleteWorkout = async (workoutId: string) => {
     if (!user) return;
     try {
@@ -56,6 +58,7 @@ export default function Tab() {
     }
   };
 
+  // Calculate how long ago the last session was from date
   const lastSession = (date: Timestamp | null | undefined) => {
     if (!date) return "Last session: N/A";
   
@@ -71,6 +74,7 @@ export default function Tab() {
     else return `Last session: ${days} days ago`;
     
   };
+
 
   return (
     <Provider>
@@ -93,8 +97,8 @@ export default function Tab() {
                           <Ionicons name="ellipsis-horizontal" size={24} color="white" />
                         </TouchableOpacity>
                       }
-                      contentStyle={styles.menuContent} // Custom styles for menu items
-                      style={styles.menuContainer} // Custom styles for positioning
+                      contentStyle={styles.menuContent}
+                      style={styles.menuContainer}
                     >
                       <Menu.Item titleStyle={styles.menuItemText} title="Delete" onPress={() => deleteWorkout(item.id)} />
                     </Menu>
@@ -110,7 +114,9 @@ export default function Tab() {
               </View>
             </TouchableOpacity>
           )}
+
           keyExtractor={item => item.id}
+
           ListHeaderComponent={
             <View>
               <ThemedText style={styles.menuTitle} type="title">Workouts</ThemedText>
@@ -182,26 +188,23 @@ const styles = StyleSheet.create({
     zIndex: 10,
   },
   menuContainer: {
-    backgroundColor: "#222", // Dark background
-    borderRadius: 8, // Rounded corners
-    marginTop: 20, // Add some space above the menu
+    backgroundColor: "#222",
+    borderRadius: 8,
+    marginTop: 20,
     width: 85,
 
 
   },
 
   menuContent: {
-    backgroundColor: "#111", // Custom background color
-    borderRadius: 10, // Make it rounded
-    // make the space above and below the text smaller
+    backgroundColor: "#111",
+    borderRadius: 10,
     paddingVertical: 0,
-
-
   },
 
   menuItemText: {
     fontSize: 18,
-    color: "white", // White text
+    color: "white",
     fontWeight: "bold",
   },
 });

@@ -7,15 +7,9 @@ import { router } from "expo-router";
 import { exerciseListAll } from "@/constants/exerciseNew";
 
 
-
 export default function Tab() {
   const [searchQuery, setSearchQuery] = useState("");
-
-  //console.log(exercises);
-
-//get data from fetchExercises use it for exercises
   const [exercises, setExercises] = useState(exerciseListAll);
-
 
   const filteredExercises = exercises.filter(
     (exercise) =>
@@ -29,28 +23,32 @@ export default function Tab() {
     <ThemedView style={styles.container}>
       <LinearGradient colors={["#1E1E1E", "black"]} style={{ padding: 16, flex: 1 }}>
 
-        <TextInput style={styles.searchBar} placeholderTextColor={'white'} placeholder="Search exercises" value={searchQuery} onChangeText={setSearchQuery}/>
+        <TextInput 
+          style={styles.searchBar} 
+          placeholderTextColor={'white'} 
+          placeholder="Search exercises" 
+          value={searchQuery} 
+          onChangeText={setSearchQuery}
+        />
 
         <FlatList data={filteredExercises} renderItem={({ item }) => (
+
             <TouchableOpacity 
-            onPress={() => {
-              //console.log(item);
-              // Navigate back to the previous screen and pass the selected exercise
-              router.navigate({ pathname: '/newWou', params: { selectedExercise: JSON.stringify(item) } });
+              onPress={() => {
+                // Navigate back to the previous screen and pass the selected exercise
+                router.navigate({ pathname: '/newWou', params: { selectedExercise: JSON.stringify(item) } });
+              }}>
 
-              
-            }}>
-            <View style={styles.containerBox}>
-
-                <View style={styles.exGifContainer}>
-                  <Image  source={item.pic ? item.pic : require('@/assets/images/icon.png')} style={styles.exGif}/>
+              <View style={styles.containerBox}>
+                  <View style={styles.exGifContainer}>
+                    <Image  source={item.pic ? item.pic : require('@/assets/images/icon.png')} style={styles.exGif}/>
+                  </View>
+                
+                <View style={{ marginLeft: 10 }}>
+                  <ThemedText style={styles.capitalize} type="subtitle">{item.name}</ThemedText>
+                  <ThemedText style={styles.capitalize}>{item.target} | {item.equipment}</ThemedText>
                 </View>
-              
-              <View style={{ marginLeft: 10 }}>
-                <ThemedText style={styles.capitalize} type="subtitle">{item.name}</ThemedText>
-                <ThemedText style={styles.capitalize}>{item.target} | {item.equipment}</ThemedText>
               </View>
-            </View>
             </TouchableOpacity>
           )}
           keyExtractor={(item) => item.id}

@@ -1,6 +1,5 @@
-// exerciseDetails.tsx
 import React from 'react';
-import { View, Text, StyleSheet, ScrollView } from 'react-native';
+import { View, StyleSheet, ScrollView } from 'react-native';
 import { ThemedText } from '../components/ThemedText';
 import { useLocalSearchParams } from 'expo-router';
 import { LinearGradient } from 'expo-linear-gradient';
@@ -15,8 +14,7 @@ export default function ExerciseDetails() {
 
   // Parse the item and determine whether it's an ID or full exercise data
   const parsedItem = JSON.parse(item);
-
-  // If parsedItem contains `id` only, find the exercise from exerciseListAll
+  // If parsedItem contains the `id` only, find the exercise from exerciseListAll
   const exercise = parsedItem.id
     ? exerciseListAll.find(ex => ex.id === parsedItem.id)
     : parsedItem;

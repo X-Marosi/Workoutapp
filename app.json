@@ -22,8 +22,8 @@
         "backgroundColor": "#ffffff"
       },
       "androidStatusBar": {
-        "backgroundColor": "transparent",
-        "translucent": true
+        "translucent": true,
+        "backgroundColor": "transparent"
       },
       "package": "com.example.Workoutapp",
       "googleServicesFile": "./google-services.json"

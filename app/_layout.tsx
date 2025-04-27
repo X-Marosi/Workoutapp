@@ -6,9 +6,10 @@ import { useEffect, useState } from 'react';
 import 'react-native-reanimated';
 import { useColorScheme } from '@/hooks/useColorScheme';
 import auth, { FirebaseAuthTypes } from '@react-native-firebase/auth';
-import { ActivityIndicator, View, StyleSheet, StatusBar } from 'react-native';
+import { ActivityIndicator, View, StyleSheet } from 'react-native';
 import { ThemedView } from '@/components/ThemedView';
 import { UserProvider } from '@/context/userContext';
+import { StatusBar as ExpoStatusBar } from 'expo-status-bar';  // Import Expo StatusBar
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
@@ -21,9 +22,7 @@ export default function RootLayout() {
   const [initializing, setInitializing] = useState(true);
   const [user, setUser] = useState<FirebaseAuthTypes.User | null>(null);
 
-
   const onAuthStateChanged = (user: FirebaseAuthTypes.User | null) => {
-    //console.log('onAuthStateChanged', user);
     setUser(user);
     if (initializing) setInitializing(false);
   };
@@ -37,14 +36,12 @@ export default function RootLayout() {
     return subscriber;
   }, []);
 
-
   useEffect(() => {
     if (loaded) {
       SplashScreen.hideAsync();
     }
   }, [loaded]);
 
-  
   useEffect(() => {
     if (initializing) return;
 
@@ -58,39 +55,43 @@ export default function RootLayout() {
     } else if (!user && !segments[0]) {
       router.replace('/login');
     }
-
-  }, [user, initializing]); 
-
+  }, [user, initializing]);
 
   if (initializing) {
     return (
       <ThemedView style={styles.container}>
         <ActivityIndicator size="large" color="#0a7ea4" />
       </ThemedView>
-    )
+    );
   }
 
   return (
-    <ThemeProvider value={DarkTheme}>
-      <UserProvider>
-        <Stack>
-          <Stack.Screen name="index" options={{ headerShown: false }}/>
-          <Stack.Screen name="(tabs)" options={{ headerShown: false }}/>
-          <Stack.Screen name="+not-found" options={{ headerShown: false }}/>
-          <Stack.Screen name="newWou" options={{ headerShown: false }}/>
-          <Stack.Screen name="viewWou" options={{ headerShown: false }}/>
-          <Stack.Screen name="exerciseList" options={{ headerShown: false }}/>
-          <Stack.Screen name="settings" options={{ headerShown: false }}/>
-          <Stack.Screen name="register" options={{ headerShown: false }}/>
-          <Stack.Screen name="exerciseDetails" options={{ headerShown: false }}/>
-          <Stack.Screen name="login" options={{ headerShown: false }}/>
-          <Stack.Screen name="smartPlan" options={{ headerShown: false }}/>
-        </Stack>
-      </UserProvider>
-    </ThemeProvider>
+    <>
+      <ExpoStatusBar style="light" translucent backgroundColor="transparent" />
+      <ThemeProvider value={DarkTheme}>
+        <UserProvider>
+          <Stack>
+            <Stack.Screen name="index" options={{ headerShown: false }}/>
+            <Stack.Screen name="(tabs)" options={{ headerShown: false }}/>
+            <Stack.Screen name="+not-found" options={{ headerShown: false }}/>
+            <Stack.Screen name="newWou" options={{ headerShown: false }}/>
+            <Stack.Screen name="viewWou" options={{ headerShown: false }}/>
+            <Stack.Screen name="exerciseList" options={{ headerShown: false }}/>
+            <Stack.Screen name="settings" options={{ headerShown: false }}/>
+            <Stack.Screen name="register" options={{ headerShown: false }}/>
+            <Stack.Screen name="exerciseDetails" options={{ headerShown: false }}/>
+            <Stack.Screen name="login" options={{ headerShown: false }}/>
+            <Stack.Screen name="smartPlan" options={{ headerShown: false }}/>
+          </Stack>
+        </UserProvider>
+      </ThemeProvider>
+    </>
   );
 }
 
 const styles = StyleSheet.create({
   container: { flex: 1, justifyContent: 'center', alignItems: 'center' },
 });
+
+
+

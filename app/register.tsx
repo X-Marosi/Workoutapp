@@ -85,9 +85,32 @@ export default function Tab() {
           {page === 'register' ? ( // Register Page
             <>
               <ThemedText style={styles.menuTitle} type="title">Get Started</ThemedText>
-              <TextInput style={styles.input} placeholderTextColor={'grey'} value={username} onChangeText={setUsername} placeholder="USERNAME"/>
-              <TextInput style={styles.input} placeholderTextColor={'grey'} value={email} onChangeText={setEmail} placeholder="EMAIL" keyboardType="email-address"/>
-              <TextInput style={styles.input} placeholderTextColor={'grey'} value={password} onChangeText={setPassword} placeholder="PASSWORD" secureTextEntry/>
+              
+              <TextInput 
+                style={styles.input} 
+                placeholderTextColor={'grey'} 
+                value={username} 
+                onChangeText={setUsername} 
+                placeholder="USERNAME"
+              />
+
+              <TextInput 
+                style={styles.input} 
+                placeholderTextColor={'grey'} 
+                value={email} 
+                onChangeText={setEmail} 
+                placeholder="EMAIL" 
+                keyboardType="email-address"
+              />
+
+              <TextInput 
+                style={styles.input} 
+                placeholderTextColor={'grey'} 
+                value={password} 
+                onChangeText={setPassword} 
+                placeholder="PASSWORD" 
+                secureTextEntry
+              />
               
               {loading ? (
                 <ActivityIndicator size="large" color="rebeccapurple" />
@@ -100,9 +123,32 @@ export default function Tab() {
           ) : ( // Setup Page
             <>
                 <ThemedText style={styles.menuTitle} type="title">Setting up your account</ThemedText>
-                <TextInput style={styles.input} placeholderTextColor={'grey'} value={weight[0]?.toString()} onChangeText={(text) => setWeight([parseFloat(text)])} placeholder="WEIGHT" keyboardType="numeric"/>
-                <TextInput style={styles.input} placeholderTextColor={'grey'} value={height} onChangeText={setHeight} placeholder="HEIGHT" keyboardType="numeric"/>
-                <TextInput style={styles.input} placeholderTextColor={'grey'} value={age} onChangeText={setAge} placeholder="AGE" keyboardType="numeric"/>
+
+                <TextInput style={styles.input}
+                  placeholderTextColor={'grey'}
+                  value={weight[0]?.toString()} 
+                  onChangeText={(text) => setWeight([parseFloat(text)])} 
+                  placeholder="WEIGHT" 
+                  keyboardType="numeric"
+                />
+
+                <TextInput 
+                  style={styles.input} 
+                  placeholderTextColor={'grey'} 
+                  value={height} 
+                  onChangeText={setHeight} 
+                  placeholder="HEIGHT" 
+                  keyboardType="numeric"
+                />
+                
+                <TextInput 
+                  style={styles.input} 
+                  placeholderTextColor={'grey'} 
+                  value={age} 
+                  onChangeText={setAge} 
+                  placeholder="AGE" 
+                  keyboardType="numeric"
+                />
 
                 <View style={styles.genderOptions}>
                   <Text style={{color: 'grey',fontSize: 22,alignSelf: 'center'}}>GENDER</Text>
@@ -118,7 +164,6 @@ export default function Tab() {
                     >
                       FEMALE
                     </Text>
-
                 </View>
 
 
@@ -136,8 +181,15 @@ export default function Tab() {
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, justifyContent: 'center' },
-  menuTitle: { textAlign: 'center', padding: 20, fontSize: 50 },
+  container: {
+    flex: 1,
+    justifyContent: 'center'
+  },
+  menuTitle: { 
+    textAlign: 'center',
+    padding: 20,
+    fontSize: 50
+  },
   input: { 
     color: 'white',
     padding: 10,

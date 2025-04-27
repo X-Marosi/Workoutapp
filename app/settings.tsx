@@ -1,9 +1,8 @@
-import { View, Text, StyleSheet, Button, Image, TextInput } from 'react-native';
+import { View, Text, StyleSheet, TextInput } from 'react-native';
 import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
 import { LinearGradient } from 'expo-linear-gradient';
 import auth from '@react-native-firebase/auth';
-import { router } from 'expo-router';
 import firestore from '@react-native-firebase/firestore';
 import { useEffect, useState } from 'react';
 
@@ -30,7 +29,7 @@ export default function Tab() {
 
       const userDoc = firestore().collection('users').doc(user?.uid);
       const userSnapshot = await userDoc.get();
-      const currentWeights = userSnapshot.data()?.weight || []; // Default to empty array if undefined
+      const currentWeights = userSnapshot.data()?.weight || [];
       const updatedWeights = [...currentWeights, parseInt(current)];
       await userDoc.update({ weight: updatedWeights });
   };
@@ -115,18 +114,56 @@ export default function Tab() {
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, justifyContent: 'center', },
+  container: { 
+    flex: 1, 
+    justifyContent: 'center'
+  },
   menuTitle: {
     textAlign: 'center',
     marginVertical: 100,
     padding: 20,
     fontSize: 50,
   },
-  settingOption: { flexDirection: 'row', justifyContent: 'space-between', padding: 20},
-  settingText: { alignSelf: 'center', fontSize: 25, color: 'white', fontWeight: 'bold', textAlign: 'center', width: 100 },
-  settingName: { fontSize: 24, color: 'darkgrey', fontWeight: 'bold', width: 100 },
-  settingTitle: { fontSize: 20, color: 'white', textAlign: 'center', padding: 20 },
-  button: { textAlign: 'center', color: 'rebeccapurple', fontSize: 18, padding: 10, width: 100  },
-  input: { textAlign: 'center', fontSize: 24, color: 'white', fontWeight: 'bold', backgroundColor: '#222', borderRadius: 8, width: 100},
+  settingOption: { 
+    flexDirection: 'row', 
+    justifyContent: 'space-between', 
+    padding: 20
+  },
+  settingText: { 
+    alignSelf: 'center',
+     fontSize: 25, 
+     color: 'white', 
+     fontWeight: 'bold', 
+     textAlign: 'center', 
+     width: 100 
+    },
+  settingName: { 
+    fontSize: 24, 
+    color: 'darkgrey', 
+    fontWeight: 'bold', 
+    width: 100 
+  },
+  settingTitle: { 
+    fontSize: 20, 
+    color: 'white', 
+    textAlign: 'center', 
+    padding: 20
+  },
+  button: { 
+    textAlign: 'center', 
+    color: 'rebeccapurple', 
+    fontSize: 18, 
+    padding: 10, 
+    width: 100  
+  },
+  input: { 
+    textAlign: 'center', 
+    fontSize: 24, 
+    color: 'white', 
+    fontWeight: 'bold', 
+    backgroundColor: '#222', 
+    borderRadius: 8, 
+    width: 100
+  },
 });
 

@@ -99,7 +99,8 @@ export default function ViewWorkout() {
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1 },
+  container: { 
+    flex: 1 },
   menuTitle: {
     textAlign: "center",
     padding: 40,
@@ -119,8 +120,15 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-start',
     
   },
-  exerciseTitle: { fontSize: 22, color: 'white', fontWeight: 'bold', textTransform: 'capitalize' },
-  setContainer: { marginTop: 10 },
+  exerciseTitle: { 
+    fontSize: 22, 
+    color: 'white', 
+    fontWeight: 'bold', 
+    textTransform: 'capitalize'
+  },
+  setContainer: { 
+    marginTop: 10 
+},
   setRow: { flexDirection: 'row', justifyContent: 'space-between', marginVertical: 5 },
   setHeader: { flex: 1, fontWeight: 'bold', color: 'lightgray', textAlign: 'center' },
   setCell: { flex: 1, color: 'white', textAlign: 'center' },

@@ -15,7 +15,14 @@ export default function Tab() {
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, justifyContent: 'center' },
-  image: { width: 150, height: 150, borderRadius: 150 / 2, alignSelf: 'center' },
-
+  container: { 
+    flex: 1,
+    justifyContent: 'center'
+  },
+  image: { 
+    width: 150,
+    height: 150,
+    borderRadius: 150 / 2,
+    alignSelf: 'center'
+ },
 });

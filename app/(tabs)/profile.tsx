@@ -3,15 +3,14 @@ import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
 import { LinearGradient } from 'expo-linear-gradient';
 import { router } from 'expo-router';
-import { LineChart, BarChart, ContributionGraph } from 'react-native-chart-kit';
+import { LineChart, ContributionGraph } from 'react-native-chart-kit';
 import { Dimensions } from 'react-native';
 import { useUser } from '@/context/userContext';
 import auth from '@react-native-firebase/auth';
-import Body from "react-native-body-highlighter";
 
 export default function Tab() {
 
-  //User Data from Context
+  //User Data from UserContext
   const { name, weight, weightRecords, height, workoutCount, workoutRecords, gender } = useUser()
   const screenWidth = Dimensions.get('window').width;
 
@@ -27,31 +26,17 @@ export default function Tab() {
     legend: []
   };
 
-  console.log(workoutCount);
-
-  const commitsData = workoutRecords.map(([date, value]) => {
+  const workoutDays = workoutRecords.map(([date, value]) => {
     return { date: date, value };
   });
-
-  const barChartData = {
-    labels: ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12'],
-    datasets: [
-      {
-        data: [20, 45, 28, 80],
-        color: () => 'rebeccapurple',
-        strokeWidth: 2,
-      }
-    ],
-    legend: []
-  };
 
   return (
     <ScrollView>
       <ThemedView style={styles.container}>
         <LinearGradient colors={['#1E1E1E', 'black']} style={styles.container}>
-          <ThemedText style={styles.menuTitle} type="title">
-            Profile
-          </ThemedText>
+
+          {/* Page Title */}
+          <ThemedText style={styles.menuTitle} type="title"> Profile </ThemedText>
 
           {/* User Name */}
           <ThemedText style={styles.userName} type="default"> {name} </ThemedText>
@@ -80,9 +65,10 @@ export default function Tab() {
           </View>
           
           {/* Workout Calendar Graph */}
-          <ThemedText style={{ textAlign: 'center', fontSize: 22, fontWeight: 'bold' }} type="default">Workout Calendar</ThemedText>
+          <ThemedText style={{ textAlign: 'center', fontSize: 22, fontWeight: 'bold', paddingVertical: 10 }} type="default"> Workout Calendar </ThemedText>
+          
           <ContributionGraph
-            values={commitsData}
+            values={workoutDays}
             endDate={new Date()}
             numDays={93}
             width={screenWidth - 40}
@@ -103,7 +89,7 @@ export default function Tab() {
           />
 
           {/* Weight Graph */}
-          <ThemedText style={{ textAlign: 'center', fontSize: 22, fontWeight: 'bold' }} type="default">Bodyweight</ThemedText>
+          <ThemedText style={{ textAlign: 'center', fontSize: 22, fontWeight: 'bold', paddingVertical: 10 }} type="default">Bodyweight</ThemedText>
           <LineChart
             data={lineChartData}
             width={screenWidth - 40}
@@ -130,66 +116,10 @@ export default function Tab() {
               alignSelf: 'center'
             }}
           />
-{/*
-          <ThemedText style={{ textAlign: 'center', fontSize: 22, fontWeight: 'bold' }} type="default">Workout Volume</ThemedText>
-
-          <BarChart
-            data={barChartData}
-            width={screenWidth - 40}
-            height={220}
-            yAxisLabel=""
-            yAxisSuffix=" reps"
-            chartConfig={{
-              backgroundColor: '#1E1E1E',
-              backgroundGradientFrom: '#1E1E1E',
-              backgroundGradientTo: 'black',
-              decimalPlaces: 0, // Ensure no floating point issues
-              color: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
-              labelColor: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
-              style: {
-                borderRadius: 16,
-              },
-            }}
-            style={{
-              marginVertical: 8,
-              borderRadius: 16,
-              alignSelf: 'center',
-            }}
-          />
-
-          <View style={styles.body}>
-            <Body
-              data={[
-                { slug: "pectorals", intensity: 3 },
-                { slug: "biceps", intensity: 3 },
-                { slug: "triceps", intensity: 3 },
-                { slug: "forearm", intensity: 1 },
-                { slug: "deltoids", intensity: 2 },
-              ]}
-              gender= {gender}
-              side="front"
-              scale={1}
-              border="#222"
-            />
-            <Body
-              data={[
-                { slug: "pectorals", intensity: 1 },
-                { slug: "biceps", intensity: 2 },
-                { slug: "triceps", intensity: 3 },
-                { slug: "forearm", intensity: 1 },
-                { slug: "deltoids", intensity: 2 },
-              ]}
-              gender= {gender}
-              side="back"
-              scale={1}
-              border="#222"
-            />
-          </View>
-          
-*/}
 
           <Text style={styles.settings} onPress={() => { router.push("/settings") }}>Edit Profile</Text>
           <Text style={styles.logout} onPress={() => auth().signOut()}>Logout</Text>
+          
         </LinearGradient>
       </ThemedView>
     </ScrollView>

@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet, Button, Image, KeyboardAvoidingView, TextInput, ActivityIndicator } from 'react-native';
+import { View, Text, StyleSheet, KeyboardAvoidingView, TextInput, ActivityIndicator } from 'react-native';
 import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
 import { LinearGradient } from 'expo-linear-gradient';
@@ -9,7 +9,6 @@ import { router } from 'expo-router';
 
 
 export default function Tab() {
-
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -33,7 +32,6 @@ export default function Tab() {
     }
     setLoading(false);
   };
-  
 
   return (
     <ThemedView style={styles.container}>
@@ -68,7 +66,6 @@ export default function Tab() {
 
           <Text style={styles.link} onPress={() => router.push("/register")}>Don't have an account? Register here</Text>
 
-
         </LinearGradient>
       </KeyboardAvoidingView>
     </ThemedView>
@@ -76,9 +73,21 @@ export default function Tab() {
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, justifyContent: 'center' },
-  menuTitle: { textAlign: 'center', padding: 20, fontSize: 50 },
-  image: { width: 150, height: 150, borderRadius: 150 / 2, alignSelf: 'center' },
+  container: { 
+    flex: 1,
+    justifyContent: 'center'
+  },
+  menuTitle: { 
+    textAlign: 'center',
+    padding: 20,
+    fontSize: 50
+  },
+  image: { 
+    width: 150,
+    height: 150,
+    borderRadius: 150 / 2,
+    alignSelf: 'center'
+  },
   input: { 
     color: 'white',
     padding: 10,
@@ -89,7 +98,12 @@ const styles = StyleSheet.create({
     borderRadius: 4,
     width: '80%',
   },
-  link: { textAlign: 'center', color: 'rebeccapurple', padding: 10, fontSize: 16 },
+  link: { 
+    textAlign: 'center',
+    color: 'rebeccapurple',
+    padding: 10,
+    fontSize: 16
+  },
   buttonNew: {
     color: "white",
     backgroundColor: "rebeccapurple",

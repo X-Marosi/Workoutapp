@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet, Button, Image, FlatList, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, FlatList, TouchableOpacity } from 'react-native';
 import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
 import { LinearGradient } from 'expo-linear-gradient';
@@ -8,9 +8,18 @@ import auth from '@react-native-firebase/auth';
 import firestore, { Timestamp } from '@react-native-firebase/firestore';
 
 export default function Tab() {
-  const [workouts, setWorkouts] = useState<{ id: string, name: string; exercises: string; volume: string; duration: string, date: Timestamp }[]>([]);
+  const [workouts, setWorkouts] = useState<{ 
+    id: string, 
+    name: string; 
+    exercises: string; 
+    volume: string; 
+    duration: string, 
+    date: Timestamp 
+  }[]>([]);
+
   const user = auth().currentUser;
 
+  // Calculate how long ago the last session was from date
   const lastSession = (date: Timestamp | null | undefined) => {
     if (!date || !date.seconds || !date.toDate) {
       return "Last session: N/A";
@@ -32,6 +41,7 @@ export default function Tab() {
   };
   
 
+  // Fetch user workouts from Firestore
   useEffect(() => {
     firestore().collection('users').doc(user?.uid).collection('workouts').onSnapshot(documentSnapshot => {
       const workoutsList = documentSnapshot.docs.map(doc => {
@@ -60,39 +70,37 @@ export default function Tab() {
     <ThemedView style={styles.container}>
       <LinearGradient colors={['#1E1E1E', 'black']} style={styles.container}>
 
-      {workouts.length > 0 ? (
-        <FlatList
-          data={workouts}
-          renderItem={({ item }) => (
-            <TouchableOpacity style={styles.workoutContainer} onPress={() => router.navigate({ pathname: '/viewWou', params: { id: item.id } })}>
-              <View style={styles.workoutContainerBox}>
-                <ThemedText style={styles.workoutName} type="title">{item.name}</ThemedText>
-                <Text style={styles.exercises}>{item.exercises}</Text>
-                <View style={{flexDirection: "row", justifyContent: 'space-between'}}>
-                  <Text style={styles.wouInfo}>Duration: {item.duration}</Text>
-                  <Text style={styles.wouInfo}>{lastSession(item.date)}</Text>
+        {workouts.length > 0 ? (
+          <FlatList
+            data={workouts}
+            renderItem={({ item }) => (
+              <TouchableOpacity style={styles.workoutContainer} onPress={() => router.navigate({ pathname: '/viewWou', params: { id: item.id } })}>
+                <View style={styles.workoutContainerBox}>
+                  <ThemedText style={styles.workoutName} type="title">{item.name}</ThemedText>
+                  <Text style={styles.exercises}>{item.exercises}</Text>
+                  <View style={{flexDirection: "row", justifyContent: 'space-between'}}>
+                    <Text style={styles.wouInfo}>Duration: {item.duration}</Text>
+                    <Text style={styles.wouInfo}>{lastSession(item.date)}</Text>
+                  </View>
                 </View>
+              </TouchableOpacity>
+            )}
+            keyExtractor={item => item.id}
+            ListHeaderComponent={
+              <View>
+                <ThemedText style={styles.menuTitle} type="title">Home</ThemedText>
+                <ThemedText style={{ fontWeight: '400', padding: 20, alignSelf: 'center'}} type="subtitle">Workout History</ThemedText>
               </View>
-            </TouchableOpacity>
-          )}
-          keyExtractor={item => item.id}
-          ListHeaderComponent={
-            <View>
-              <ThemedText style={styles.menuTitle} type="title">Home</ThemedText>
-              <ThemedText style={{ fontWeight: '400', padding: 20, alignSelf: 'center'}} type="subtitle">Workout History</ThemedText>
-            </View>
-          }
-        />
-      ) : (
-        <View>
-          <ThemedText style={styles.menuTitle} type="title">Home</ThemedText>
-          <ThemedText style={{ fontWeight: '400', padding: 20, alignSelf: 'center'}} type="subtitle">Workout History</ThemedText>
-          <ThemedText style={{textAlign: 'center'}} type="subtitle">No workouts found</ThemedText>
-        </View>
-      )}
-
-
-    
+            }
+          />
+        ) : (
+          <View>
+            <ThemedText style={styles.menuTitle} type="title">Home</ThemedText>
+            <ThemedText style={{ fontWeight: '400', padding: 20, alignSelf: 'center'}} type="subtitle">Workout History</ThemedText>
+            <ThemedText style={{textAlign: 'center'}} type="subtitle">No workouts found</ThemedText>
+          </View>
+        )}
+      
       </LinearGradient>
     </ThemedView>
   );
@@ -122,7 +130,7 @@ const styles = StyleSheet.create({
   },
   workoutContainerBox: {
     padding: 10,
-    backgroundColor: "#222",
+    backgroundColor: 'rgba(34, 34, 34, 0.9)',
     borderRadius: 6,
   },
 
@@ -133,7 +141,9 @@ const styles = StyleSheet.create({
 
   exercises: {
     fontSize: 16,
-    color: 'white',
+    paddingLeft: 12,
+    paddingVertical: 10,
+    color: '#EEE',
     textTransform: 'capitalize',
   },
 

@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, FlatList, TextInput, StyleSheet, TouchableOpacity, Image, Alert, ImageSourcePropType, Text, Modal, KeyboardAvoidingView } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
@@ -289,6 +289,7 @@ export default function Tab() {
     updateTotalSets();
   }, [exerciseSets]);
 
+
   //Calculate elapsed time
   useEffect(() => {
     let interval: NodeJS.Timeout;
@@ -298,11 +299,11 @@ export default function Tab() {
 
       interval = setInterval(() => {
         const currentTime = Date.now();
-        setElapsedTime(Math.floor((currentTime - startTime) / 1000)); // Calculate elapsed time in seconds
+        setElapsedTime(Math.floor((currentTime - startTime) / 1000));
       }, 1000);
     }
 
-    return () => clearInterval(interval); // Cleanup interval on component unmount or when timerState changes
+    return () => clearInterval(interval);
   }, [timerState]);
   
   return (
@@ -312,6 +313,7 @@ export default function Tab() {
       <View style={styles.containerData}>
         <View>
           <ThemedText style={styles.infoTitle} type="default">Duration</ThemedText>
+
           <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
             <ThemedText style={styles.infoData} type="default"> {formatTime(elapsedTime)}</ThemedText>
             {timerState === 'running' ? 
@@ -365,7 +367,9 @@ export default function Tab() {
       <Modal visible={isModalVisible} transparent={true} animationType="slide">
         <KeyboardAvoidingView style={styles.modalContainer}>
           <View style={styles.modalContent}>
+
             <Text style={styles.modalTitle}>Save Workout</Text>
+            
             <TextInput
               style={styles.modalInput}
               placeholder="Workout Name"
@@ -373,17 +377,23 @@ export default function Tab() {
               value={workoutName}
               onChangeText={setWorkoutName}
             />
+            
             <View style={styles.modalButtons}>
+
               <TouchableOpacity style={styles.modalButton} onPress={() => finishWorkout(false)}>
                 <Text style={styles.modalButtonText}>Save</Text>
               </TouchableOpacity>
+              
               <TouchableOpacity style={styles.modalButton } onPress={() => finishWorkout(true)}>
                 <Text style={styles.modalButtonText}>Save as Plan</Text>
               </TouchableOpacity>
+              
               <TouchableOpacity style={[styles.modalButton, { backgroundColor: '#222' }]} onPress={() => setIsModalVisible(false)}>
                 <Text style={styles.modalButtonText}>Cancel</Text>
               </TouchableOpacity>
+          
             </View>
+          
           </View>
         </KeyboardAvoidingView>
       </Modal>
@@ -395,26 +405,78 @@ export default function Tab() {
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1 },
-  exerciseContainer: { padding: 10, marginVertical: 5 },
-  finished: { backgroundColor: "rgba(40, 191, 55, 0.25)" },
-  containerBox: { flexDirection: "row", alignItems: "center", marginBottom: 16 , width: '100%'},
+  container: {
+    flex: 1
+  },
+  exerciseContainer: {
+    padding: 10,
+    marginVertical: 5
+  },
+  finished: {
+    backgroundColor: "rgba(40, 191, 55, 0.25)"
+  },
+  containerBox: {
+    flexDirection: "row",
+    alignItems: "center",
+    marginBottom: 16 ,
+    width: '100%'
+  },
   exerciseInfo: { 
     marginLeft: 10, 
     width: '70%', 
     justifyContent: 'center', 
     alignItems: 'center',
   },
-  setContainer: { flexDirection: 'row', justifyContent: 'space-between' },
-  setNumbers: { flexDirection: 'row', justifyContent: 'space-between', paddingLeft: 10, paddingRight: 8 },
-  input: { flex: 1, fontSize: 16, color: 'lightgray', fontWeight: 'bold', textAlign: 'right' },
-  iconContainer: { flexDirection: 'row', justifyContent: 'flex-end', alignItems: 'center'},
-  icon: { marginHorizontal: 6, paddingTop: 14 },
-  capitalize: { textTransform: "capitalize" },
-  menuTitle: { textAlign: "center", padding: 20, paddingTop: 30, fontSize: 50, lineHeight: 50 },
-  exPic: { width: 60, height: 60, borderRadius: 20 },
-  exSet: { color: 'lightgray', fontSize: 16, textTransform: 'capitalize' },
-  setText: { fontWeight: 'bold', textAlign: 'center' },
+  setContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between'
+  },
+  setNumbers: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    paddingLeft: 10,
+    paddingRight: 8
+  },
+  input: {
+    flex: 1,
+    fontSize: 16,
+    color: 'lightgray',
+    fontWeight: 'bold',
+    textAlign: 'right'
+  },
+  iconContainer: {
+    flexDirection: 'row',
+    justifyContent: 'flex-end',
+    alignItems: 'center'
+  },
+  icon: {
+    marginHorizontal: 6,
+    paddingTop: 14
+  },
+  capitalize: {
+    textTransform: "capitalize"
+  },
+  menuTitle: {
+    textAlign: "center",
+    padding: 20,
+    paddingTop: 30,
+    fontSize: 50,
+    lineHeight: 50
+  },
+  exPic: {
+    width: 60,
+    height: 60,
+    borderRadius: 20
+  },
+  exSet: { 
+    color: 'lightgray',
+    fontSize: 16,
+    textTransform: 'capitalize'
+  },
+  setText: { 
+    fontWeight: 'bold',
+    textAlign: 'center'
+  },
   buttonFinish: { 
     marginTop: 10,
     height: 40,
@@ -435,7 +497,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     alignSelf: 'center',
-    marginVertical: 20, // Spacing from the list and other content
+    marginVertical: 20,
   },
   buttonAddText: {
     fontWeight: 'bold',

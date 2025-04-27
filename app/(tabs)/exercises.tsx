@@ -1,6 +1,6 @@
-import { View, Text, StyleSheet, Button, FlatList, Image, TextInput, TouchableOpacity } from "react-native";
+import { View, StyleSheet, Button, FlatList, Image, TextInput, TouchableOpacity } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { ThemedText } from "@/components/ThemedText";
 import { ThemedView } from "@/components/ThemedView";
 import { router } from "expo-router";
@@ -9,13 +9,8 @@ import { exerciseListAll } from "@/constants/exerciseNew";
 
 
 export default function Tab() {
-  const [searchQuery, setSearchQuery] = useState("");
-
-  //console.log(exercises);
-
-//get data from fetchExercises use it for exercises
   const [exercises, setExercises] = useState(exerciseListAll);
-
+  const [searchQuery, setSearchQuery] = useState("");
 
   const filteredExercises = exercises.filter(
     (exercise) =>
@@ -29,8 +24,7 @@ export default function Tab() {
     <ThemedView style={styles.container}>
       <LinearGradient colors={["#1E1E1E", "black"]} style={{ padding: 16, flex: 1 }}>
 
-       
-
+        {/* Exercise List */}
         <FlatList data={filteredExercises} renderItem={({ item }) => (
             <TouchableOpacity 
             onPress={() => {
@@ -49,7 +43,9 @@ export default function Tab() {
             </View>
             </TouchableOpacity>
           )}
+          
           keyExtractor={(item) => item.id}
+
           ListHeaderComponent={
             <View>
               <ThemedText style={styles.menuTitle} type="title">Exercises</ThemedText>
