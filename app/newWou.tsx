@@ -9,7 +9,7 @@ import firestore from '@react-native-firebase/firestore';
 import auth from '@react-native-firebase/auth';
 
 type Exercise = { id: string; name: string; target: string; pic: ImageSourcePropType };
-type SetDetails = { setNumber: number; weight: number; reps: number };
+type SetDetails = { setNumber: number; rpe: number; weight: number; reps: number };
 type ExerciseSet = { isComplete: boolean; sets: SetDetails[] };
 
 const ExerciseItem = ({
@@ -25,7 +25,7 @@ const ExerciseItem = ({
   addSet: (id: string) => void;
   deleteSet: (id: string) => void;
   exerciseSets: Record<string, ExerciseSet>;
-  updateSetDetails: (exerciseId: string, setNumber: number, field: 'weight' | 'reps', value: number) => void;
+  updateSetDetails: (exerciseId: string, setNumber: number, field: 'weight' | 'reps' | 'rpe', value: number) => void;
   updateVolume: () => void;
 }) => (
   <View style={[styles.exerciseContainer, exerciseSets[item.id]?.isComplete && styles.finished]}>
@@ -42,6 +42,7 @@ const ExerciseItem = ({
 
     <View style={styles.setContainer}>
       <ThemedText style={styles.exSet}>Sets</ThemedText>
+      <ThemedText style={styles.exSet}>RPE</ThemedText>
       <ThemedText style={styles.exSet}>Weight</ThemedText>
       <ThemedText style={styles.exSet}>Reps</ThemedText>
     </View>
@@ -54,17 +55,31 @@ const ExerciseItem = ({
           style={styles.input}
           placeholder="0"
           placeholderTextColor="white"
-          value={set.weight ? set.weight.toString() : ''} // Empty string if weight is 0
+          value={set.rpe ? set.rpe.toString() : ''}
           keyboardType="numeric"
-          onChangeText={(text) => updateSetDetails(item.id, set.setNumber, 'weight', parseInt(text) || 0)} // Default to 0
+          onChangeText={(text) =>
+            updateSetDetails(item.id, set.setNumber, 'rpe', parseInt(text) || 0)
+          }
         />
         <TextInput
           style={styles.input}
           placeholder="0"
           placeholderTextColor="white"
-          value={set.reps ? set.reps.toString() : ''} // Empty string if reps is 0
+          value={set.weight ? set.weight.toString() : ''}
           keyboardType="numeric"
-          onChangeText={(text) => updateSetDetails(item.id, set.setNumber, 'reps', parseInt(text) || 0)} // Default to 0
+          onChangeText={(text) =>
+            updateSetDetails(item.id, set.setNumber, 'weight', parseInt(text) || 0)
+          }
+        />
+        <TextInput
+          style={styles.input}
+          placeholder="0"
+          placeholderTextColor="white"
+          value={set.reps ? set.reps.toString() : ''}
+          keyboardType="numeric"
+          onChangeText={(text) =>
+            updateSetDetails(item.id, set.setNumber, 'reps', parseInt(text) || 0)
+          }
         />
       </View>
     ))}
@@ -127,10 +142,15 @@ export default function Tab() {
   };
 
   //Update the details of a set
-  const updateSetDetails = (exerciseId: string, setNumber: number, field: 'weight' | 'reps', value: number) => {
+  const updateSetDetails = (
+    exerciseId: string,
+    setNumber: number,
+    field: 'weight' | 'reps' | 'rpe',
+    value: number
+  ) => {
     setExerciseSets((prev) => {
       const updatedSets = prev[exerciseId]?.sets.map((set) =>
-        set.setNumber === setNumber ? { ...set, [field]: value || 0 } : set // Default to 0 if input is cleared
+        set.setNumber === setNumber ? { ...set, [field]: value || 0 } : set
       ) || [];
       return { ...prev, [exerciseId]: { ...prev[exerciseId], sets: updatedSets } };
     });
@@ -152,7 +172,7 @@ export default function Tab() {
         ...prevState,
         [exerciseId]: {
           ...prevState[exerciseId],
-          sets: [...sets, { setNumber: newSetNumber, weight: 0, reps: 0 }],
+          sets: [...sets, { setNumber: newSetNumber, weight: 0, reps: 0, rpe: 0 }],
         },
       };
     });
@@ -201,6 +221,7 @@ export default function Tab() {
           weight: set.weight,
           setNumber: set.setNumber,
           reps: set.reps,
+          rpe: set.rpe,
         })),
         pic: exercise.pic || null,
       })),
@@ -227,7 +248,7 @@ export default function Tab() {
       setExercises((prevExercises) => [...prevExercises, exercise]);
       setExerciseSets((prevState) => ({
         ...prevState,
-        [exercise.id]: { isComplete: false, sets: [{ setNumber: 1, weight: 0, reps: 0 }] },
+        [exercise.id]: { isComplete: false, sets: [{ setNumber: 1, weight: 0, reps: 0, rpe: 0 }], },
       }));
     }
   }, [selectedExercise]);
@@ -253,7 +274,13 @@ export default function Tab() {
           setExercises(data?.exercises || []);
           setExerciseSets(
             data?.exercises.reduce((acc: Record<string, ExerciseSet>, exercise: { id: string, sets: SetDetails[] }) => {
-            acc[exercise.id] = { isComplete: false, sets: exercise.sets };
+              acc[exercise.id] = {
+                isComplete: false,
+                sets: exercise.sets.map((set: any) => ({
+                  ...set,
+                  rpe: set.rpe ?? 0,
+                })),
+              };
               return acc;
             }, {})
           );

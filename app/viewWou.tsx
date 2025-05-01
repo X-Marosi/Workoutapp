@@ -44,7 +44,8 @@ export default function ViewWorkout() {
         return () => unsubscribe(); // Cleanup the Firestore listener on unmount
     }
     }, [workoutId]);
-    const renderExercise = ({ item }: { item: { id: string; name: string; pic: number; sets: { weight: number; reps: number }[] } }) => {
+
+    const renderExercise = ({ item }: { item: { id: string; name: string; pic: number; sets: { weight: number; reps: number; rpe?: number }[] } }) => {
         console.log('Exercise picture data:', item.pic);
         return (
             <View style={styles.exerciseContainer}>
@@ -52,16 +53,18 @@ export default function ViewWorkout() {
                     <Image source={item.pic || require('@/assets/images/icon.png')} style={styles.exPic} />
                     <ThemedText style={styles.exerciseTitle}>{item.name}</ThemedText>
                 </View>
-
+    
                 <View style={styles.setContainer}>
                     <View style={styles.setRow}>
                         <Text style={[styles.setHeader, styles.headerIndex]}>Set</Text>
+                        <Text style={styles.setHeader}>RPE</Text>
                         <Text style={styles.setHeader}>Weight</Text>
                         <Text style={styles.setHeader}>Reps</Text>
                     </View>
                     {item.sets.map((set, index) => (
                         <View key={index} style={styles.setRow}>
                             <Text style={[styles.setCell, styles.cellIndex]}>{index + 1}</Text>
+                            <Text style={styles.setCell}>{set.rpe ?? '-'}</Text>
                             <Text style={styles.setCell}>{set.weight}kg</Text>
                             <Text style={styles.setCell}>{set.reps}</Text>
                         </View>
@@ -70,6 +73,7 @@ export default function ViewWorkout() {
             </View>
         );
     };
+    
 
     
 
@@ -129,11 +133,37 @@ const styles = StyleSheet.create({
   setContainer: { 
     marginTop: 10 
 },
-  setRow: { flexDirection: 'row', justifyContent: 'space-between', marginVertical: 5 },
-  setHeader: { flex: 1, fontWeight: 'bold', color: 'lightgray', textAlign: 'center' },
-  setCell: { flex: 1, color: 'white', textAlign: 'center' },
-  headerIndex: { flex: 0.5 },
-  cellIndex: { flex: 0.5 },
-  emptyMessage: { textAlign: 'center', color: 'lightgray', marginTop: 50 },
-  exPic: { width: 60, height: 60, borderRadius: 20, marginRight: 10 },
+  setRow: { 
+    flexDirection: 'row', 
+    justifyContent: 'space-between', 
+    marginVertical: 5 
+},
+  setHeader: { 
+    flex: 1, 
+    fontWeight: 'bold', 
+    color: 'lightgray', 
+    textAlign: 'center' 
+},
+  setCell: { 
+    flex: 1, 
+    color: 'white', 
+    textAlign: 'center' 
+},
+  headerIndex: { 
+    flex: 0.5 
+},
+  cellIndex: {
+    flex: 0.5 
+},
+  emptyMessage: { 
+    textAlign: 'center', 
+    color: 'lightgray', 
+    marginTop: 50 
+},
+  exPic: { 
+    width: 60, 
+    height: 60, 
+    borderRadius: 20, 
+    marginRight: 10 
+},
 });

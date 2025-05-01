@@ -8,7 +8,7 @@ import { View, Text, StyleSheet, TouchableOpacity, ScrollView } from 'react-nati
 import { exerciseListAll } from "@/constants/exerciseNew";
 import { router } from 'expo-router';
 
-// Helper function to shuffle an array
+// Function to shuffle an array
 const shuffleArray = (array) => {
   const arr = [...array];
   for (let i = arr.length - 1; i > 0; i--) {
