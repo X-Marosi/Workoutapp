@@ -45,7 +45,7 @@ export default function Tab() {
       ["Bodyweight", "Dumbbells", "Barbell", "Machines"].includes(item)
     );
 
-    // Map our equipment options to acceptable exercise.equipment values (all in lower case)
+    // Map our equipment options to acceptable values for filtering.
     const equipmentMapping = {
       "Bodyweight": ["body weight", "weighted"],
       "Dumbbells": ["dumbbell"],
@@ -53,6 +53,7 @@ export default function Tab() {
       "Machines": ["machine", "cable"]
     };
 
+    // Get a list of allowed equipment types.
     let allowedEquipment = null;
     if (equipmentSelection.length > 0 && equipmentSelection.length < 4) {
       allowedEquipment = equipmentSelection.reduce((acc, curr) => acc.concat(equipmentMapping[curr] || []), []);
@@ -66,18 +67,20 @@ export default function Tab() {
       repCount = 20;
     }
 
-    // Helper: select exercises for a given muscle group.
+    // Select exercises for a given muscle group from the exercise list.
     const selectExercisesForMuscle = (muscle, count) => {
       let filteredExercises = exerciseListAll.filter(exercise => {
         const matchesMuscle = exercise.bodyPart.toLowerCase() === muscle.toLowerCase();
         const matchesEquipment = allowedEquipment ? allowedEquipment.includes(exercise.equipment.toLowerCase()) : true;
         return matchesMuscle && matchesEquipment;
       });
+      // Shuffle the selection
       filteredExercises = shuffleArray(filteredExercises);
+      // Cut off the excess
       return filteredExercises.slice(0, count);
     };
 
-    // Helper: for non-fullBody splits, get exercise count per muscle.
+    // For non-fullBody splits, get exercise count per muscle.
     const getCount = (muscle) => {
       if (["Biceps", "Triceps", "Quads", "Hamstrings", "Glutes", "Calves"].includes(muscle)) {
         return 2;
@@ -86,7 +89,7 @@ export default function Tab() {
       }
     };
 
-    // Function to format exercises (attach a basic 3-set structure)
+    // Attach three sets to each exercise
     const formatExercises = (exercises) =>
       exercises.map(exercise => ({
         id: exercise.id,
@@ -99,7 +102,7 @@ export default function Tab() {
         pic: exercise.pic || null,
       }));
 
-    // We'll accumulate an array of workout objects to upload.
+    // The array of workout objects to upload (for uplading moultiple workouts at once).
     let workoutsToUpload = [];
 
     if (selectedSplit === "pushPullLegs") {
