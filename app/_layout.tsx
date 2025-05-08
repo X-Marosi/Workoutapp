@@ -9,6 +9,7 @@ import auth, { FirebaseAuthTypes } from '@react-native-firebase/auth';
 import { ActivityIndicator, View, StyleSheet } from 'react-native';
 import { ThemedView } from '@/components/ThemedView';
 import { UserProvider } from '@/context/userContext';
+import { WorkoutProvider } from '@/context/workoutContext';
 import { StatusBar as ExpoStatusBar } from 'expo-status-bar';  // Import Expo StatusBar
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
@@ -70,19 +71,21 @@ export default function RootLayout() {
       <ExpoStatusBar style="light" translucent backgroundColor="transparent" />
       <ThemeProvider value={DarkTheme}>
         <UserProvider>
-          <Stack>
-            <Stack.Screen name="index" options={{ headerShown: false }}/>
-            <Stack.Screen name="(tabs)" options={{ headerShown: false }}/>
-            <Stack.Screen name="+not-found" options={{ headerShown: false }}/>
-            <Stack.Screen name="newWou" options={{ headerShown: false }}/>
-            <Stack.Screen name="viewWou" options={{ headerShown: false }}/>
-            <Stack.Screen name="exerciseList" options={{ headerShown: false }}/>
-            <Stack.Screen name="settings" options={{ headerShown: false }}/>
-            <Stack.Screen name="register" options={{ headerShown: false }}/>
-            <Stack.Screen name="exerciseDetails" options={{ headerShown: false }}/>
-            <Stack.Screen name="login" options={{ headerShown: false }}/>
-            <Stack.Screen name="smartPlan" options={{ headerShown: false }}/>
-          </Stack>
+          <WorkoutProvider>
+            <Stack>
+              <Stack.Screen name="index" options={{ headerShown: false }}/>
+              <Stack.Screen name="(tabs)" options={{ headerShown: false }}/>
+              <Stack.Screen name="+not-found" options={{ headerShown: false }}/>
+              <Stack.Screen name="newWou" options={{ headerShown: false }}/>
+              <Stack.Screen name="viewWou" options={{ headerShown: false }}/>
+              <Stack.Screen name="exerciseList" options={{ headerShown: false }}/>
+              <Stack.Screen name="settings" options={{ headerShown: false }}/>
+              <Stack.Screen name="register" options={{ headerShown: false }}/>
+              <Stack.Screen name="exerciseDetails" options={{ headerShown: false }}/>
+              <Stack.Screen name="login" options={{ headerShown: false }}/>
+              <Stack.Screen name="smartPlan" options={{ headerShown: false }}/>
+            </Stack>
+          </WorkoutProvider>
         </UserProvider>
       </ThemeProvider>
     </>

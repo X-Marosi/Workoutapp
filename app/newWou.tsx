@@ -7,6 +7,7 @@ import { useLocalSearchParams } from 'expo-router';
 import { ThemedText } from '../components/ThemedText';
 import firestore from '@react-native-firebase/firestore';
 import auth from '@react-native-firebase/auth';
+import { useWorkout } from '@/context/workoutContext';
 
 type Exercise = { id: string; name: string; target: string; pic: ImageSourcePropType };
 type SetDetails = { setNumber: number; rpe: number; weight: number; reps: number };
@@ -26,7 +27,6 @@ const ExerciseItem = ({
   deleteSet: (id: string) => void;
   exerciseSets: Record<string, ExerciseSet>;
   updateSetDetails: (exerciseId: string, setNumber: number, field: 'weight' | 'reps' | 'rpe', value: number) => void;
-  updateVolume: () => void;
 }) => (
   <View style={[styles.exerciseContainer, exerciseSets[item.id]?.isComplete && styles.finished]}>
     <TouchableOpacity
@@ -46,7 +46,6 @@ const ExerciseItem = ({
       <ThemedText style={styles.exSet}>Weight</ThemedText>
       <ThemedText style={styles.exSet}>Reps</ThemedText>
     </View>
-
 
     {exerciseSets[item.id]?.sets.map((set) => (
       <View key={set.setNumber} style={styles.setNumbers}>
@@ -93,121 +92,40 @@ const ExerciseItem = ({
 );
 
 export default function Tab() {
-  const user = auth().currentUser;
+  const { 
+    exercises, 
+    exerciseSets, 
+    totalWeight, 
+    totalSets,
+    elapsedTime,
+    timerState,
+    workoutName,
+    toggleState,
+    addSet,
+    deleteSet,
+    updateSetDetails,
+    setWorkoutName,
+    setTimerState,
+    addExercise,
+    resetWorkout,
+    loadWorkoutPlan
+  } = useWorkout();
+  
   const { selectedExercise } = useLocalSearchParams<{ selectedExercise: string }>();
   const { selectedWorkout } = useLocalSearchParams<{ selectedWorkout: string }>();
   const navigation = useNavigation();
-  const [exercises, setExercises] = useState<Exercise[]>([]);
-  const [exerciseSets, setExerciseSets] = useState<Record<string, ExerciseSet>>({});
-  const [totalWeight, setTotalWeight] = useState(0);
-  const [totalSets, setTotalSets] = useState(0);
+  const user = auth().currentUser;
   const [isModalVisible, setIsModalVisible] = useState(false);
-  const [timerState, setTimerState] = useState('running');
-  const [elapsedTime, setElapsedTime] = useState(0);
 
-  const nameWorkout = () => {
-    let time = new Date().getHours();
-
-    if (time >= 6 && time < 12) { return "Morning Workout"; }
-    else if (time > 12 && time <= 18) { return "Afternoon Workout"; }
-    else if (time > 18 || time < 6) { return "Evening Workout"; }
-  };
-
-  const [workoutName, setWorkoutName] = useState(nameWorkout());
-
-  //Update the total weight lifted
-  const updateVolume = () => {
-    let total = 0;
-    exercises.forEach((exercise) => {
-      const exerciseData = exerciseSets[exercise.id];
-      if (exerciseData?.isComplete) {
-        exerciseData.sets.forEach((set) => {
-          total += set.weight * set.reps;
-        });
-      }
-    });
-    setTotalWeight(total);
-  };
-
-  //Update the total number of sets completed
-  const updateTotalSets = () => {
-    let total = 0;
-    exercises.forEach((exercise) => {
-      const exerciseData = exerciseSets[exercise.id];
-      if (exerciseData?.isComplete) {
-        total += exerciseData.sets.length;
-      }
-    });
-    setTotalSets(total);
-  };
-
-  //Update the details of a set
-  const updateSetDetails = (
-    exerciseId: string,
-    setNumber: number,
-    field: 'weight' | 'reps' | 'rpe',
-    value: number
-  ) => {
-    setExerciseSets((prev) => {
-      const updatedSets = prev[exerciseId]?.sets.map((set) =>
-        set.setNumber === setNumber ? { ...set, [field]: value || 0 } : set
-      ) || [];
-      return { ...prev, [exerciseId]: { ...prev[exerciseId], sets: updatedSets } };
-    });
-  };
-
-  //Toggle the completion state of an exercise (complete or incomplete)
-  const toggleState = (exerciseId: string) => {
-    setExerciseSets((prevState) => ({
-      ...prevState,
-      [exerciseId]: { ...prevState[exerciseId], isComplete: !prevState[exerciseId].isComplete },
-    }));
-  };
-
-  const addSet = (exerciseId: string) => {
-    setExerciseSets((prevState) => {
-      const sets = prevState[exerciseId]?.sets || [];
-      const newSetNumber = sets.length + 1;
-      return {
-        ...prevState,
-        [exerciseId]: {
-          ...prevState[exerciseId],
-          sets: [...sets, { setNumber: newSetNumber, weight: 0, reps: 0, rpe: 0 }],
-        },
-      };
-    });
-  };
-
-  const deleteSet = (exerciseId: string) => {
-    if(exerciseSets[exerciseId]?.sets.length > 1) {
-    setExerciseSets((prevState) => {
-      const sets = prevState[exerciseId]?.sets || [];
-      return { ...prevState, [exerciseId]: { ...prevState[exerciseId], sets: sets.slice(0, -1) } };
-    });
-    } else {
-      removeExercise(exerciseId);
-    }
-  };
-
-  const removeExercise = (exerciseId: string) => {
-    setExercises((prevExercises) => prevExercises.filter((exercise) => exercise.id !== exerciseId));
-    setExerciseSets((prevState) => {
-      const newState = { ...prevState };
-      delete newState[exerciseId];
-      return newState;
-    });
-    router.setParams({ selectedExercise: null });
-  };
-
+  // Format time function
   const formatTime = (time: number) => {
     const hours = Math.floor(time / 3600);
     const minutes = Math.floor((time % 3600) / 60);
     const seconds = time % 60;
-
     return `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
   };
 
-  //Finish the workout and save it to the database
+  // Finish workout function
   const finishWorkout = async (saveAsPlan: boolean) => {
     const workoutData = {
       name: workoutName || 'Unnamed Workout',
@@ -238,105 +156,77 @@ export default function Tab() {
       await firestore().collection('users').doc(user?.uid).collection('workoutPlans').add(workoutData);
     }
 
+    resetWorkout(); // Reset the workout before navigating away
     router.push('/workouts');
   };
 
-  //Add the selected exercise in the exercise list to the workout
+  // Add selected exercise from params
   useEffect(() => {
     if (selectedExercise && selectedExercise !== 'null') {
-      const exercise = JSON.parse(selectedExercise);
-      setExercises((prevExercises) => [...prevExercises, exercise]);
-      setExerciseSets((prevState) => ({
-        ...prevState,
-        [exercise.id]: { isComplete: false, sets: [{ setNumber: 1, weight: 0, reps: 0, rpe: 0 }], },
-      }));
+      try {
+        const exercise = JSON.parse(selectedExercise);
+        addExercise(exercise);
+      } catch (e) {
+        console.error("Error parsing selected exercise:", e);
+      }
     }
   }, [selectedExercise]);
 
-  //Load the selected workout plan from the database
+  // Load workout plan
   useEffect(() => {
     if (selectedWorkout && selectedWorkout !== 'null') {
-
-      //Get the workout reference
       const workoutRef = firestore().collection('users').doc(user?.uid).collection('workoutPlans').doc(selectedWorkout);
-
-      //Get the workout name
-      workoutRef.get().then((doc) => {
-        if (doc.exists) {
-          setWorkoutName(doc.data()?.name);
-        }
-      });
-
-      //Get the exercises and sets
+      
       workoutRef.get().then((doc) => {
         if (doc.exists) {
           const data = doc.data();
-          setExercises(data?.exercises || []);
-          setExerciseSets(
-            data?.exercises.reduce((acc: Record<string, ExerciseSet>, exercise: { id: string, sets: SetDetails[] }) => {
-              acc[exercise.id] = {
-                isComplete: false,
-                sets: exercise.sets.map((set: any) => ({
-                  ...set,
-                  rpe: set.rpe ?? 0,
-                })),
-              };
-              return acc;
-            }, {})
-          );
+          const planExercises = data?.exercises || [];
+          const name = data?.name || 'Workout Plan';
+          
+          // Convert data to the format needed for context
+          const planSets = planExercises.reduce((acc: Record<string, ExerciseSet>, exercise: any) => {
+            acc[exercise.id] = {
+              isComplete: false,
+              sets: exercise.sets.map((set: any) => ({
+                ...set,
+                rpe: set.rpe ?? 0,
+              })),
+            };
+            return acc;
+          }, {});
+          
+          // Load the workout plan into context
+          loadWorkoutPlan(planExercises, planSets, name);
         }
       });
     }
   }, [selectedWorkout]);
 
-  //Prompt the user to confirm before leaving the screen
+  // Handle back navigation
   useEffect(() => {
     const unsubscribe = navigation.addListener('beforeRemove', (event) => {
-      // Prevent default behavior of leaving the screen
       event.preventDefault();
-
-      // Show confirmation dialog
       Alert.alert(
         'Discard workout?',
         'Are you sure you want to discard your workout?',
         [
           { text: 'Cancel', style: 'cancel', onPress: () => {} },
-          { text: 'Discard', style: 'destructive', onPress: () => router.push('/workouts') },
+          { 
+            text: 'Discard', 
+            style: 'destructive', 
+            onPress: () => {
+              resetWorkout();
+              navigation.dispatch(event.data.action); 
+            } 
+          },
         ]
       );
     });
+    return unsubscribe;
+  }, [navigation]);
 
-    return unsubscribe; // Cleanup listener on component unmount
-  }, [navigation, router]);
-
-
-  //Update the total volume and sets completed when the exercise sets change
-  useEffect(() => {
-    updateVolume();
-    updateTotalSets();
-  }, [exerciseSets]);
-
-
-  //Calculate elapsed time
-  useEffect(() => {
-    let interval: NodeJS.Timeout;
-
-    if (timerState === 'running') {
-      const startTime = Date.now() - elapsedTime * 1000;
-
-      interval = setInterval(() => {
-        const currentTime = Date.now();
-        setElapsedTime(Math.floor((currentTime - startTime) / 1000));
-      }, 1000);
-    }
-
-    return () => clearInterval(interval);
-  }, [timerState]);
-  
   return (
     <LinearGradient colors={['#1E1E1E', 'black']} style={styles.container}>
-
-
       <View style={styles.containerData}>
         <View>
           <ThemedText style={styles.infoTitle} type="default">Duration</ThemedText>
@@ -365,7 +255,6 @@ export default function Tab() {
         <Text style={styles.buttonFinish} onPress={() => {selectedWorkout? finishWorkout(true) : setIsModalVisible(true)}}>Finish</Text>
       </View>
 
-
       <FlatList
         data={exercises}
         renderItem={({ item }) => (
@@ -376,7 +265,6 @@ export default function Tab() {
             deleteSet={deleteSet}
             exerciseSets={exerciseSets}
             updateSetDetails={updateSetDetails}
-            updateVolume={updateVolume}
           />
         )}
         keyExtractor={(item) => item.id}
@@ -394,7 +282,6 @@ export default function Tab() {
       <Modal visible={isModalVisible} transparent={true} animationType="slide">
         <KeyboardAvoidingView style={styles.modalContainer}>
           <View style={styles.modalContent}>
-
             <Text style={styles.modalTitle}>Save Workout</Text>
             
             <TextInput
@@ -406,7 +293,6 @@ export default function Tab() {
             />
             
             <View style={styles.modalButtons}>
-
               <TouchableOpacity style={styles.modalButton} onPress={() => finishWorkout(false)}>
                 <Text style={styles.modalButtonText}>Save</Text>
               </TouchableOpacity>
@@ -418,15 +304,10 @@ export default function Tab() {
               <TouchableOpacity style={[styles.modalButton, { backgroundColor: '#222' }]} onPress={() => setIsModalVisible(false)}>
                 <Text style={styles.modalButtonText}>Cancel</Text>
               </TouchableOpacity>
-          
             </View>
-          
           </View>
         </KeyboardAvoidingView>
       </Modal>
-
-      
-      
     </LinearGradient>
   );
 }

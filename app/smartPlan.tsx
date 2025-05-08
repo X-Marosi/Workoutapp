@@ -8,8 +8,37 @@ import { View, Text, StyleSheet, TouchableOpacity, ScrollView } from 'react-nati
 import { exerciseListAll } from "@/constants/exerciseNew";
 import { router } from 'expo-router';
 
+// Define types for clarity
+type Exercise = {
+  id: string;
+  name: string;
+  bodyPart: string;
+  target: string;
+  equipment: string;
+  pic: any;
+};
+
+type ExerciseSet = {
+  weight: number;
+  setNumber: number;
+  reps: number;
+};
+
+type FormattedExercise = {
+  id: string;
+  name: string;
+  sets: ExerciseSet[];
+  pic: any;
+};
+
+type WorkoutData = {
+  name: string;
+  createdAt: Date;
+  exercises: FormattedExercise[];
+};
+
 // Function to shuffle an array
-const shuffleArray = (array) => {
+const shuffleArray = <T,>(array: T[]): T[] => {
   const arr = [...array];
   for (let i = arr.length - 1; i > 0; i--) {
     const j = Math.floor(Math.random() * (i + 1));
@@ -18,14 +47,16 @@ const shuffleArray = (array) => {
   return arr;
 };
 
-export default function Tab() {
-  const { name, weight, weightRecords, height, workoutCount, workoutRecords, gender } = useUser();
+// Define muscle groups and equipment types for consistency
+const muscle_groups = ["Chest", "Back", "Shoulders", "Biceps", "Triceps", "Quads", "Glutes", "Hamstrings", "Calves"];
+const equipment_types = ["Bodyweight", "Dumbbells", "Barbell", "Machines"];
 
-  const [selectedLevel, setSelectedLevel] = useState("beginner");
-  const [selectedGoal, setSelectedGoal] = useState("");
-  const [selectedPlan, setSelectedPlan] = useState("workout");
+export default function SmartPlan() {
+  const [selectedLevel, setSelectedLevel] = useState<string>("beginner");
+  const [selectedGoal, setSelectedGoal] = useState<string>("");
+  const [selectedPlan, setSelectedPlan] = useState<string>("workout");
   const [equipment, setEquipment] = useState<string[]>([]);
-  const [selectedSplit, setSelectedSplit] = useState("");
+  const [selectedSplit, setSelectedSplit] = useState<string>("");
 
   // Toggle selection (used for both muscle groups and equipment types)
   const handleEquipmentToggle = (item: string) => {
@@ -37,26 +68,22 @@ export default function Tab() {
   };
 
   const handleGeneratePlan = async () => {
-    // Separate selections into muscle groups and equipment availability.
-    const muscleGroups = equipment.filter(item =>
-      ["Chest", "Back", "Shoulders", "Biceps", "Triceps", "Quads", "Glutes", "Hamstrings", "Calves"].includes(item)
-    );
-    const equipmentSelection = equipment.filter(item =>
-      ["Bodyweight", "Dumbbells", "Barbell", "Machines"].includes(item)
-    );
+    // Separate selections into muscle groups and equipment availability
+    const muscleGroups = equipment.filter(item => muscle_groups.includes(item));
+    const equipmentSelection = equipment.filter(item => equipment_types.includes(item));
 
-    // Map our equipment options to acceptable values for filtering.
-    const equipmentMapping = {
+    // Map our equipment options to acceptable exercise.equipment values (all in lower case)
+    const equipmentMapping: Record<string, string[]> = {
       "Bodyweight": ["body weight", "weighted"],
       "Dumbbells": ["dumbbell"],
       "Barbell": ["barbell"],
       "Machines": ["machine", "cable"]
     };
 
-    // Get a list of allowed equipment types.
-    let allowedEquipment = null;
+    let allowedEquipment: string[] | null = null;
     if (equipmentSelection.length > 0 && equipmentSelection.length < 4) {
-      allowedEquipment = equipmentSelection.reduce((acc, curr) => acc.concat(equipmentMapping[curr] || []), []);
+      allowedEquipment = equipmentSelection.reduce<string[]>((acc, curr) => 
+        acc.concat(equipmentMapping[curr] || []), []);
     }
 
     // Determine rep count based on selected goal
@@ -67,21 +94,21 @@ export default function Tab() {
       repCount = 20;
     }
 
-    // Select exercises for a given muscle group from the exercise list.
-    const selectExercisesForMuscle = (muscle, count) => {
+    // Select exercises for a given muscle group
+    const selectExercisesForMuscle = (muscle: string, count: number): Exercise[] => {
       let filteredExercises = exerciseListAll.filter(exercise => {
         const matchesMuscle = exercise.bodyPart.toLowerCase() === muscle.toLowerCase();
-        const matchesEquipment = allowedEquipment ? allowedEquipment.includes(exercise.equipment.toLowerCase()) : true;
+        const matchesEquipment = allowedEquipment 
+          ? allowedEquipment.includes(exercise.equipment.toLowerCase()) 
+          : true;
         return matchesMuscle && matchesEquipment;
       });
-      // Shuffle the selection
       filteredExercises = shuffleArray(filteredExercises);
-      // Cut off the excess
       return filteredExercises.slice(0, count);
     };
 
-    // For non-fullBody splits, get exercise count per muscle.
-    const getCount = (muscle) => {
+    // Helper: get exercise count per muscle for non-fullBody splits
+    const getCount = (muscle: string): number => {
       if (["Biceps", "Triceps", "Quads", "Hamstrings", "Glutes", "Calves"].includes(muscle)) {
         return 2;
       } else {
@@ -89,8 +116,8 @@ export default function Tab() {
       }
     };
 
-    // Attach three sets to each exercise
-    const formatExercises = (exercises) =>
+    // Function to format exercises (attach a basic 3-set structure)
+    const formatExercises = (exercises: Exercise[]): FormattedExercise[] =>
       exercises.map(exercise => ({
         id: exercise.id,
         name: exercise.name,
@@ -102,17 +129,19 @@ export default function Tab() {
         pic: exercise.pic || null,
       }));
 
-    // The array of workout objects to upload (for uplading moultiple workouts at once).
-    let workoutsToUpload = [];
+    // We'll accumulate an array of workout objects to upload
+    const workoutsToUpload: WorkoutData[] = [];
 
     if (selectedSplit === "pushPullLegs") {
-      // Define split buckets.
-      const splitMapping = {
+      // Define split buckets
+      const splitMapping: Record<string, string[]> = {
         pull: ["Back", "Biceps"],
         push: ["Chest", "Shoulders", "Triceps"],
         legs: ["Quads", "Glutes", "Hamstrings", "Calves"]
       };
-      let splitWorkouts = { pull: [], push: [], legs: [] };
+      
+      const splitWorkouts: Record<string, Exercise[]> = { pull: [], push: [], legs: [] };
+      
       for (const category in splitMapping) {
         splitMapping[category].forEach(muscle => {
           if (muscleGroups.includes(muscle)) {
@@ -122,7 +151,8 @@ export default function Tab() {
           }
         });
       }
-      // Format and push separate workouts if there are exercises.
+      
+      // Format and push separate workouts if there are exercises
       Object.entries(splitWorkouts).forEach(([category, exercises]) => {
         if (exercises.length > 0) {
           workoutsToUpload.push({
@@ -133,25 +163,27 @@ export default function Tab() {
         }
       });
     } else if (selectedSplit === "antagonistic") {
-      // Three workouts:
+      // Three workouts
       // Workout 1: Chest + Biceps
-      let w1 = [];
+      let w1: Exercise[] = [];
       if (muscleGroups.includes("Chest")) {
         w1 = w1.concat(selectExercisesForMuscle("Chest", 3));
       }
       if (muscleGroups.includes("Biceps")) {
         w1 = w1.concat(selectExercisesForMuscle("Biceps", 2));
       }
+      
       // Workout 2: Back + Triceps
-      let w2 = [];
+      let w2: Exercise[] = [];
       if (muscleGroups.includes("Back")) {
         w2 = w2.concat(selectExercisesForMuscle("Back", 3));
       }
       if (muscleGroups.includes("Triceps")) {
         w2 = w2.concat(selectExercisesForMuscle("Triceps", 2));
       }
+      
       // Workout 3: Shoulders + Legs (Quads, Glutes, Hamstrings, Calves)
-      let w3 = [];
+      let w3: Exercise[] = [];
       if (muscleGroups.includes("Shoulders")) {
         w3 = w3.concat(selectExercisesForMuscle("Shoulders", 3));
       }
@@ -160,6 +192,7 @@ export default function Tab() {
           w3 = w3.concat(selectExercisesForMuscle(muscle, 2));
         }
       });
+      
       if (w1.length > 0)
         workoutsToUpload.push({ name: "Smart Chest+Bi", createdAt: new Date(), exercises: formatExercises(w1) });
       if (w2.length > 0)
@@ -167,13 +200,13 @@ export default function Tab() {
       if (w3.length > 0)
         workoutsToUpload.push({ name: "Smart Shoulders+Legs", createdAt: new Date(), exercises: formatExercises(w3) });
     } else if (selectedSplit === "custom") {
-      // Four workouts:
-      // Workout 1: Chest only.
+      // Four workouts
+      // Workout 1: Chest only
       let cw1 = muscleGroups.includes("Chest") ? selectExercisesForMuscle("Chest", 3) : [];
-      // Workout 2: Back only.
+      // Workout 2: Back only
       let cw2 = muscleGroups.includes("Back") ? selectExercisesForMuscle("Back", 3) : [];
       // Workout 3: Arms (Shoulders + Biceps + Triceps)
-      let cw3 = [];
+      let cw3: Exercise[] = [];
       if (muscleGroups.includes("Shoulders")) {
         cw3 = cw3.concat(selectExercisesForMuscle("Shoulders", 3));
       }
@@ -183,13 +216,15 @@ export default function Tab() {
       if (muscleGroups.includes("Triceps")) {
         cw3 = cw3.concat(selectExercisesForMuscle("Triceps", 2));
       }
+      
       // Workout 4: Legs (Quads, Glutes, Hamstrings, Calves)
-      let cw4 = [];
+      let cw4: Exercise[] = [];
       ["Quads", "Glutes", "Hamstrings", "Calves"].forEach(muscle => {
         if (muscleGroups.includes(muscle)) {
           cw4 = cw4.concat(selectExercisesForMuscle(muscle, 2));
         }
       });
+      
       if (cw1.length > 0)
         workoutsToUpload.push({ name: "Smart Chest", createdAt: new Date(), exercises: formatExercises(cw1) });
       if (cw2.length > 0)
@@ -199,9 +234,9 @@ export default function Tab() {
       if (cw4.length > 0)
         workoutsToUpload.push({ name: "Smart Legs", createdAt: new Date(), exercises: formatExercises(cw4) });
     } else if (selectedSplit === "fullBody") {
-      // Three full body variations.
+      // Three full body variations
       for (let day = 1; day <= 3; day++) {
-        let fbWorkout = [];
+        let fbWorkout: Exercise[] = [];
         // For non-leg groups: Chest, Back, Shoulders, Biceps, Triceps, Calves (if selected, pick 1 each)
         const nonLegGroups = ["Chest", "Back", "Shoulders", "Biceps", "Triceps", "Calves"];
         nonLegGroups.forEach(muscle => {
@@ -209,22 +244,27 @@ export default function Tab() {
             fbWorkout = fbWorkout.concat(selectExercisesForMuscle(muscle, 1));
           }
         });
-        // For leg muscles: union of Quads, Glutes, Hamstrings (if any selected), pick 2 total.
+        
+        // For leg muscles: union of Quads, Glutes, Hamstrings (if any selected), pick 2 total
         const legPoolMuscles = ["Quads", "Glutes", "Hamstrings"];
-        let legPool = [];
+        let legPool: Exercise[] = [];
         legPoolMuscles.forEach(muscle => {
           if (muscleGroups.includes(muscle)) {
             const exercises = exerciseListAll.filter(exercise => {
               const matchesMuscle = exercise.bodyPart.toLowerCase() === muscle.toLowerCase();
-              const matchesEquipment = allowedEquipment ? allowedEquipment.includes(exercise.equipment.toLowerCase()) : true;
+              const matchesEquipment = allowedEquipment 
+                ? allowedEquipment.includes(exercise.equipment.toLowerCase()) 
+                : true;
               return matchesMuscle && matchesEquipment;
             });
             legPool = legPool.concat(exercises);
           }
         });
+        
         legPool = shuffleArray(legPool);
         const selectedLegs = legPool.slice(0, 2);
         fbWorkout = fbWorkout.concat(selectedLegs);
+        
         if (fbWorkout.length > 0) {
           workoutsToUpload.push({
             name: `Smart Full Body Day ${day}`,
@@ -234,11 +274,12 @@ export default function Tab() {
         }
       }
     } else {
-      // Fallback: Single workout generation for all selected muscle groups.
-      let fallbackWorkout = [];
+      // Fallback: Single workout generation for all selected muscle groups
+      let fallbackWorkout: Exercise[] = [];
       muscleGroups.forEach(muscle => {
         fallbackWorkout = fallbackWorkout.concat(selectExercisesForMuscle(muscle, getCount(muscle)));
       });
+      
       if (fallbackWorkout.length > 0) {
         workoutsToUpload.push({
           name: "Smart Plan Workout",
@@ -248,16 +289,21 @@ export default function Tab() {
       }
     }
 
-    // Now upload each workout as a separate document.
+    // Now upload each workout as a separate document
     try {
-      const uid = auth().currentUser.uid;
+      const user = auth().currentUser;
+      if (!user) {
+        throw new Error("User not authenticated");
+      }
+      
       for (const workoutData of workoutsToUpload) {
         await firestore()
           .collection('users')
-          .doc(uid)
+          .doc(user.uid)
           .collection('workoutPlans')
           .add(workoutData);
       }
+      
       router.navigate({ pathname: '/workouts' });
     } catch (error) {
       console.error("Error saving workout plan:", error);
@@ -276,42 +322,81 @@ export default function Tab() {
         {/* Workout / Plan */}
         <ThemedText style={styles.sectionTitle} type="subtitle">Generate</ThemedText>
         <View style={styles.skillLevels}>
-          <Text style={[styles.button, selectedPlan === "workout" && styles.selected]} onPress={() => setSelectedPlan("workout")}> Workout </Text>
-          <Text style={[styles.button, selectedPlan === "plan" && styles.selected]} onPress={() => setSelectedPlan("plan")}> Plan </Text>
+          <Text 
+            style={[styles.button, selectedPlan === "workout" && styles.selected]} 
+            onPress={() => setSelectedPlan("workout")}
+          > 
+            Workout 
+          </Text>
+          <Text 
+            style={[styles.button, selectedPlan === "plan" && styles.selected]} 
+            onPress={() => setSelectedPlan("plan")}
+          > 
+            Plan 
+          </Text>
         </View>
 
-
-        {
-          selectedPlan === "plan" && (
-            <View>
-              {/* Split Type */}
-              <ThemedText style={styles.sectionTitle} type="subtitle">Split Type</ThemedText>
-              <View style={styles.equipmentOptions}>
-                {/*<Text style={[styles.splitButton, selectedSplit === "full" && styles.selectedEquipment]} onPress={() => setSelectedSplit("full")}> Full Body (Fallback) </Text>*/}
-                {/*<Text style={[styles.splitButton, selectedSplit === "upperLower" && styles.selectedEquipment]} onPress={() => setSelectedSplit("upperLower")}> Upper/Lower </Text>*/}
-                <Text style={[styles.splitButton, selectedSplit === "pushPullLegs" && styles.selectedEquipment]} onPress={() => setSelectedSplit("pushPullLegs")}> PPL </Text>
-                <Text style={[styles.splitButton, selectedSplit === "antagonistic" && styles.selectedEquipment]} onPress={() => setSelectedSplit("antagonistic")}> Antagonistic </Text>
-                <Text style={[styles.splitButton, selectedSplit === "custom" && styles.selectedEquipment]} onPress={() => setSelectedSplit("custom")}> Custom </Text>
-                <Text style={[styles.splitButton, selectedSplit === "fullBody" && styles.selectedEquipment]} onPress={() => setSelectedSplit("fullBody")}> Full Body </Text>
-              </View>
+        {selectedPlan === "plan" && (
+          <View>
+            {/* Split Type */}
+            <ThemedText style={styles.sectionTitle} type="subtitle">Split Type</ThemedText>
+            <View style={styles.equipmentOptions}>
+              <Text 
+                style={[styles.splitButton, selectedSplit === "pushPullLegs" && styles.selectedEquipment]} 
+                onPress={() => setSelectedSplit("pushPullLegs")}
+              > 
+                PPL 
+              </Text>
+              <Text 
+                style={[styles.splitButton, selectedSplit === "antagonistic" && styles.selectedEquipment]} 
+                onPress={() => setSelectedSplit("antagonistic")}
+              > 
+                Antagonistic 
+              </Text>
+              <Text 
+                style={[styles.splitButton, selectedSplit === "custom" && styles.selectedEquipment]} 
+                onPress={() => setSelectedSplit("custom")}
+              > 
+                Custom 
+              </Text>
+              <Text 
+                style={[styles.splitButton, selectedSplit === "fullBody" && styles.selectedEquipment]} 
+                onPress={() => setSelectedSplit("fullBody")}
+              > 
+                Full Body 
+              </Text>
             </View>
-          )
-        }
-
+          </View>
+        )}
 
         {/* Skill Levels */}
         <ThemedText style={styles.sectionTitle} type="subtitle">Skill Level</ThemedText>
         <View style={styles.skillLevels}>
-          <Text style={[styles.button, selectedLevel === "beginner" && styles.selected]} onPress={() => setSelectedLevel("beginner")}> Beginner </Text>
-          <Text style={[styles.button, selectedLevel === "intermediate" && styles.selected]} onPress={() => setSelectedLevel("intermediate")}> Intermediate </Text>
-          <Text style={[styles.button, selectedLevel === "advanced" && styles.selected]} onPress={() => setSelectedLevel("advanced")}> Advanced </Text>
+          <Text 
+            style={[styles.button, selectedLevel === "beginner" && styles.selected]} 
+            onPress={() => setSelectedLevel("beginner")}
+          > 
+            Beginner 
+          </Text>
+          <Text 
+            style={[styles.button, selectedLevel === "intermediate" && styles.selected]} 
+            onPress={() => setSelectedLevel("intermediate")}
+          > 
+            Intermediate 
+          </Text>
+          <Text 
+            style={[styles.button, selectedLevel === "advanced" && styles.selected]} 
+            onPress={() => setSelectedLevel("advanced")}
+          > 
+            Advanced 
+          </Text>
         </View>
 
         {/* Muscle Groups */}
         <View>
           <ThemedText style={styles.sectionTitle} type="subtitle">Muscle Groups</ThemedText>
           <View style={styles.equipmentOptions}>
-            {["Chest", "Back", "Shoulders", "Biceps", "Triceps", "Quads", "Glutes", "Hamstrings", "Calves"].map((item, index) => (
+            {muscle_groups.map((item, index) => (
               <TouchableOpacity
                 key={index}
                 onPress={() => handleEquipmentToggle(item)}
@@ -326,15 +411,30 @@ export default function Tab() {
         {/* Workout Goals */}
         <ThemedText style={styles.sectionTitle} type="subtitle">Workout Goal</ThemedText>
         <View style={styles.goalOptions}>
-          <Text style={[styles.button, selectedGoal === "strength" && styles.selected]} onPress={() => setSelectedGoal("strength")}> Strength </Text>
-          <Text style={[styles.button, selectedGoal === "hypertrophy" && styles.selected]} onPress={() => setSelectedGoal("hypertrophy")}> Muscle Gain </Text>
-          <Text style={[styles.button, selectedGoal === "endurance" && styles.selected]} onPress={() => setSelectedGoal("endurance")}> Endurance </Text>
+          <Text 
+            style={[styles.button, selectedGoal === "strength" && styles.selected]} 
+            onPress={() => setSelectedGoal("strength")}
+          > 
+            Strength 
+          </Text>
+          <Text 
+            style={[styles.button, selectedGoal === "hypertrophy" && styles.selected]} 
+            onPress={() => setSelectedGoal("hypertrophy")}
+          > 
+            Muscle Gain 
+          </Text>
+          <Text 
+            style={[styles.button, selectedGoal === "endurance" && styles.selected]} 
+            onPress={() => setSelectedGoal("endurance")}
+          > 
+            Endurance 
+          </Text>
         </View>
 
         {/* Equipment Availability */}
         <ThemedText style={styles.sectionTitle} type="subtitle">Equipment</ThemedText>
         <View style={styles.equipmentOptions}>
-          {["Bodyweight", "Dumbbells", "Barbell", "Machines"].map((item, index) => (
+          {equipment_types.map((item, index) => (
             <TouchableOpacity
               key={index}
               onPress={() => handleEquipmentToggle(item)}
@@ -355,8 +455,15 @@ export default function Tab() {
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1 },
-  menuTitle: { textAlign: 'center', marginTop: 100, padding: 20, fontSize: 50 },
+  container: { 
+    flex: 1 
+  },
+  menuTitle: { 
+    textAlign: 'center', 
+    marginTop: 100, 
+    padding: 20, 
+    fontSize: 50 
+  },
   button: {
     color: "white",
     backgroundColor: "#222",
@@ -374,8 +481,16 @@ const styles = StyleSheet.create({
     padding: 5,
     borderRadius: 8,
   },
-  selected: { backgroundColor: "rebeccapurple", fontSize: 20 },
-  sectionTitle: { marginTop: 20, textAlign: "center", fontSize: 20, color: "white" },
+  selected: { 
+    backgroundColor: "rebeccapurple", 
+    fontSize: 20 
+  },
+  sectionTitle: { 
+    marginTop: 20, 
+    textAlign: "center", 
+    fontSize: 20, 
+    color: "white" 
+  },
   goalOptions: {
     flexDirection: "row",
     justifyContent: "space-evenly",
@@ -405,8 +520,14 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: "bold",
   },
-  selectedEquipment: { backgroundColor: "rebeccapurple" },
-  equipmentText: { color: "white", fontSize: 16, fontWeight: "bold" },
+  selectedEquipment: { 
+    backgroundColor: "rebeccapurple" 
+  },
+  equipmentText: { 
+    color: "white", 
+    fontSize: 16, 
+    fontWeight: "bold" 
+  },
   generateButton: {
     backgroundColor: "rebeccapurple",
     margin: 30,
@@ -414,8 +535,11 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     alignItems: "center",
   },
-  generateButtonText: { color: "white", fontSize: 18, fontWeight: "bold" },
+  generateButtonText: { 
+    color: "white", 
+    fontSize: 18, 
+    fontWeight: "bold" 
+  },
 });
-
 
 
