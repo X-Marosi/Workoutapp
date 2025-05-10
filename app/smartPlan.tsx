@@ -274,7 +274,7 @@ export default function SmartPlan() {
         }
       }
     } else {
-      // Fallback: Single workout generation for all selected muscle groups
+      // Fallback option
       let fallbackWorkout: Exercise[] = [];
       muscleGroups.forEach(muscle => {
         fallbackWorkout = fallbackWorkout.concat(selectExercisesForMuscle(muscle, getCount(muscle)));
@@ -289,7 +289,7 @@ export default function SmartPlan() {
       }
     }
 
-    // Now upload each workout as a separate document
+    // Upload each workout
     try {
       const user = auth().currentUser;
       if (!user) {
@@ -431,7 +431,7 @@ export default function SmartPlan() {
           </Text>
         </View>
 
-        {/* Equipment Availability */}
+        {/* Equipment */}
         <ThemedText style={styles.sectionTitle} type="subtitle">Equipment</ThemedText>
         <View style={styles.equipmentOptions}>
           {equipment_types.map((item, index) => (
