@@ -51,7 +51,10 @@ A cross-platform mobile fitness application for tracking workouts, creating trai
    or
    npx expo run:android
    ```
-
+Or
+```bash
+  Try it out using a Virtual Device
+```
 ## Acknowledgements
 - This project was developed as part of a Bachelor's thesis at Selye Janos University Faculty of Economics and Informatics
 - Special thanks to all everyone who helped improve the application
