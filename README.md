@@ -7,6 +7,9 @@
 
 A cross-platform mobile fitness application for tracking workouts, creating training plans, and monitoring progress. Built as part of a Bachelor's thesis project.
 
+<img width="1504" height="825" alt="Screenshot 2026-02-19 151021" src="https://github.com/user-attachments/assets/104164ad-65b0-4d90-b0ab-620056bed058" />
+
+
 ## Features
 
 - **Workout Tracking**: Record sets, reps, weights, and RPE for each exercise
